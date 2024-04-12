@@ -1,5 +1,5 @@
 FROM ruby:3.2.0
-ENV APP /railsapp
+ENV APP /n_app
 ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -

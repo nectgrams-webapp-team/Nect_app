@@ -20,14 +20,14 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
     volumes:
       - type: bind
-        source: ./railsapp
-        target: /railsapp
+        source: ./n_app
+        target: /n_app
       - type: volume
         source: gemdata
         target: /usr/local/bundle
       - type: volume
         source: node_modules
-        target: /railsapp/node_modules
+        target: /n_app/node_modules
     ports:
       - "3000:3000"
     depends_on:
