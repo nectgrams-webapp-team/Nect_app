@@ -1,0 +1,6 @@
+<h1><%= @activity.title %></h1>
+<h3><%= @activity.body %></h3>
+<h5><%= @activity.post_day %></h5>
+<%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+<%= link_to '編集', edit_activity_path, class: 'link-info link-offset-2 link-underline link-underline-opacity-0' %>
+<%= button_to "削除", activity_path(@activity.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>

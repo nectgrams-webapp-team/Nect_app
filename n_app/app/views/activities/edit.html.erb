@@ -1,0 +1,14 @@
+<h1>投稿内容の編集</h1>
+<!-- form_with部分 -->
+<%= form_with model: @activity, method: :patch  do |activity| %>
+
+  <%= activity.file_field :activity_image, accept: "image/*" %>
+  <h4>記事タイトル</h4>
+  <%= activity.text_field :title %>
+	
+  <h4>本文</h4>
+  <%= activity.text_area :body %>
+	
+  <%= activity.submit '変更を保存' %>
+<% end %>
+<%= link_to '戻る', activity_path(@activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
