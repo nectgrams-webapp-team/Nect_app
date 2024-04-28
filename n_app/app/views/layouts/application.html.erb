@@ -9,7 +9,20 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
-
+    <header>
+      <li>
+        <%= link_to "トップページ", root_path %>
+      </li>
+      <% if member_signed_in? %>
+        <li>
+          <%= button_to "ログアウト", destroy_member_session_path, method: :delete %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "ログイン", new_member_session_path %>
+        </li>
+      <% end %>
+    </header>
   <body>
     <%= yield %>
   </body>
