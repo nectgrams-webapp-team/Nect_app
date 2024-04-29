@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   def index
+    @members = Member.all
   end
 
   def show
@@ -7,4 +8,9 @@ class MembersController < ApplicationController
 
   def edit
   end
+
+  #private
+  #def members_params
+  #  params.require(:member).permit(:name)
+  #end
 end
