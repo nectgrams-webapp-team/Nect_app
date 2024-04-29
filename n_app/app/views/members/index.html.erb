@@ -1,0 +1,13 @@
+<h1>メンバー一覧</h1>
+
+<% @members.each do |member| %>
+    <div class="card mb-3" style="max-width: 540px; height: 120px">
+      <div class="row g-0">
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to member.email, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
