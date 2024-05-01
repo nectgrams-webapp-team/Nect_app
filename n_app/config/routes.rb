@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "homes/about", to: "homes#about", as: "about"
   devise_for :members
 
-  resources :members, only: [:index, :show]
+  resources :members, only: [:index, :show, :edit, :update]
   resources :activities
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
