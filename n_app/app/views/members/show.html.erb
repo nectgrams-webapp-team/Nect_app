@@ -1,2 +1,12 @@
-<h1>Members#show</h1>
-<p>Find me in app/views/members/show.html.erb</p>
+<h1><%= @member.name %></h1>
+<%= link_to '戻る', members_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+<%= link_to 'To top page', root_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+
+
+<% if member_signed_in? && current_member.id == @member.id %>
+  <div class="d-flex justify-content-start">
+    <%= link_to 'Profile Edit', edit_member_path, class: 'btn btn-outline-info me-2' %>
+    <%= link_to 'Member Invite', new_member_invitation_path, class: 'btn btn-outline-secondary' %>
+    <%= button_to 'Logout', destroy_member_session_path, method: :delete, class: 'btn btn-outline-danger me-2' %>
+  </div>
+<% end %>

@@ -1,2 +1,18 @@
-<h1>Members#edit</h1>
-<p>Find me in app/views/members/edit.html.erb</p>
+<h1>メンバー情報の編集</h1>
+
+<%= form_with model: @member, method: :patch  do |member| %>
+    <table>
+      <tr>
+        <th>名前</th>
+        <td><%= member.text_field :name, placeholder: "名前の入力" %></td>
+      </tr>
+      <tr>
+        <th>email</th>
+        <td><%= member.text_field :email, placeholder: "メールの入力" %></td>
+      </tr>
+    </table>
+
+    <%= member.submit '変更を保存' %>
+<% end %>
+
+<%= link_to '戻る', member_path(@member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
