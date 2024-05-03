@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root to: "homes#top"
   get "homes/about", to: "homes#about", as: "about"
-  devise_for :members
+
+  devise_for :members, controllers: {
+      invitations: 'members/invitations'
+    }
 
   resources :members, only: [:index, :show, :edit, :update]
   resources :activities
