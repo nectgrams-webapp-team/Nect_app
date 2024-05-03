@@ -10,6 +10,10 @@
         <th>email</th>
         <td><%= member.text_field :email, placeholder: "メールの入力" %></td>
       </tr>
+      <tr>
+        <th>学籍番号</th>
+        <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
+      </tr>
     </table>
 
     <%= member.submit '変更を保存' %>
