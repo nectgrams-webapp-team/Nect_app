@@ -2,7 +2,16 @@ class Members::InvitationsController < Devise::InvitationsController
   before_action :configure_permitted_parameters
 
   def update
-    super
+    super do |resource|
+      if resource.errors.empty?
+        # ユーザーの招待受け入れが成功し、エラーがなければ編集ページにリダイレクト
+        redirect_to edit_member_path(resource)
+      else
+        # エラーがある場合は、デフォルトの動作を維持（通常は再度招待ページをrenderする）
+        respond_with_navigational(resource) { render :edit }
+      end
+      return # 重要: コントローラーアクションをここで終了させる
+    end
   end
 
   protected
