@@ -4,6 +4,9 @@ class Members::InvitationsController < Devise::InvitationsController
   def update
     super do |resource|
       if resource.errors.empty?
+        # ユーザーをログインさせる
+        sign_in(resource)
+
         # ユーザーの招待受け入れが成功し、エラーがなければ編集ページにリダイレクト
         redirect_to edit_member_path(resource)
       else

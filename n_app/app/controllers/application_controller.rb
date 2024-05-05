@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-  #def after_sign_in_path_for(resource)
-  #  edit_member_path(current_member.id)
-  #end
+  #before_action :configure_permitted_parameters, if: :devise_controller?
+
+  def after_sign_in_path_for(resource)
+    member_path(current_member.id)
+  end
 end
