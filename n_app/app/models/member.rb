@@ -1,10 +1,12 @@
 class Member < ApplicationRecord
   has_many :activities, dependent: :destroy
+
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   # 学籍番号かどうか確認
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
+  validates :name, presence: true
 
 
   def calculate_grade(student_id)
