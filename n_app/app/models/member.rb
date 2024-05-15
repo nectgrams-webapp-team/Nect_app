@@ -4,7 +4,7 @@ class Member < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # 学籍番号かどうか確認
+  # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
   validates :name, presence: true
 
@@ -22,4 +22,23 @@ class Member < ApplicationRecord
     # 4年を超える場合は 'OM' を返す
     grade > 4 ? 'OM' : grade
   end
+
+  PROGRAMMING_LANGUAGES = {
+    1 => "Ruby",
+    2 => "C",
+    4 => "C#",
+    8 => "C++",
+    16 => "Python"
+  }.freeze
+
+  def calculate_select_pl(select_pl)
+    s_pl = []
+    PROGRAMMING_LANGUAGES.each do |key,val|
+      if (select_lp & key) != 0
+        s_pl.push(val)
+      end
+    end
+    s_lp.join(" , ")
+  end
+
 end
