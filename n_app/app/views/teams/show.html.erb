@@ -4,6 +4,7 @@
 <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
     <h3>作成者：自分</h3>
     <%= link_to 'メンバー管理', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>
+    <%= link_to 'チーム編集', edit_team_path, class: 'btn btn-outline-primary' %>
 <% else %>
     <h3>作成者：<%= Member.find(@team.master_id).name %></h3>
     <%= link_to 'メンバー一覧', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>

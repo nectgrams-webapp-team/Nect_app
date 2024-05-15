@@ -24,15 +24,15 @@ class TeamsController < ApplicationController
   end
 
   def update
-    activity = Activity.find(params[:id])
-    activity.update(activity_params)
-    redirect_to activity_path
+    team = Team.find(params[:id])
+    team.update(team_params)
+    redirect_to teams_path
   end
 
   def destroy
-    activity = Activity.find(params[:id])
-    activity.delete
-    redirect_to activities_path
+    #activity = Activity.find(params[:id])
+    #activity.delete
+    #redirect_to activities_path
   end
 
   private
