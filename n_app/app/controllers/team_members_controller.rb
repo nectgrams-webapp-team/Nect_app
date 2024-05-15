@@ -32,9 +32,11 @@ class TeamMembersController < ApplicationController
     end
 
     def destroy
-      #activity = Activity.find(params[:id])
-      #activity.delete
-      #redirect_to activities_path
+      team_id = params[:id]
+      member_id = params[:format]
+      team_member = TeamMember.find_by(team_id: team_id, member_id: member_id)
+      team_member.delete
+      redirect_back(fallback_location: root_path)
     end
 
     private

@@ -19,4 +19,7 @@
 <h5>正式メンバー</h5>
 <% @team_members.where(team_id: @team.id, approved: true).each do |member| %>
     <p><%= Member.find(member.member_id).name %></p>
+    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+        <%= button_to "退会させる", team_member_path(member.team_id, member.member_id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
+    <% end %>
 <% end %>
