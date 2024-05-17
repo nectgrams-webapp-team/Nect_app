@@ -30,9 +30,9 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    #activity = Activity.find(params[:id])
-    #activity.delete
-    #redirect_to activities_path
+    team = Team.find(params[:id])
+    team.delete
+    redirect_to teams_path
   end
 
   private

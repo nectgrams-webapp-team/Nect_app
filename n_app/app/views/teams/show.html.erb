@@ -5,6 +5,7 @@
     <h3>作成者：自分</h3>
     <%= link_to 'メンバー管理', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>
     <%= link_to 'チーム編集', edit_team_path, class: 'btn btn-outline-primary' %>
+    <%= button_to "チームを削除", team_path(@team.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？この処理によってチームへの参加リクエスト、参加メンバーは取り消されます" } } %>
 <% else %>
     <h3>作成者：<%= Member.find(@team.master_id).name %></h3>
     <%= link_to 'メンバー一覧', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>
