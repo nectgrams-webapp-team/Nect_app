@@ -1,0 +1,25 @@
+<h3>チーム <%= @team.name %> のメンバー一覧</h3>
+
+<% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+    <h5>仮メンバー</h5>
+    <% @team_members.where(team_id: @team.id, approved: false).each do |member| %>
+        <p><%= Member.find(member.member_id).name %></p>
+        <%= form_with(model: @team_members, method: :patch, url: team_member_path(member.team_id, member.member_id), local: true) do |form| %>
+            <%= form.hidden_field :approved, value: true %>
+            <%= form.submit '参加を許可' %>
+        <% end %>
+    <% end %>
+<% else %>
+    <h5>仮メンバー</h5>
+    <% @team_members.where(team_id: @team.id, approved: false).each do |member| %>
+        <p><%= Member.find(member.member_id).name %></p>
+    <% end %>
+<% end %>
+
+<h5>正式メンバー</h5>
+<% @team_members.where(team_id: @team.id, approved: true).each do |member| %>
+    <p><%= Member.find(member.member_id).name %></p>
+    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+        <%= button_to "退会させる", team_member_path(member.team_id, member.member_id), method: :delete, form: { data: { turbo_confirm: "本当に退会させますか？" } } %>
+    <% end %>
+<% end %>

@@ -7,6 +7,9 @@ class Member < ApplicationRecord
   # 学籍番号かどうか確認
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
 
+  has_many :teams, dependent: :destroy
+  has_many :team_members, dependent: :destroy
+
 
   def calculate_grade(student_id)
     # 学籍番号から入学年の下二桁を取得
