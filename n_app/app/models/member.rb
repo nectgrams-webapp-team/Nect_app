@@ -34,11 +34,11 @@ class Member < ApplicationRecord
   def calculate_select_pl(select_pl)
     s_pl = []
     PROGRAMMING_LANGUAGES.each do |key,val|
-      if (select_lp & key) != 0
+      if (select_pl & key) != 0
         s_pl.push(val)
       end
     end
-    s_lp.join(" , ")
+    s_pl.join(" , ")
   end
 
 end

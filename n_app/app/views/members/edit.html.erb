@@ -14,6 +14,22 @@
         <th>学籍番号</th>
         <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
       </tr>
+      <tr>
+        <th>学習中プログラミング言語</th>
+        <td>
+        <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
+          <% if (pl_num & member.object.learning_programming_languages) != 0 %>
+          <p>selected</p>
+            <%= member.check_box :selected_languages, { multiple: true }, pl_num, {checked: true} %>
+            <%= member.label :selected_languages, language, value: pl_num %>
+          <% else %>
+          <p>no</p>
+            <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
+            <%= member.label :selected_languages, language, value: pl_num %>
+          <% end %>
+        <% end %>
+        </td>
+      </tr>
     </table>
 
     <%= member.submit '変更を保存' %>
