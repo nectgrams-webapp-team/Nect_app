@@ -9,7 +9,8 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-            <p class="card-text"><small class="text-body-secondary"><%= activity.post_day %></small></p>
+            <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d %H:%M:%S') %></small></p>
+            <!-- <p class="card-text"><small class="text-body-secondary"><%= activity.updated_at.strftime('%Y/%m/%d %H:%M:%S') %></small></p> -->
           </div>
         </div>
       </div>
