@@ -42,7 +42,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_070338) do
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.string "post_day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
