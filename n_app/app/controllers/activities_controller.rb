@@ -14,6 +14,7 @@ class ActivitiesController < ApplicationController
   def create
     activity = Activity.new(activity_params)
     activity.post_day = Date.today.strftime("%Y/%m/%d")
+    activity.member_id = current_member.id
     activity.save
     redirect_to activities_path
   end
