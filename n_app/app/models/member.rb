@@ -24,4 +24,6 @@ class Member < ApplicationRecord
     # 4年を超える場合は 'OM' を返す
     grade > 4 ? 'OM' : grade
   end
+
+  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
 end

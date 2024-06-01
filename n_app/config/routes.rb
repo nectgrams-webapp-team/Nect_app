@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     }
 
   resources :members, only: [:index, :show, :edit, :update]
+  get "members/update/grade", to: "member#update_grade"
   resources :activities
   resources :teams
   resources :team_members

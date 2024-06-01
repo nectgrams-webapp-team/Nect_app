@@ -14,6 +14,26 @@
         <th>学籍番号</th>
         <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
       </tr>
+      <tr>
+        <th>学年</th>
+        <td>
+          <div class="form-check form-check-inline">
+            <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |b| %>
+              <div class="form-check form-check-inline">
+                <%= b.radio_button(class: "form-check-input") %>
+                <%= b.label(class: "form-check-label") %>
+              </div>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <!-- Repeat year checkform added but it does nothing! -->
+      <tr>
+        <div class="form-check">
+          <th class="form-check-label">留年</th>
+          <td><%= check_box("留年", tag.id) %></td>
+        </div>
+      </tr>
     </table>
 
     <%= member.submit '変更を保存' %>

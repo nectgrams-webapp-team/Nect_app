@@ -5,7 +5,7 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @member.grade = @member.calculate_grade(@member.student_id)
+    # @member.grade = @member.calculate_grade(@member.student_id)
   end
 
   def edit
@@ -20,6 +20,10 @@ class MembersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def update_grade
+    
   end
 
   private
