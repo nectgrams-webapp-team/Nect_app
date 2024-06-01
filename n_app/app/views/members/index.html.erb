@@ -1,4 +1,8 @@
 <h1>メンバー一覧</h1>
+<%= button_to "INCREMENT ALL GRADES", { :controller => "members", :action => "increment_grade"}, class: 'btn btn-danger' %>
+<br />
+<%= button_to "DECREMENT ALL GRADES", { :controller => "members", :action => "decrement_grade"}, class: 'btn btn-danger' %>
+<br />
 
 <% @members.each do |member| %>
     <div class="card mb-3" style="max-width: 540px; height: 120px">

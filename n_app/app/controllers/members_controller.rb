@@ -22,12 +22,20 @@ class MembersController < ApplicationController
     end
   end
 
-  def update_grade
+  def increment_grade
+    @members = Member.all
+    @members.where.not(grade: 5).update_all('grade = grade + 1')
+    puts 'Grades incremented successfully!'
+  end
 
+  def decrement_grade
+    @members = Member.all
+    @members.where.not(grade: 1).update_all('grade = grade - 1')
+    puts 'Grades decremented successfully!'
   end
 
   private
   def members_params
-    params.require(:member).permit(:name, :student_id)
+    params.require(:member).permit(:name, :student_id, :grade)
   end
 end
