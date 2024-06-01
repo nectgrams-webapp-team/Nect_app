@@ -28,6 +28,8 @@
         </td>
       </tr>
       <tr>
+        <th>自己紹介</th>
+        <td><%= member.text_area :intro, placeholder: "自己紹介" %></td>
         <th>学習中プログラミング言語</th>
         <td>
         <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>

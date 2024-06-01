@@ -30,6 +30,6 @@ class MembersController < ApplicationController
 
   private
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :profile_image, :department, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :intro, :profile_image, :department, selected_languages: [])
   end
 end
