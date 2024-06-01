@@ -1,11 +1,12 @@
 class Member < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :activities, dependent: :destroy
+
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # 学籍番号かどうか確認
+  # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
+  validates :name, presence: true
 
   has_many :teams, dependent: :destroy
   has_many :team_members, dependent: :destroy
@@ -26,4 +27,29 @@ class Member < ApplicationRecord
   end
 
   enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
+  
+  PROGRAMMING_LANGUAGES = {
+    1 => "Ruby",
+    2 => "C",
+    4 => "C#",
+    8 => "C++",
+    16 => "Python"
+  }.freeze
+
+  def calculate_select_pl(select_pl)
+    s_pl = []
+    PROGRAMMING_LANGUAGES.each do |key,val|
+      if (select_pl & key) != 0
+        s_pl.push(val)
+      end
+    end
+    s_pl.join(" , ")
+  end
+
+  # プロフィール写真
+  has_one_attached :profile_image
+
+  def get_profile_image
+      (profile_image.attatched?) ? profile_image : 'no_image.png'
+  end
 end
