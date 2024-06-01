@@ -15,6 +15,19 @@
         <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
       </tr>
       <tr>
+        <th>学科</th>
+        <td>
+          <div class="form-check">
+            <%= member.collection_radio_buttons(:department, Member.departments, :first, :first) do |displayDepartments| %>
+              <div class ="form-check">
+                <%= displayDepartments.radio_button(class:"form-check-input") %>
+                <%= displayDepartments.label(class:"form-check-label") %>
+              </div>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <tr>
         <th>学習中プログラミング言語</th>
         <td>
         <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
