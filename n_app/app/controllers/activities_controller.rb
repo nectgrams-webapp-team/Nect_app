@@ -13,6 +13,7 @@ class ActivitiesController < ApplicationController
 
   def create
     activity = Activity.new(activity_params)
+    activity.member_id = current_member.id
     activity.save
     redirect_to activities_path
   end
