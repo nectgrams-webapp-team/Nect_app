@@ -50,4 +50,6 @@ class Member < ApplicationRecord
   def get_profile_image
       (profile_image.attatched?) ? profile_image : 'no_image.png'
   end
+
+  enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
 end
