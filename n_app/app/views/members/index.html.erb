@@ -1,3 +1,10 @@
+<% flash.each do |type, msg| %>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% end %>
+
 <h1>メンバー一覧</h1>
 <%= button_to "INCREMENT ALL GRADES", { :controller => "members", :action => "increment_grade"}, class: 'btn btn-danger' %>
 <br />

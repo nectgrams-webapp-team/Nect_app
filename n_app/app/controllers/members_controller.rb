@@ -25,13 +25,13 @@ class MembersController < ApplicationController
   def increment_grade
     @members = Member.all
     @members.where.not(grade: 5).update_all('grade = grade + 1')
-    puts 'Grades incremented successfully!'
+    redirect_to members_path, notice: "Grades incremented successfully!"
   end
 
   def decrement_grade
     @members = Member.all
     @members.where.not(grade: 1).update_all('grade = grade - 1')
-    puts 'Grades decremented successfully!'
+    redirect_to members_path, notice: "Grades decremented successfully!"
   end
 
   private
