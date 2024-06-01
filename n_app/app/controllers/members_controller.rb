@@ -14,7 +14,7 @@ class MembersController < ApplicationController
 
   def update
     member = Member.find(params[:id])
-    #member.grade = member.calculate_grade(member.student_id)
+    # member.grade = member.calculate_grade(member.student_id)
     if member.update(members_params)
       redirect_to member_path(member.id)
     else
@@ -23,7 +23,7 @@ class MembersController < ApplicationController
   end
 
   def update_grade
-    
+
   end
 
   private
