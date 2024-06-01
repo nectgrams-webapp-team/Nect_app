@@ -1,16 +1,17 @@
 class Member < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :activities, dependent: :destroy
+
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # 学籍番号かどうか確認
+  # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
+  validates :name, presence: true
 
   has_many :teams, dependent: :destroy
   has_many :team_members, dependent: :destroy
-  
-  
+
+
   def calculate_grade(student_id)
     # 学籍番号から入学年の下二桁を取得
     enrollment_year = student_id[2..3].to_i
@@ -20,9 +21,27 @@ class Member < ApplicationRecord
     current_year_last_two_digits -= 1 if Date.today.month < 4
     # 入学年から現在の年までの差を計算し、学年を求める
     grade = current_year_last_two_digits - enrollment_year + 1
-    
+
     # 4年を超える場合は 'OM' を返す
     grade > 4 ? 'OM' : grade
+  end
+
+  PROGRAMMING_LANGUAGES = {
+    1 => "Ruby",
+    2 => "C",
+    4 => "C#",
+    8 => "C++",
+    16 => "Python"
+  }.freeze
+
+  def calculate_select_pl(select_pl)
+    s_pl = []
+    PROGRAMMING_LANGUAGES.each do |key,val|
+      if (select_pl & key) != 0
+        s_pl.push(val)
+      end
+    end
+    s_pl.join(" , ")
   end
 
   # プロフィール写真

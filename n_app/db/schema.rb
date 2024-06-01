@@ -42,9 +42,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_043804) do
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.string "post_day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "member_id"
   end
 
   create_table "members", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_043804) do
     t.string "name"
     t.string "student_id"
     t.string "grade"
-    t.text "intro"
+    t.bigint "learning_programming_languages", default: 0
     t.text "intro"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
