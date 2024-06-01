@@ -1,4 +1,7 @@
 <h1><%= @member.name %></h1>
+<div class="col-md-4" style="max-width: 200px; max-height: 150px;">
+          <%= image_tag @member.get_profile_image, class: 'img-fluid rounded-start' %>
+</div>
 <h1><%= @member.grade%></h1>
 <h1><%= @member.calculate_select_pl(@member.learning_programming_languages)%></h1>
 <%= link_to '戻る', members_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>

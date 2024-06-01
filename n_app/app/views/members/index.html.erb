@@ -1,16 +1,14 @@
 <h1>メンバー一覧</h1>
-
-
-<div class="container">
-  <div class="row justify-content-evenly g-4">
-    <% @members.each do |member| %>
-    <div class="col-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Show activities</a>
+<% @members.each do |member| %>
+    <div class="card mb-3" style="max-width: 540px; height: 120px">
+      <div class="row g-0">
+        <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
+          <%= image_tag member.get_profile_image, class: 'img-fluid rounded-start' %>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+          </div>
         </div>
       </div>
     </div>

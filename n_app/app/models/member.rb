@@ -44,4 +44,10 @@ class Member < ApplicationRecord
     s_pl.join(" , ")
   end
 
+  # プロフィール写真
+  has_one_attached :profile_image
+
+  def get_profile_image
+      (profile_image.attatched?) ? profile_image : 'no_image.png'
+  end
 end
