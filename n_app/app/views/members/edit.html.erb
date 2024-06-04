@@ -1,53 +1,150 @@
-<h1>メンバー情報の編集</h1>
-
 <%= form_with model: @member, method: :patch  do |member| %>
-    <table>
-      <tr>
-        <th>名前</th>
-        <td><%= member.text_field :name, placeholder: "名前の入力" %></td>
-      </tr>
-      <tr>
-        <th>email</th>
-        <td><%= member.text_field :email, placeholder: "メールの入力" %></td>
-      </tr>
-      <tr>
-        <th>学籍番号</th>
-        <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
-      </tr>
-      <tr>
-        <th>学科</th>
-        <td>
-          <div class="form-check">
+  <div class="card text-bg-light">
+    <div class="card-header">
+      <h1>メンバー情報の編集</h1>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">名前</label>
+          <div class="col-sm-10">
+            <%= member.text_field :name, placeholder: "名前の入力", class:"form-control" %>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">メール</label>
+          <div class="col-sm-10">
+            <%= member.text_field :email, placeholder: "メールの入力", class:"form-control" %>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">学籍番号</label>
+          <div class="col-sm-10">
+            <%= member.text_field :student_id, placeholder: "半角で入力してください", class:"form-control" %>
+          </div>
+        </div>
+        <fieldset class="row mb-3">
+          <legend class="col-form-label col-sm-2 pt-0">学科</legend>
+          <div class="col-sm-10">
             <%= member.collection_radio_buttons(:department, Member.departments, :first, :first) do |displayDepartments| %>
-              <div class ="form-check">
-                <%= displayDepartments.radio_button(class:"form-check-input") %>
+              <div class="form-check">
+                <%= displayDepartments.radio_button(class:"form-check-input", data: { department: displayDepartments.value }) %>
                 <%= displayDepartments.label(class:"form-check-label") %>
               </div>
             <% end %>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <th>自己紹介</th>
-        <td><%= member.text_area :intro, placeholder: "自己紹介" %></td>
-        <th>学習中プログラミング言語</th>
-        <td>
-        <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
-          <% if (pl_num & member.object.learning_programming_languages) != 0 %>
-          <p>selected</p>
-            <%= member.check_box :selected_languages, { multiple: true }, pl_num, {checked: true} %>
-            <%= member.label :selected_languages, language, value: pl_num %>
+        </fieldset>
+        <fieldset class="row mb-3">
+          <% if @member.grade == '1' %>
+            <legend class="col-form-label col-sm-2 pt-0">コース</legend>
+            <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioCheckedDisabled" checked disabled>
+                  <label class="form-check-label" for="flexRadioCheckedDisabled">
+                    コース選択中
+                  </label>
+                </div>
+            </div>
           <% else %>
-          <p>no</p>
-            <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
-            <%= member.label :selected_languages, language, value: pl_num %>
+            <legend class="col-form-label col-sm-2 pt-0">コース</legend>
+            <div class="col-sm-10">
+              <div id="additional-options" data-selected-course="<%= @member.course %>"></div>
+            </div>
           <% end %>
-        <% end %>
-        </td>
-      </tr>
-    </table>
-
-    <%= member.submit '変更を保存' %>
+        </fieldset>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">自己紹介</label>
+          <div class="col-sm-10">
+            <%= member.text_area :intro, placeholder: "自己紹介", class:"form-control" %>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <legend class="col-sm-2 col-form-label">学習中プログラミング言語</legend>
+          <div class="col-sm-10">
+            <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
+              <% if (pl_num & member.object.learning_programming_languages) != 0 %>
+                <div class="form-check form-check-inline">
+                  <p>selected</p>
+                  <%= member.check_box :selected_languages, { multiple: true }, pl_num, {checked: true} %>
+                  <%= member.label :selected_languages, language, value: pl_num %>
+                </div>
+              <% else %>
+                <div class="form-check form-check-inline">
+                  <p>no</p>
+                  <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
+                  <%= member.label :selected_languages, language, value: pl_num %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <%= member.submit '変更を保存', class:"btn btn-success" %>
+          <%= link_to '戻る', member_path(@member.id), class:"btn btn-danger" %>
+        </div>
+      </form>
+    </div>
+  </div>
 <% end %>
 
-<%= link_to '戻る', member_path(@member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+<!-- Our lord and saviour ChatGPT has blessed us with this piece of code -->
+<!-- If someone who knows how javascript scripts work, feel free to change it! -->
+<script>
+document.addEventListener('turbo:load', () => {
+  attachRadioListeners();
+  checkAndGenerateOptions();
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  attachRadioListeners();
+  checkAndGenerateOptions();
+});
+
+function attachRadioListeners() {
+  document.querySelectorAll('input[type=radio][name="member[department]"]').forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const selectedDepartment = e.target.value;
+      generateAdditionalOptions(selectedDepartment);
+    });
+  });
+}
+
+function checkAndGenerateOptions() {
+  const selectedRadio = document.querySelector('input[type=radio][name="member[department]"]:checked');
+  if (selectedRadio) {
+    generateAdditionalOptions(selectedRadio.value);
+  }
+}
+
+function generateAdditionalOptions(department) {
+  let optionsContainer = document.getElementById('additional-options');
+  const selectedCourse = optionsContainer.dataset.selectedCourse; // Get the selected course
+  optionsContainer.innerHTML = ''; // Clear previous options
+
+  let options = [];
+  
+  if (department === '情報工学科') {
+    options = [
+      { value: 'AI戦略コース', label: 'AI戦略コース' },
+      { value: 'IoTシステムコース', label: 'IoTシステムコース' },
+      { value: 'ロボット開発コース', label: 'ロボット開発コース' },
+    ];
+  } else if (department === 'デジタルエンタテインメント学科') {
+    options = [
+      { value: 'ゲームプロデュースコース', label: 'ゲームプロデュースコース' },
+      { value: 'CGアニメーションコース', label: 'CGアニメーションコース' },
+    ];
+  }
+
+  options.forEach(option => {
+    const isChecked = option.value === selectedCourse ? 'checked' : '';
+    const radioOption = `
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="member[course]" value="${option.value}" ${isChecked}>
+        <label class="form-check-label">${option.label}</label>
+      </div>
+    `;
+    optionsContainer.insertAdjacentHTML('beforeend', radioOption);
+  });
+}
+</script>
