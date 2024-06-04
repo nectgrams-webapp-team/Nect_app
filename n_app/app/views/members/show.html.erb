@@ -4,7 +4,9 @@
 </div>
 <h1><%= @member.grade%></h1>
 <h1><%= @member.department %></h1>
-<h3><%= @member.course %></h3>
+<% if @member.grade != '1' %>
+  <h3><%= @member.course %></h3>
+<% end %>
 <p><%= @member.intro %><p>
 <h1><%= @member.calculate_select_pl(@member.learning_programming_languages)%></h1>
 <%= link_to '戻る', members_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
