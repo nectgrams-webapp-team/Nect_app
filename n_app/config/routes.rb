@@ -6,8 +6,15 @@ Rails.application.routes.draw do
       invitations: 'members/invitations'
     }
 
-  resources :members, only: [:index, :show, :edit, :update]
   resources :activities
+
+  namespace :markdouwn_api, path: 'api', format: :json do
+    namespace :v1 do
+      post '/activities/preview', to: 'activities#preview'
+    end
+  end
+
+  resources :members, only: [:index, :show, :edit, :update]
   resources :teams
   resources :team_members
 
