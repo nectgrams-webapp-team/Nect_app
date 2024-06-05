@@ -1,5 +1,7 @@
 <h1><%= @activity.title %></h1>
-<h3 class="markdown"><%= @activity.body %></h3>
+<div class="markdown">
+	<%== markdown(@activity.body)  %>
+</div>
 <h5>Created: <%= @activity.created_at.strftime('%Y/%m/%d') %></h5>
 <%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
 <% if member_signed_in? %>
