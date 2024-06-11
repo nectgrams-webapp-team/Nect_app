@@ -1,26 +1,6 @@
 class MembersController < ApplicationController
   def index
     @members = Member.all
-    respond_to do |format|
-      format.html
-      format.xlsx do
-        filename = "data_export_#{Time.now.strftime('%Y%m%d%H%M%S')}.xlsx"
-        
-        p = Axlsx::Package.new
-        p.workbook.add_worksheet(name: "Member Data Sheet") do |sheet|
-          
-          headers = Member.column_names
-          sheet.add_row headers
-
-          @members.each do |record|
-            values = record.attributes.values
-            sheet.add_row values
-          end
-        end
-
-        send_data p.to_stream.read, filename: filename, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      end
-    end
   end
 
   def show
