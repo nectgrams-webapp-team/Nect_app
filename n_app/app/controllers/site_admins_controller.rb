@@ -1,5 +1,5 @@
 class SiteAdminsController < ApplicationController
-  before_action :validate_admin
+  before_action :validate_admin, only: [:admin_index, :member_editor, :destroy, :grant_admin_status, :revoke_admin_status]
 
   def validate_admin
     if current_member.admin == false
