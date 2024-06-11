@@ -66,10 +66,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_032718) do
     t.string "name"
     t.string "student_id"
     t.string "grade"
-    t.bigint "learning_programming_languages", default: 0
-    t.integer "department"
-    t.text "intro"
     t.string "course"
+    t.bigint "learning_programming_languages", default: 0
+    t.text "intro"
+    t.integer "department"
     t.boolean "admin", default: false
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
