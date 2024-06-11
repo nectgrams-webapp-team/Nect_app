@@ -11,7 +11,7 @@
             <h5 class="card-title"><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
             <% if member.admin == false %>
               <div class="btn-group">
-                <%= link_to 'Terminate Membership', destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "Are you really sure about that?" }, class:"btn btn-danger btn-sm" %>
+                <%= link_to 'Remove Member', destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "Are you really sure about that?" }, class:"btn btn-danger btn-sm" %>
               </div>
               <div class="btn-group">
                 <%= button_to 'Grant Admin Privileges', grant_admin_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm" %>
