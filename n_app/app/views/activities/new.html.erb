@@ -22,12 +22,19 @@
   </div>
 
   <h3 for="inputPassword5" class="form-label">記事の内容</h3>
-  <%= activity.text_area :body, class: 'form-control' %>
+  <div>
+      <%= activity.text_area :body, class: 'form-control', id: 'article_markdown_content' %>
+  </div>
+  
+
   <div id="passwordHelpBlock" class="form-text">
     Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
   </div>
 	
   <%= activity.submit '投稿' %>
 <% end %>
+
+
+<div id="preview"></div>
 
 <%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>

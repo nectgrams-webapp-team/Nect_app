@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :activities
 
-  namespace :markdouwn_api, path: 'api', format: :json do
+  namespace :api, path: 'api', format: :json do
     namespace :v1 do
       post '/activities/preview', to: 'activities#preview'
     end
