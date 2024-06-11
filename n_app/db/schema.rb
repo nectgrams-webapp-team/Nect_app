@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_032718) do
     t.string "name"
     t.string "student_id"
     t.string "grade"
-    t.string "course"
     t.bigint "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
@@ -82,6 +81,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_032718) do
     t.integer "team_id"
     t.integer "member_id"
     t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "teams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "introduction"
+    t.integer "master_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
