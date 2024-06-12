@@ -35,7 +35,7 @@ class TeamMembersController < ApplicationController
       team_id = params[:id]
       member_id = params[:format]
       team_member = TeamMember.find_by(team_id: team_id, member_id: member_id)
-      team_member.delete
+      team_member.destroy
       redirect_back(fallback_location: root_path)
     end
 
