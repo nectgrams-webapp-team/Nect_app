@@ -16,7 +16,7 @@ class SiteAdminsController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx do
-        filename = "Member_Data_Export_#{Time.now.strftime('%Y%m%d%H%M%S')}.xlsx"
+        filename = "Member_Data_Export_#{Time.now.strftime('%Y%m%d')}.xlsx"
         
         p = Axlsx::Package.new
         p.workbook.add_worksheet(name: "Member Data Sheet") do |sheet|
