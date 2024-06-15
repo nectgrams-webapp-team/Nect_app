@@ -6,7 +6,7 @@ window.addEventListener('turbo:load', function(){
     // タイピングが1秒停止したらプレビューする、タイピングし続ける時はプレビューしない。
     editArea.addEventListener('keyup', delay(function() {
         preview()
-    }, 1000))
+    }, 500))
 
     // CSRFトークンを取得する関数
     function getCsrfToken() {
