@@ -1,16 +1,15 @@
 class Member < ApplicationRecord
-  has_many :activities, dependent: :destroy
-
+  
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
+  :recoverable, :rememberable, :validatable
+  
   # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
   validates :name, presence: true
-
-  has_many :teams, dependent: :destroy
+  
+  has_many :activities, dependent: :destroy
   has_many :team_members, dependent: :destroy
-
+  has_many :teams, :through => :team_members
 
   def calculate_grade(student_id)
     # 学籍番号から入学年の下二桁を取得
@@ -26,6 +25,8 @@ class Member < ApplicationRecord
     grade > 4 ? 'OM' : grade
   end
 
+  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
+  
   PROGRAMMING_LANGUAGES = {
     1 => "Ruby",
     2 => "C",
