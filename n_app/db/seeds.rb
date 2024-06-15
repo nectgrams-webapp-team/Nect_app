@@ -8,11 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Member.create!(
+  name: "テスト管理者",
+  email: "admin@ac.jp",
+  student_id: "TK22000",
+  password: "adminkey",
+  admin: true
+)
+
 5.times do |n|
-  Member.create(
-    name: "テスト太郎#{n+1}", 
-    email: "test#{n+1}@ac.jp", 
-    student_id: "TK2200#{n+1}", 
-    password: "abcde#{n+1}"
+Member.create(
+  name: "テスト太郎#{n+1}", 
+  email: "test#{n+1}@ac.jp", 
+  student_id: "TK2200#{n+1}", 
+  password: "abcde#{n+1}"
 )
 end

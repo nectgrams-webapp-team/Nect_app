@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'site_admins/member_editor', to: "site_admins#member_editor", as: "member_editor"
+  get 'site_admins/admin_index', to: "site_admins#admin_index", as: "admin_index"
+  post "site_admins/increment_grade", to: "site_admins#increment_grade", as: "increment_grade"
+  post "site_admins/decrement_grade", to: "site_admins#decrement_grade", as: "decrement_grade"
+  patch 'grant_admin_status/:id', to: 'site_admins#grant_admin_status', as: 'grant_admin_status'
+  patch 'revoke_admin_status/:id', to: 'site_admins#revoke_admin_status', as: 'revoke_admin_status'
+  delete 'site_admins/:id', to: "site_admins#destroy", as: "destroy"
   root to: "homes#top"
   get "homes/about", to: "homes#about", as: "about"
 
@@ -6,7 +13,7 @@ Rails.application.routes.draw do
       invitations: 'members/invitations'
     }
 
-  resources :members, only: [:index, :show, :edit, :update]
+  resources :members, only: [:index, :show, :edit, :update, :destroy]
   resources :activities
   resources :teams
   resources :team_members
