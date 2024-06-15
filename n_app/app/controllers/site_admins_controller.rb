@@ -1,10 +1,22 @@
 class SiteAdminsController < ApplicationController
-  before_action :validate_admin, only: [:admin_index, :member_editor, :destroy, :grant_admin_status, :revoke_admin_status, :increment_grade, :decrement_grade]
+  before_action :validate_access_permission
+  before_action :check_for_mod, only: [:admin_index, :member_editor, :increment_grade, :decrement_grade]
+  before_action :check_for_admin, only: [:admin_index, :member_editor, :destroy, :grant_mod_status, :revoke_mod_status, :increment_grade, :decrement_grade]
 
-  def validate_admin
-    if current_member.admin == false
-      flash[:error] = "You must be an admin to access this section"
+  def validate_access_permission
+    if current_member.member_role == "user"
+      flash[:error] = "You must be an admin or a mod to have access"
       redirect_to root_path
+    end
+  end
+
+  def check_for_mod
+    if current_member.member_role == "mod"
+    end
+  end
+
+  def check_for_admin
+    if current_member.member_role == "admin"
     end
   end
 
@@ -55,18 +67,18 @@ class SiteAdminsController < ApplicationController
     redirect_to member_editor_path
   end
 
-  def grant_admin_status
+  def grant_mod_status
     @member = Member.find(params[:id])
-    if @member.update(admin: true)
+    if @member.update(member_role: 1)
       redirect_to request.referrer
     else
       render :member_editor 
     end
   end
 
-  def revoke_admin_status
+  def revoke_mod_status
     @member = Member.find(params[:id])
-    if @member.update(admin: false)
+    if @member.update(member_role: 0)
       redirect_to request.referrer
     else
       render :member_editor

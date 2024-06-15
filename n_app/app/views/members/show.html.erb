@@ -14,7 +14,7 @@
 <% if member_signed_in? && current_member.id == @member.id %>
   <div class="d-flex justify-content-start">
     <%= link_to 'Profile Edit', edit_member_path, class: 'btn btn-outline-info me-2' %>
-    <% if current_member.admin? %>
+    <% if current_member.member_role != "user" %>
       <%= link_to 'Admin', admin_index_path, class: 'btn btn-outline-warning' %>
     <% end %>
     <%= link_to 'Member Invite', new_member_invitation_path, class: 'btn btn-outline-secondary' %>

@@ -13,7 +13,7 @@ Member.create!(
   email: "admin@ac.jp",
   student_id: "TK22000",
   password: "adminkey",
-  admin: true
+  member_role: 2
 )
 
 5.times do |n|

@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   get 'site_admins/admin_index', to: "site_admins#admin_index", as: "admin_index"
   post "site_admins/increment_grade", to: "site_admins#increment_grade", as: "increment_grade"
   post "site_admins/decrement_grade", to: "site_admins#decrement_grade", as: "decrement_grade"
-  patch 'grant_admin_status/:id', to: 'site_admins#grant_admin_status', as: 'grant_admin_status'
-  patch 'revoke_admin_status/:id', to: 'site_admins#revoke_admin_status', as: 'revoke_admin_status'
+  patch 'grant_mod_status/:id', to: 'site_admins#grant_mod_status', as: 'grant_mod_status'
+  patch 'revoke_mod_status/:id', to: 'site_admins#revoke_mod_status', as: 'revoke_mod_status'
   delete 'site_admins/:id', to: "site_admins#destroy", as: "destroy"
   root to: "homes#top"
   get "homes/about", to: "homes#about", as: "about"
