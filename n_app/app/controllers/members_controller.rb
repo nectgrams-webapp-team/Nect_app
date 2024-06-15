@@ -28,18 +28,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def increment_grade
-    @members = Member.all
-    @members.where.not(grade: 5).update_all('grade = grade + 1')
-    redirect_to members_path, notice: "Grades incremented successfully!"
-  end
-
-  def decrement_grade
-    @members = Member.all
-    @members.where.not(grade: 1).update_all('grade = grade - 1')
-    redirect_to members_path, notice: "Grades decremented successfully!"
-  end
-
   private
   def members_params
     params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, selected_languages: [])

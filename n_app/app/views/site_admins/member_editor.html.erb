@@ -25,4 +25,10 @@
     </div>
 <% end %>
 <br />
+<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+  <%= button_to "INCREMENT ALL GRADES", { :controller => "site_admins", :action => "increment_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
+  <%= button_to "DECREMENT ALL GRADES", { :controller => "site_admins", :action => "decrement_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
+</div>
+<br />
+<br />
 <%= link_to "Export as Microsoft Excel Spreadsheet", member_editor_path(format: 'xlsx'), class:"btn btn-success" %>

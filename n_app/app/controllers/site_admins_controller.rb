@@ -1,5 +1,5 @@
 class SiteAdminsController < ApplicationController
-  before_action :validate_admin, only: [:admin_index, :member_editor, :destroy, :grant_admin_status, :revoke_admin_status]
+  before_action :validate_admin, only: [:admin_index, :member_editor, :destroy, :grant_admin_status, :revoke_admin_status, :increment_grade, :decrement_grade]
 
   def validate_admin
     if current_member.admin == false
@@ -33,6 +33,18 @@ class SiteAdminsController < ApplicationController
         send_data p.to_stream.read, filename: filename, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       end
     end
+  end
+
+  def increment_grade
+    @members = Member.all
+    @members.where.not(grade: 5).update_all('grade = grade + 1')
+    redirect_to member_editor_path, notice: "Grades incremented successfully!"
+  end
+
+  def decrement_grade
+    @members = Member.all
+    @members.where.not(grade: 1).update_all('grade = grade - 1')
+    redirect_to member_editor_path, notice: "Grades decremented successfully!"
   end
 
   def destroy
