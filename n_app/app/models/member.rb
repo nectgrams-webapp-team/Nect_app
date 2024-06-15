@@ -25,6 +25,8 @@ class Member < ApplicationRecord
     grade > 4 ? 'OM' : grade
   end
 
+  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
+  
   PROGRAMMING_LANGUAGES = {
     1 => "Ruby",
     2 => "C",

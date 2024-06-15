@@ -11,7 +11,13 @@ Rails.application.routes.draw do
       invitations: 'members/invitations'
     }
 
+<<<<<<< HEAD
   resources :members, only: [:index, :show, :edit, :update, :destroy]
+=======
+  resources :members, only: [:index, :show, :edit, :update]
+  post "members/increment_grade", to: "members#increment_grade"
+  post "members/decrement_grade", to: "members#decrement_grade"
+>>>>>>> feature-member_uni_year_selection-ankhbold
   resources :activities
   resources :teams
   resources :team_members
