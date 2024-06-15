@@ -1,7 +1,18 @@
 <h1>投稿内容の編集</h1>
+
+<% if @activity.errors.any? %>
+  <div class="alert alert-danger">
+    <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
+    <ul>
+      <% @activity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="editor-container">
   <div class="editor">
-    <!-- form_with部分 -->
     <%= form_with model: @activity, method: :patch  do |activity| %>
     
       <div class="mb-3">

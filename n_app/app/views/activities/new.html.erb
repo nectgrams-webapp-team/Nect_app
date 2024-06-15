@@ -1,9 +1,20 @@
 <h1>新しい活動記事を投稿</h1>
+
+<% if @activity.errors.any? %>
+  <div class="alert alert-danger">
+    <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
+    <ul>
+      <% @activity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <div class="editor-container">
   <div class="editor">
-    <!-- form_with部分 -->
-    <%= form_with model: @activity, url: activities_path, method: :post  do |activity| %>
     
+    <%= form_with model: @activity, url: activities_path, method: :post  do |activity| %>
       <div class="mb-3">
         <label for="formFile" class="form-label">トップ画像の選択</label>
         <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile'  %>
