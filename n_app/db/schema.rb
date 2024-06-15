@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_032718) do
     t.text "intro"
     t.integer "department"
     t.boolean "admin", default: false
+    t.integer "graduation_year"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_members_on_invited_by_id"
