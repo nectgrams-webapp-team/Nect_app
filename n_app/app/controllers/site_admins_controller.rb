@@ -16,17 +16,15 @@ class SiteAdminsController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx do
-        filename = "Member_Data_Export_#{Time.now.strftime('%Y%m%d%H%M%S')}.xlsx"
+        filename = "Member_Data_Export_#{Time.now.strftime('%Y%m%d')}.xlsx"
         
         p = Axlsx::Package.new
         p.workbook.add_worksheet(name: "Member Data Sheet") do |sheet|
           
-          headers = Member.column_names
-          sheet.add_row headers
+          sheet.add_row ["Name", "Department", "Grade", "Student ID"]
 
           @members.each do |record|
-            values = record.attributes.values
-            sheet.add_row values
+            sheet.add_row [record.name, record.department, record.grade, record.student_id]
           end
         end
 

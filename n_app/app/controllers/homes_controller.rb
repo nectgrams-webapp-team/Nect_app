@@ -3,5 +3,6 @@ class HomesController < ApplicationController
   end
 
   def about
+    @activities = Activity.all
   end
 end
