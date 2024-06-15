@@ -38,8 +38,10 @@ class SiteAdminsController < ApplicationController
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
-    @team = Team.find_by(master_id: @member.id)
-    @team.destroy
+    @team = Team.where(master_id: @member.id)
+    @team.each do |team|
+      team.destroy
+    end
     redirect_to member_editor_path
   end
 

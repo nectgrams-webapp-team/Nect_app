@@ -9,7 +9,7 @@ class Member < ApplicationRecord
   
   has_many :activities, dependent: :destroy
   has_many :team_members, dependent: :destroy
-  has_many :teams, :through => :team_members
+  has_many :teams, :through => :team_members, dependent: :destroy
 
   def calculate_grade(student_id)
     # 学籍番号から入学年の下二桁を取得
