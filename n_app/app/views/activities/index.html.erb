@@ -4,7 +4,7 @@
   <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary' %>
 <% end %>
 
-<% @activities.each do |activity| %>
+<% @activities.reverse_each do |activity| %>
     <div class="card mb-3" style="max-width: 540px; height: 120px">
       <div class="row g-0">
         <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
