@@ -1,20 +1,22 @@
-<h1>チームの編集</h1>
-<!-- form_with部分 -->
-<%= form_with model: @team, method: :patch do |team| %>
+<div class = "container">
+  <h1>チームの編集</h1>
+  <!-- form_with部分 -->
+  <%= form_with model: @team, method: :patch do |team| %>
 
-  <div class="row g-3 align-items-center">
-    <div class="col-auto">
-      <h3 for="inputPassword6" class="col-form-label">チーム名</h3>
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <h3 for="inputPassword6" class="col-form-label">チーム名</h3>
+      </div>
+      <div class="col-auto">
+        <%= team.text_field :name,class: 'form-control'%>
+      </div>
     </div>
-    <div class="col-auto">
-      <%= team.text_field :name,class: 'form-control'%>
-    </div>
-  </div>
 
-  <h3 for="inputPassword5" class="form-label">チームの説明</h3>
-  <%= team.text_area :introduction, class: 'form-control' %>
-	
-  <%= team.submit '変更を保存' %>
-<% end %>
+    <h3 for="inputPassword5" class="form-label">チームの説明</h3>
+    <%= team.text_area :introduction, class: 'form-control' %>
+  
+    <%= team.submit '変更を保存' %>
+  <% end %>
 
-<%= link_to '戻る', teams_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+  <%= link_to '戻る', teams_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+</div>

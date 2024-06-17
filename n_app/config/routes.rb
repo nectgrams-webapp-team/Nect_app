@@ -15,6 +15,14 @@ Rails.application.routes.draw do
 
   resources :members, only: [:index, :show, :edit, :update, :destroy]
   resources :activities
+
+  namespace :api, path: 'api', format: :json do
+    namespace :v1 do
+      post '/activities/preview', to: 'activities#preview'
+    end
+  end
+
+  resources :members, only: [:index, :show, :edit, :update]
   resources :teams
   resources :team_members
 
