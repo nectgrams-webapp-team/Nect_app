@@ -5,7 +5,7 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @member.grade = @member.calculate_grade(@member.student_id)
+    @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
   end
 
   def edit
@@ -30,6 +30,6 @@ class MembersController < ApplicationController
 
   private
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :intro, :profile_image, :department, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, selected_languages: [])
   end
 end

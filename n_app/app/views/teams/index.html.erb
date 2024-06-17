@@ -1,16 +1,18 @@
-<h1>チーム一覧</h1>
+<div class = "container">
+  <h1>チーム一覧</h1>
 
-<% @teams.each do |team| %>
-    <div class="card mb-3" style="max-width: 540px; height: 120px">
-      <div class="row g-0">
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%= link_to team.name, team_path(team.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-            <p class="card-text"><small class="text-body-secondary"><%= team.introduction %></small></p>
-            <p class="card-text"><small class="text-body-secondary"><%= Member.find(team.master_id).name %></small></p>
+  <% @teams.each do |team| %>
+      <div class="card mb-3" style="max-width: 540px; height: 120px">
+        <div class="row g-0">
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to team.name, team_path(team.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+              <p class="card-text"><small class="text-body-secondary"><%= team.introduction %></small></p>
+              <p class="card-text"><small class="text-body-secondary"><%= Member.find(team.master_id).name %></small></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-<% end %>
-<%= link_to '新しいチームを作成', new_team_path, class: 'btn btn-outline-primary' %>
+  <% end %>
+  <%= link_to '新しいチームを作成', new_team_path, class: 'btn btn-outline-primary' %>
+</div>

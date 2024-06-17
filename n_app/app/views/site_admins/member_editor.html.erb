@@ -1,0 +1,36 @@
+<div class = "container">
+  <h1>メンバー一覧</h1>
+  <br />
+  <% @members.each do |member| %>
+      <div class="card mb-3" style="max-width: 540px">
+        <div class="row g-0">
+          <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
+            <%= image_tag member.get_profile_image, class: 'img-fluid rounded-start' %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+              <% if member.admin == false %>
+                <div class="btn-group">
+                  <%= link_to 'Remove Member', destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "Are you really sure about that?" }, class:"btn btn-danger btn-sm" %>
+                </div>
+                <div class="btn-group">
+                  <%= button_to 'Grant Admin Privileges', grant_admin_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm" %>
+                </div>
+              <% elsif member != current_member %>
+                <%= button_to 'Revoke Admin Privileges', revoke_admin_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+  <br />
+  <div class="d-inline-flex gap-1">
+    <%= button_to "INCREMENT ALL GRADES", { :controller => "site_admins", :action => "increment_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
+    <%= button_to "DECREMENT ALL GRADES", { :controller => "site_admins", :action => "decrement_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
+  </div>
+  <br />
+  <br />
+  <%= link_to "Export as Microsoft Excel Spreadsheet", member_editor_path(format: 'xlsx'), class:"btn btn-success" %>
+</div>

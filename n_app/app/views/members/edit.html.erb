@@ -1,6 +1,7 @@
-<h1>メンバー情報の編集</h1>
+<div class = "container">
+  <h1>メンバー情報の編集</h1>
 
-<%= form_with model: @member, method: :patch  do |member| %>
+  <%= form_with model: @member, method: :patch  do |member| %>
     <table>
       <tr>
         <th>名前</th>
@@ -13,6 +14,19 @@
       <tr>
         <th>学籍番号</th>
         <td><%= member.text_field :student_id, placeholder: "半角で入力してください" %></td>
+      </tr>
+      <tr>
+        <th>学年</th>
+        <td>
+          <div class="form-check form-check-inline">
+            <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |b| %>
+              <div class="form-check form-check-inline">
+                <%= b.radio_button(class: "form-check-input") %>
+                <%= b.label(class: "form-check-label") %>
+              </div>
+            <% end %>
+          </div>
+        </td>
       </tr>
       <tr>
         <th>学科</th>
@@ -48,6 +62,7 @@
     </table>
 
     <%= member.submit '変更を保存' %>
-<% end %>
+  <% end %>
 
-<%= link_to '戻る', member_path(@member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+  <%= link_to '戻る', member_path(@member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+</div>

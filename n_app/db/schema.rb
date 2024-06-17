@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_01_062111) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_09_032718) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,6 +69,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_062111) do
     t.bigint "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
+    t.boolean "admin", default: false
+    t.integer "graduation_year"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_members_on_invited_by_id"
