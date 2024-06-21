@@ -1,40 +1,79 @@
-<h1>メンバー一覧</h1>
-<br />
-<% @members.each do |member| %>
-    <div class="card mb-3" style="max-width: 540px">
-      <div class="row g-0">
-        <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
-          <%= image_tag member.get_profile_image, class: 'img-fluid rounded-start' %>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-            <% if current_member.member_role == "admin" %>
-              <% if member.member_role != "admin" %>
-                <div class="btn-group">
-                  <%= link_to 'Remove Member', destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "Are you really sure about that?" }, class:"btn btn-danger btn-sm" %>
-                </div>
-              <% end %>
-              <% if member.member_role == "user" %>
-                <div class="btn-group">
-                  <%= button_to 'Grant Mod Privileges', grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm" %>
-                </div>
-              <% elsif member.member_role == "mod" %>
-                <div class="btn-group">
-                  <%= button_to 'Revoke Mod Privileges', revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm" %>
-                </div>
-              <% end %>
+<div class="table-responsive">
+  <table class="table table-bordered table-light table-hover table-sm table align-middle caption-top">
+    <caption><i class="bi bi-person-lines-fill"></i> List of Users</caption>
+    <thead class="table-secondary">
+      <tr>
+        <th scope="col">Student ID</th>
+        <th scope="col">Member Name</th>
+        <th scope="col">Year</th>
+        <th scope="col">Department</th>
+        <% if current_member.member_role == "admin" %>
+          <th scope="col">Mod Access</th>
+          <th scope="col">Membership</th>
+        <% end %>
+      </tr>
+    </thead>
+    <% @members.each do |member| %>
+      <tbody>
+        <tr>
+          <th scope="row"><%= member.student_id %></th>
+          <td><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></td>
+          <td><%= member.grade %></td>
+          <td><%= member.department %></td>
+          <% if current_member.member_role == "admin" %>
+            <% if member.member_role == "user" %>
+              <td><%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm w-100" %></td>
+            <% elsif member.member_role == "mod" %>
+              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
+            <% elsif member.member_role == "admin" %>
+              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Not Subject to Change</button></td>
             <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-<% end %>
-<br />
-<div class="d-inline-flex gap-1">
-  <%= button_to "INCREMENT ALL GRADES", { :controller => "site_admins", :action => "increment_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
-  <%= button_to "DECREMENT ALL GRADES", { :controller => "site_admins", :action => "decrement_grade"}, data: { turbo_method: :delete, turbo_confirm: "Are you sure about that?" }, class: 'btn btn-danger' %>
+            
+            <% if member.member_role != "admin" %>
+              <td>
+                <%= link_to destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm w-100" do %>
+                  <i class="bi bi-person-x"></i>
+                  Remove Membership
+                <% end %>
+              </td>
+            <% else %>
+              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Not Subject to Removal</button></td>
+            <% end %>
+          <% end %>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+<div class="card">
+  <div class="card-header">
+    Administrative Functions
+  </div>
+  <ul class="list-group list-group-horizontal d-flex flex-wrap">
+    <li class="flex-fill custom-list-item">
+      <%= button_to "<i class=\"bi bi-arrow-up-square\"></i> INCREMENT ALL GRADES BY 1 YEAR".html_safe, { :controller => "site_admins", :action => "increment_grade"}, data: { turbo_method: :delete, turbo_confirm: "<<<INCREMENT ALL GRADES BY 1 YEAR>>>\nPROCEED?" }, class: "list-group-item list-group-item-action list-group-item-primary w-100 text-center" %>
+    </li>
+    <li class="flex-fill custom-list-item">
+      <%= button_to "<i class=\"bi bi-arrow-down-square\"></i> DECREMENT ALL GRADES BY 1 YEAR".html_safe, { :controller => "site_admins", :action => "decrement_grade"}, data: { turbo_method: :delete, turbo_confirm: "<<<DECREMENT ALL GRADES BY 1 YEAR>>>\nPROCEED?" }, class: "list-group-item list-group-item-action list-group-item-warning w-100 text-center" %>
+    </li>
+    <li class="flex-fill custom-list-item">
+      <%= link_to member_editor_path(format: 'xlsx'), class: "list-group-item list-group-item-action list-group-item-success w-100 text-center" do %>
+        <i class="bi bi-file-earmark-excel"></i>
+        EXPORT AS MICROSOFT EXCEL SPREADSHEET
+      <% end %>
+    </li>
+  </ul>
 </div>
 <br />
-<br />
-<%= link_to "Export as Microsoft Excel Spreadsheet", member_editor_path(format: 'xlsx'), class:"btn btn-success" %>
+<%= link_to admin_index_path, class:"link-offset-2 link-underline link-underline-opacity-0" do %>
+  <i class="bi bi-arrow-left-square"></i>
+  Back To Admin Index
+<% end %>
+
+<style>
+  .custom-list-item {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

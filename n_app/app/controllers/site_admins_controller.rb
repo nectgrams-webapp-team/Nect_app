@@ -1,7 +1,6 @@
 class SiteAdminsController < ApplicationController
   before_action :validate_access_permission
-  before_action :check_for_mod, only: [:admin_index, :member_editor, :increment_grade, :decrement_grade]
-  before_action :check_for_admin, only: [:admin_index, :member_editor, :destroy, :grant_mod_status, :revoke_mod_status, :increment_grade, :decrement_grade]
+  before_action :check_for_admin, only: [:destroy, :grant_mod_status, :revoke_mod_status]
 
   def validate_access_permission
     if current_member.member_role == "user"
@@ -10,13 +9,10 @@ class SiteAdminsController < ApplicationController
     end
   end
 
-  def check_for_mod
-    if current_member.member_role == "mod"
-    end
-  end
-
   def check_for_admin
-    if current_member.member_role == "admin"
+    unless current_member.member_role == "admin"
+      flash[:error] = "You must be an admin to access this section"
+      redirect_to root_path
     end
   end
 
@@ -28,15 +24,15 @@ class SiteAdminsController < ApplicationController
     respond_to do |format|
       format.html
       format.xlsx do
-        filename = "Member_Data_Export_#{Time.now.strftime('%Y%m%d')}.xlsx"
+        filename = "member_data_export_#{Time.now.strftime('%Y%m%d')}.xlsx"
         
         p = Axlsx::Package.new
         p.workbook.add_worksheet(name: "Member Data Sheet") do |sheet|
           
-          sheet.add_row ["Name", "Department", "Grade", "Student ID"]
+          sheet.add_row ["Student ID", "Name", "Grade", "Department"]
 
           @members.each do |record|
-            sheet.add_row [record.name, record.department, record.grade, record.student_id]
+            sheet.add_row [record.student_id, record.name, record.grade, record.department]
           end
         end
 
