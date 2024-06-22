@@ -45,6 +45,107 @@
     <% end %>
   </table>
 </div>
+<br />
+<table class="table caption-top">
+  <caption><i class="bi bi-clipboard-data-fill"></i> Statistics on Member Grades</caption>
+  <thead>
+    <tr>
+      <th scope="col">Year</th>
+      <th scope="col">Member Count</th>
+      <th scope="col">Percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @grades.each do |grade| %>
+      <tr>
+        <th scope="row"><%= grade %></th>
+        <td><%= @count[grade].to_i %></td>
+        <% if @memberCount == 0 %>
+          <td>0%</td>
+        <% else %>
+          <td><%= (@count[grade].to_i * 100 / @memberCount.to_i).to_s + "%" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row">Total</th>
+      <td><%= @memberCount %></td>
+      <td>100%</td>
+    </tr>
+  </tfoot>
+</table>
+<br />
+<table class="table caption-top">
+  <caption><i class="bi bi-clipboard-data-fill"></i> Statistics on Member Departments</caption>
+  <thead>
+    <tr>
+      <th scope="col">Year</th>
+      <th scope="col">Department</th>
+      <th scope="col">Share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @grades.each do |grade| %>
+      <tr>
+        <th scope="row"><%= grade %></th>
+        <td>
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="flex: 1;">情報工学科</li>
+            <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "情報工学科"]].to_i %></li>
+          </ul>
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="flex: 1;">デジタルエンタテインメント学科</li>
+            <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i %></li>
+          </ul>
+        </td>
+        <td>
+          <ul class="list-group">
+            <% if @count[grade].to_i == 0 %>
+              <li class="list-group-item">0%</li>
+              <li class="list-group-item">0%</li>
+            <% else %>
+              <li class="list-group-item"><%= (@departmentCount[[grade, "情報工学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
+              <li class="list-group-item"><%= (@departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <th scope="row">Combined</th>
+      <td>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item" style="flex: 1;">情報工学科</li>
+          <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["情報工学科"].to_i %></li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item" style="flex: 1;">デジタルエンタテインメント学科</li>
+          <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["デジタルエンタテインメント学科"].to_i %></li>
+        </ul>
+      </td>
+      <td>
+        <ul class="list-group">
+          <% if @memberCount.to_i == 0 %>
+            <li class="list-group-item">0%</li>
+            <li class="list-group-item">0%</li>
+          <% else %>
+            <li class="list-group-item"><%= (@totalDepartmentCount["情報工学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
+            <li class="list-group-item"><%= (@totalDepartmentCount["デジタルエンタテインメント学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row">Total</th>
+      <td><%= @memberCount %></td>
+      <td>100%</td>
+    </tr>
+  </tfoot>
+</table>
 <div class="card">
   <div class="card-header">
     Administrative Functions

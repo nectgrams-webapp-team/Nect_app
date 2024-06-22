@@ -21,6 +21,17 @@ class SiteAdminsController < ApplicationController
   
   def member_editor
     @members = Member.all
+
+    # I am paying for my incompetence here... sad!
+    @grades = ['1年生', '2年生', '3年生', '4年生', 'OM']
+    @memberCount = @members.count
+    @count = @members.group(:grade).count
+
+    @totalDepartmentCount = @members.group(:department).count
+
+    @grouped_members = @members.group_by{|member| [member.grade, member.department]}
+    @departmentCount = @grouped_members.transform_values(&:count)
+
     respond_to do |format|
       format.html
       format.xlsx do
