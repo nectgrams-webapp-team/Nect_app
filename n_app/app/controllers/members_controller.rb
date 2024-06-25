@@ -6,6 +6,7 @@ class MembersController < ApplicationController
   def show
     @member = Member.find(params[:id])
     @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
+    @activities = Activity.where(member_id: @member.id)
   end
 
   def edit
