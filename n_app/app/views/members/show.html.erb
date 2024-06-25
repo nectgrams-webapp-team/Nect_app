@@ -8,7 +8,9 @@
   <h1><%= @member.department %></h1>
   <p><%= @member.intro %><p>
   <h1><%= @member.calculate_select_pl(@member.learning_programming_languages)%></h1>
-  <h2>記事一覧</h2>
+  <% if @count > 0 %>
+    <h2>記事一覧</h2>
+  <% end %>
   <% @activities.reverse_each do |activity| %>
     <div class="card mb-3" style="max-width: 540px; height: 120px">
       <div class="row g-0">
