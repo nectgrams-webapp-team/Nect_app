@@ -1,11 +1,23 @@
 Rails.application.routes.draw do
-  get 'site_admins/member_editor', to: "site_admins#member_editor", as: "member_editor"
   get 'site_admins/admin_index', to: "site_admins#admin_index", as: "admin_index"
+
+  get 'site_admins/member_editor', to: "site_admins#member_editor", as: "member_editor"
   post "site_admins/increment_grade", to: "site_admins#increment_grade", as: "increment_grade"
   post "site_admins/decrement_grade", to: "site_admins#decrement_grade", as: "decrement_grade"
   patch 'grant_mod_status/:id', to: 'site_admins#grant_mod_status', as: 'grant_mod_status'
   patch 'revoke_mod_status/:id', to: 'site_admins#revoke_mod_status', as: 'revoke_mod_status'
   delete 'site_admins/:id', to: "site_admins#destroy", as: "destroy"
+
+  get 'site_admins/carousel_editor', to: "site_admins#carousel_editor", as: "carousel_editor"
+  post 'site_admins/create_image', to: 'site_admins#create_image', as: "create_image"
+  patch 'site_admins/update_image/:id', to: 'site_admins#update_image', as: "update_image"
+  delete 'site_admins/delete_image/:id', to: 'site_admins#delete_image', as: "delete_image"
+
+  get 'site_admins/event_history_editor', to: 'site_admins#event_history_editor', as: 'event_history_editor'
+  post 'site_admins/create_event_history', to: 'site_admins#create_event_history', as: 'create_event_history'
+  patch 'site_admins/update_event_history/:id', to: 'site_admins#update_event_history', as: 'update_event_history'
+  delete 'site_admins/delete_event_history/:id', to: 'site_admins#delete_event_history', as: 'delete_event_history'
+
   root to: "homes#top"
   get "homes/about", to: "homes#about", as: "about"
 

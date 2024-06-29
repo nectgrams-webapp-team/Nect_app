@@ -3,7 +3,7 @@ class SiteAdminsController < ApplicationController
   before_action :check_for_admin, only: [:destroy, :grant_mod_status, :revoke_mod_status]
 
   def validate_access_permission
-    if current_member.member_role == "user"
+    unless current_member.member_role == "admin" || current_member.member_role == "mod"
       flash[:error] = "You must be an admin or a mod to have access"
       redirect_to root_path
     end
@@ -19,6 +19,7 @@ class SiteAdminsController < ApplicationController
   def admin_index
   end
   
+  # Below here are the functions pertaining to the modifications of members by the mods or the admin
   def member_editor
     @members = Member.all
 
@@ -90,5 +91,75 @@ class SiteAdminsController < ApplicationController
     else
       render :member_editor
     end
+  end
+
+  # Below here are the functions pertaining to modifying the images of the carousel in the top page
+  def carousel_editor
+    @images = Home.all
+    @new_image = Home.new
+  end
+
+  def create_image
+    @image = Home.new(image_params)
+    if @image.save
+      redirect_to request.referrer, notice: "Image successfully uploaded!"
+    else
+      render :new_image
+    end
+  end
+  
+  def update_image
+    @image = Home.find(params[:id])
+    if @image.update(image_params)
+      redirect_to request.referrer, notice: 'Image was successfully updated.'
+    else
+      render :edit_image
+    end
+  end
+
+  def delete_image
+    @image = Home.find(params[:id])
+    @image.destroy
+    redirect_to request.referrer, notice: "Image was successfully deleted"
+  end
+
+  # Below here are the functions pertaining to events in the about page
+  def event_history_editor
+    @event_history = EventHistory.all
+    @new_event_history = EventHistory.new
+  end
+
+  def create_event_history
+    @event_history = EventHistory.new(event_history_params)
+    if @event_history.save
+      redirect_to request.referrer, notice: "New Event Added!"
+    else
+      render :event_history_editor
+    end
+  end
+
+  def update_event_history
+    @event_history = EventHistory.find(params[:id])
+    if @event_history.update(event_history_params)
+      redirect_to request.referrer, notice: "Event Successfully Updated!"
+    else
+      render :event_history_editor
+    end
+  end
+
+  def delete_event_history
+    @event_history = EventHistory.find(params[:id])
+    @event_history.destroy
+    redirect_to request.referrer, notice: "Event Successfully Deleted!"
+  end
+
+  private
+
+  def event_history_params
+    params.require(:event_history).permit(:event_title, :event_text, :date_of_event)
+  end
+
+  def image_params
+    params.require(:home).permit(:title, :caption, :file)
   end
 end
