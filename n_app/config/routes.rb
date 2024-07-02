@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post "site_admins/decrement_grade", to: "site_admins#decrement_grade", as: "decrement_grade"
   patch 'grant_mod_status/:id', to: 'site_admins#grant_mod_status', as: 'grant_mod_status'
   patch 'revoke_mod_status/:id', to: 'site_admins#revoke_mod_status', as: 'revoke_mod_status'
+  patch 'grant_admin_status/:id', to: 'site_admins#grant_admin_status', as: 'grant_admin_status'
+  patch 'revoke_admin_status/:id', to: 'site_admins#revoke_admin_status', as: 'revoke_admin_status'
   delete 'site_admins/:id', to: "site_admins#destroy", as: "destroy"
 
   get 'site_admins/carousel_editor', to: "site_admins#carousel_editor", as: "carousel_editor"

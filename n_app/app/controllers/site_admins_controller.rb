@@ -68,6 +68,7 @@ class SiteAdminsController < ApplicationController
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
+
     @team = Team.where(master_id: @member.id)
     @team.each do |team|
       team.destroy
@@ -77,16 +78,46 @@ class SiteAdminsController < ApplicationController
 
   def grant_mod_status
     @member = Member.find(params[:id])
-    if @member.update(member_role: 1)
-      redirect_to request.referrer
+    
+    if Member.mod.count < 4
+      if @member.update(member_role: :mod)
+        redirect_back(fallback_location: members_path, notice: "#{@member.name} has been granted mod status.")
+      else
+        flash[:alert] = "Unable to grant mod status to #{@member.name}. Please try again."
+        render :member_editor
+      end
     else
-      render :member_editor 
+      redirect_to member_editor_path, notice: "Mod limit reached! Only 4 mods are allowed."
     end
   end
 
   def revoke_mod_status
     @member = Member.find(params[:id])
-    if @member.update(member_role: 0)
+    if @member.update(member_role: :user)
+      redirect_to request.referrer
+    else
+      render :member_editor
+    end
+  end
+
+  def grant_admin_status
+    @member = Member.find(params[:id])
+
+    if Member.admin.count < 3
+      if @member.update(member_role: :admin)
+        redirect_back(fallback_location: members_path, notice: "#{@member.name} has been granted admin status.")
+      else
+        flash[:alert] = "Unable to grant admin status to #{@member.name}. Please try again."
+        render :member_editor
+      end
+    else
+      redirect_to member_editor_path, notice: "Admin limit reached! Only 3 admins are allowed."
+    end
+  end
+
+  def revoke_admin_status
+    @member = Member.find(params[:id])
+    if @member.update(member_role: :user)
       redirect_to request.referrer
     else
       render :member_editor
@@ -104,16 +135,16 @@ class SiteAdminsController < ApplicationController
     if @image.save
       redirect_to request.referrer, notice: "Image successfully uploaded!"
     else
-      render :new_image
+      redirect_to request.referrer, notice: "Image carousel has missing parameters!"
     end
   end
-  
+
   def update_image
     @image = Home.find(params[:id])
     if @image.update(image_params)
-      redirect_to request.referrer, notice: 'Image was successfully updated.'
+      redirect_to request.referrer, notice: "Image was successfully updated."
     else
-      render :edit_image
+      redirect_to request.referrer, notice: "Image carousel has failed to update!"
     end
   end
 
@@ -134,16 +165,16 @@ class SiteAdminsController < ApplicationController
     if @event_history.save
       redirect_to request.referrer, notice: "New Event Added!"
     else
-      render :event_history_editor
+      redirect_to request.referrer, notice: "Event history has missing parameters!"
     end
   end
-
+  
   def update_event_history
     @event_history = EventHistory.find(params[:id])
     if @event_history.update(event_history_params)
       redirect_to request.referrer, notice: "Event Successfully Updated!"
     else
-      render :event_history_editor
+      redirect_to request.referrer, notice: "Event history has failed to update!"
     end
   end
 

@@ -48,8 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_052751) do
   end
 
   create_table "event_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "event_title"
-    t.string "event_text"
+    t.string "event_title", null: false
+    t.string "event_text", null: false
     t.date "date_of_event"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

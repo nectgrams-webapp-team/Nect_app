@@ -8,8 +8,8 @@
         <th scope="col">Year</th>
         <th scope="col">Department</th>
         <% if current_member.member_role == "admin" %>
-          <th scope="col">Mod Access</th>
-          <th scope="col">Membership</th>
+          <th scope="col">Access Level</th>
+          <th scope="col">Member Status</th>
         <% end %>
       </tr>
     </thead>
@@ -24,20 +24,24 @@
             <% if member.member_role == "user" %>
               <td><%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm w-100" %></td>
             <% elsif member.member_role == "mod" %>
-              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
-            <% elsif member.member_role == "admin" %>
-              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Not Subject to Change</button></td>
+              <td><%= button_to "<i class=\"bi bi-check-square\"></i> Grant Admin Privileges".html_safe, grant_admin_status_path(member.id), method: :patch, class:"btn btn-success btn-sm w-100" %></td>
+            <% elsif %>
+              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Admin</button></td>
             <% end %>
             
-            <% if member.member_role != "admin" %>
+            <% if member.member_role == "user" %>
               <td>
                 <%= link_to destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm w-100" do %>
                   <i class="bi bi-person-x"></i>
                   Remove Membership
                 <% end %>
               </td>
-            <% else %>
-              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Not Subject to Removal</button></td>
+            <% elsif member.member_role == "mod" %>
+              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
+            <% elsif member.member_role == "admin" && member != current_member %>
+              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Admin Privileges".html_safe, revoke_admin_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
+            <% elsif %>
+              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Cannot Demote Yourself</button></td>
             <% end %>
           <% end %>
         </tr>
