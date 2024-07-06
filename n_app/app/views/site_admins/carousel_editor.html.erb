@@ -26,7 +26,7 @@
                         <%= form.file_field :file, class: "form-control-file" %>
                     </div>
                     <div class="image-actions">
-                        <%= form.submit "Update Image", class: "btn btn-primary" %>
+                        <%= form.submit "Update", class: "btn btn-primary" %>
                         <%= link_to 'Delete', delete_image_path(image.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE IMAGE>>>\nPROCEED?" }, class: "btn btn-danger" %>
                     </div>
                 </div>

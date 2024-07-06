@@ -1,0 +1,29 @@
+.editor-container {
+    display: flex;
+    gap: 1rem; /* スペースの調整 */
+  }
+  
+  .editor, .preview {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    height: 100vh; /* 全体の高さを統一 */
+    overflow-y: auto; /* スクロールを可能に */
+  }
+  
+  .editor {
+    background-color: #f8f9fa; /* 編集エリアの背景色 */
+  }
+  
+  .preview {
+    background-color: #fff; /* プレビューエリアの背景色 */
+  }
+  
+  .text-area-large {
+    height: 500px; /* 必要に応じて高さを調整 */
+  }
+
+  .markdown {
+    word-wrap: break-word; /* テキストの折り返し */
+  }
+  

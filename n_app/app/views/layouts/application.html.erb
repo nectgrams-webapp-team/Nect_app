@@ -52,17 +52,18 @@
         </div>
         <br />
       <% end %>
-      <%= yield %>
+
+      <%= yield %>  
     </div>
   <br /><br />
   </body>
-  <body class="d-flex flex-column min-vh-100">
-    <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
-      <div class="container">
-        <div class="col-md-4 d-flex align-items-center">
-          <span class="mb-3 mb-md-0 text-body-secondary">&copy; <%= Time.now.year %> Nectgrams</span>
-        </div>
+  
+  <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
+    <div class="container">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Nectgrams</span>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+
 </html>
