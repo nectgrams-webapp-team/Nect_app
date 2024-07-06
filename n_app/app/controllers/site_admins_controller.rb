@@ -65,7 +65,7 @@ class SiteAdminsController < ApplicationController
     redirect_to member_editor_path, notice: "Grades decremented successfully!"
   end
 
-  def destroy
+  def destroy_member
     @member = Member.find(params[:id])
     @member.destroy
 
