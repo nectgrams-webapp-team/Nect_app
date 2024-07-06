@@ -30,7 +30,19 @@ class Member < ApplicationRecord
     2 => "C",
     4 => "C#",
     8 => "C++",
-    16 => "Python"
+    16 => "Python",
+    32 => "Java",
+    64 => "Go",
+    128 => "PHP",
+    256 => "JavaScript",
+    512 => "R",
+    1024 => "HTML/CSS",
+    2048 => "Swift",
+    4096 => "Kotlin",
+    8192 => "Rust",
+    16384 => "Objective-C",
+    32768 => "TypeScript",
+    65536 => "SQL"
   }.freeze
 
   def calculate_select_pl(select_pl)
