@@ -1,53 +1,74 @@
 <div class="table-responsive">
-  <table class="table table-bordered table-light table-hover table-sm table align-middle caption-top">
-    <caption><i class="bi bi-person-lines-fill"></i> List of Users</caption>
-    <thead class="table-secondary">
+<table class="table table-bordered table-light table-hover table-sm table align-middle caption-top">
+  <caption><i class="bi bi-person-lines-fill"></i> List of Users</caption>
+  <thead class="table-secondary">
+    <tr>
+      <th scope="col">Student ID</th>
+      <th scope="col">Member Name</th>
+      <th scope="col">Year</th>
+      <th scope="col">Department</th>
+      <% if current_member.member_role == "admin" %>
+        <th scope="col">Access Level</th>
+        <th scope="col">Member Status</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @members.each do |member| %>
       <tr>
-        <th scope="col">Student ID</th>
-        <th scope="col">Member Name</th>
-        <th scope="col">Year</th>
-        <th scope="col">Department</th>
+        <th scope="row"><%= member.student_id %></th>
+        <td>
+          <%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+        </td>
+        <td><%= member.grade %></td>
+        <td><%= member.department %></td>
         <% if current_member.member_role == "admin" %>
-          <th scope="col">Access Level</th>
-          <th scope="col">Member Status</th>
+          <td>
+            <% case member.member_role %>
+            <% when "user" %>
+              <div class="full-width-container">
+                <%= button_to "<i class='bi bi-check-square'></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm full-width-button" %>
+              </div>
+            <% when "mod" %>
+              <div class="full-width-container">
+                <%= button_to "<i class='bi bi-check-square'></i> Grant Admin Privileges".html_safe, grant_admin_status_path(member.id), method: :patch, class:"btn btn-success btn-sm full-width-button" %>
+              </div>
+            <% else %>
+              <div class="full-width-container">
+                <button type="button" class="btn btn-info active btn-sm full-width-button" aria-pressed="true">
+                  <i class="bi bi-exclamation-square"></i> Admin
+                </button>
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <% if member.member_role == "user" %>
+              <div class="full-width-container">
+                <%= link_to destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm full-width-button" do %>
+                  <i class="bi bi-person-x"></i> Remove Membership
+                <% end %>
+              </div>
+            <% elsif member.member_role == "mod" %>
+              <div class="full-width-container">
+                <%= button_to "<i class='bi bi-x-square'></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm full-width-button" %>
+              </div>
+            <% elsif member.member_role == "admin" && member != current_member %>
+              <div class="full-width-container">
+                <%= button_to "<i class='bi bi-x-square'></i> Revoke Admin Privileges".html_safe, revoke_admin_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm full-width-button" %>
+              </div>
+            <% else %>
+              <div class="full-width-container">
+                <button type="button" class="btn btn-info active btn-sm full-width-button" aria-pressed="true">
+                  <i class="bi bi-exclamation-square"></i> Cannot Demote Yourself
+                </button>
+              </div>
+            <% end %>
+          </td>
         <% end %>
       </tr>
-    </thead>
-    <% @members.each do |member| %>
-      <tbody>
-        <tr>
-          <th scope="row"><%= member.student_id %></th>
-          <td><%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></td>
-          <td><%= member.grade %></td>
-          <td><%= member.department %></td>
-          <% if current_member.member_role == "admin" %>
-            <% if member.member_role == "user" %>
-              <td><%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm w-100" %></td>
-            <% elsif member.member_role == "mod" %>
-              <td><%= button_to "<i class=\"bi bi-check-square\"></i> Grant Admin Privileges".html_safe, grant_admin_status_path(member.id), method: :patch, class:"btn btn-success btn-sm w-100" %></td>
-            <% elsif %>
-              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Admin</button></td>
-            <% end %>
-            
-            <% if member.member_role == "user" %>
-              <td>
-                <%= link_to destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm w-100" do %>
-                  <i class="bi bi-person-x"></i>
-                  Remove Membership
-                <% end %>
-              </td>
-            <% elsif member.member_role == "mod" %>
-              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
-            <% elsif member.member_role == "admin" && member != current_member %>
-              <td><%= button_to "<i class=\"bi bi-x-square\"></i> Revoke Admin Privileges".html_safe, revoke_admin_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm w-100" %></td>
-            <% elsif %>
-              <td><button type="button" class="btn btn-info active w-100 btn-sm" data-bs-toggle="button" aria-pressed="true"><i class="bi bi-exclamation-square"></i> Cannot Demote Yourself</button></td>
-            <% end %>
-          <% end %>
-        </tr>
-      </tbody>
     <% end %>
-  </table>
+  </tbody>
+</table>
 </div>
 <br />
 <table class="table caption-top">
@@ -180,5 +201,24 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+  }
+
+  .table td {
+    padding: 0; /* Ensure no padding around cells */
+  }
+
+  .full-width-container {
+    width: 100%; /* Container takes full width of cell */
+    display: table; /* Ensures the container respects table cell layout */
+    height: 100%; /* Container takes full height of cell */
+  }
+
+  .full-width-button {
+    width: 100%; /* Button takes full width of container */
+    display: table-cell; /* Makes the button respect the table layout */
+    text-align: center; /* Centers text within the button */
+    vertical-align: middle; /* Aligns the button text vertically in the middle */
+    box-sizing: border-box; /* Ensures padding and borders are included in width */
+    margin: 0; /* Removes any default margins */
   }
 </style>
