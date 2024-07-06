@@ -44,7 +44,7 @@
           <td>
             <% if member.member_role == "user" %>
               <div class="full-width-container">
-                <%= link_to destroy_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm full-width-button" do %>
+                <%= link_to destroy_member_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm full-width-button" do %>
                   <i class="bi bi-person-x"></i> Remove Membership
                 <% end %>
               </div>

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   patch 'revoke_mod_status/:id', to: 'site_admins#revoke_mod_status', as: 'revoke_mod_status'
   patch 'grant_admin_status/:id', to: 'site_admins#grant_admin_status', as: 'grant_admin_status'
   patch 'revoke_admin_status/:id', to: 'site_admins#revoke_admin_status', as: 'revoke_admin_status'
-  delete 'site_admins/:id', to: "site_admins#destroy", as: "destroy"
+  delete 'site_admins/:id', to: "site_admins#destroy_member", as: "destroy_member"
 
   get 'site_admins/carousel_editor', to: "site_admins#carousel_editor", as: "carousel_editor"
   post 'site_admins/create_image', to: 'site_admins#create_image', as: "create_image"

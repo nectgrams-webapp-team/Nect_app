@@ -1,6 +1,6 @@
 class SiteAdminsController < ApplicationController
   before_action :validate_access_permission
-  before_action :check_for_admin, only: [:destroy, :grant_mod_status, :revoke_mod_status]
+  before_action :check_for_admin, only: [:destroy_member, :grant_mod_status, :revoke_mod_status]
 
   def validate_access_permission
     unless current_member.member_role == "admin" || current_member.member_role == "mod"
@@ -65,7 +65,7 @@ class SiteAdminsController < ApplicationController
     redirect_to member_editor_path, notice: "Grades decremented successfully!"
   end
 
-  def destroy
+  def destroy_member
     @member = Member.find(params[:id])
     @member.destroy
 
