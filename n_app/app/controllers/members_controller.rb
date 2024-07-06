@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-    @members = Member.where.not(member_role: 2)
+    @members = Member.all
   end
 
   def show
