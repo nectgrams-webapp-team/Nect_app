@@ -44,17 +44,17 @@
   </header>
   <body>
     <br /><br />
-    
-    <% flash.each do |type, msg| %>
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <%= msg %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      <br />
-    <% end %>
+    <div class="container">
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <%= msg %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <br />
+      <% end %>
 
-    <%= yield %>
-  
+      <%= yield %>  
+    </div>
   <br /><br />
   </body>
   
@@ -65,5 +65,5 @@
       </div>
     </div>
   </footer>
-  
+
 </html>

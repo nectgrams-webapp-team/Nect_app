@@ -47,6 +47,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_06_062750) do
     t.integer "member_id"
   end
 
+  create_table "event_histories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "event_title", null: false
+    t.string "event_text", null: false
+    t.date "date_of_event"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "homes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.string "caption"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "members", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -69,8 +85,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_06_062750) do
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
-    t.boolean "admin", default: false
     t.integer "graduation_year"
+    t.integer "member_role", default: 0
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_members_on_invited_by_id"

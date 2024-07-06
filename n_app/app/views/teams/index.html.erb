@@ -13,6 +13,9 @@
           </div>
         </div>
       </div>
-  <% end %>
+    </div>
+<% end %>
+
+<% if member_signed_in? %>
   <%= link_to '新しいチームを作成', new_team_path, class: 'btn btn-outline-primary' %>
-</div>
+<% end %>

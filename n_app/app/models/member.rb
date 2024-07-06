@@ -63,4 +63,5 @@ class Member < ApplicationRecord
   end
 
   enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
+  enum :member_role, { user: 0, mod: 1, admin: 2 }
 end
