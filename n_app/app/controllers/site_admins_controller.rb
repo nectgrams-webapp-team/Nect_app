@@ -1,6 +1,6 @@
 class SiteAdminsController < ApplicationController
   before_action :validate_access_permission
-  before_action :check_for_admin, only: [:destroy_member, :grant_mod_status, :revoke_mod_status]
+  before_action :check_for_admin, only: [:destroy_member, :grant_mod_status, :revoke_mod_status, :resend_invitation]
 
   def validate_access_permission
     unless current_member.member_role == "admin" || current_member.member_role == "mod"
@@ -23,16 +23,6 @@ class SiteAdminsController < ApplicationController
   def member_editor
     @members = Member.all
 
-    # I am paying for my incompetence here... sad!
-    @grades = ['1年生', '2年生', '3年生', '4年生', 'OM']
-    @memberCount = @members.count
-    @count = @members.group(:grade).count
-
-    @totalDepartmentCount = @members.group(:department).count
-
-    @grouped_members = @members.group_by{|member| [member.grade, member.department]}
-    @departmentCount = @grouped_members.transform_values(&:count)
-
     respond_to do |format|
       format.html
       format.xlsx do
@@ -51,6 +41,20 @@ class SiteAdminsController < ApplicationController
         send_data p.to_stream.read, filename: filename, type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       end
     end
+  end
+
+  def member_statistics
+    @members = Member.all
+
+    # I am paying for my incompetence here... sad!
+    @grades = ['1年生', '2年生', '3年生', '4年生', 'OM']
+    @memberCount = @members.count
+    @count = @members.group(:grade).count
+
+    @totalDepartmentCount = @members.group(:department).count
+
+    @grouped_members = @members.group_by{|member| [member.grade, member.department]}
+    @departmentCount = @grouped_members.transform_values(&:count)
   end
 
   def increment_grade
@@ -121,6 +125,15 @@ class SiteAdminsController < ApplicationController
       redirect_to request.referrer
     else
       render :member_editor
+    end
+  end
+
+  def resend_invitation
+    @member = Member.find(params[:id])
+    if @member.invite!
+      redirect_to member_editor_path, notice: "Invitation mail successfully sent!"
+    else
+      redirect_to member_editor_path, notice: "Invitation mail could not be sent!"
     end
   end
 

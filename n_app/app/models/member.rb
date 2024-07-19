@@ -12,6 +12,9 @@ class Member < ApplicationRecord
   has_many :teams, :through => :team_members
 
   def calculate_graduation_year(student_id)
+    if student_id == nil 
+      return 0
+    end
     # 学籍番号から入学年の下二桁を取得
     enrollment_year = student_id[2..3].to_i
     # 現在の年の下二桁を取得
@@ -24,7 +27,6 @@ class Member < ApplicationRecord
     graduation_year = enrollment_year + 4
   end
 
-  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
   PROGRAMMING_LANGUAGES = {
     1 => "Ruby",
     2 => "C",
@@ -44,7 +46,7 @@ class Member < ApplicationRecord
     32768 => "TypeScript",
     65536 => "SQL"
   }.freeze
-
+  
   def calculate_select_pl(select_pl)
     s_pl = []
     PROGRAMMING_LANGUAGES.each do |key,val|
@@ -54,14 +56,15 @@ class Member < ApplicationRecord
     end
     s_pl.join(" , ")
   end
-
+  
   # プロフィール写真
   has_one_attached :profile_image
-
+  
   def get_profile_image
-      (profile_image.attatched?) ? profile_image : 'no_image.png'
+    (profile_image.attatched?) ? profile_image : 'no_image.png'
   end
-
+  
+  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
   enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
   enum :member_role, { user: 0, mod: 1, admin: 2 }
 end
