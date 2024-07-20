@@ -27,10 +27,10 @@
         <div class="row mb-3">
           <label class="col-sm-2 col-form-label">学年</label>
           <div class="col-sm-10">
-            <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |b| %>
+            <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |displayGrade| %>
               <div class="form-check form-check-inline">
-                <%= b.radio_button(class: "form-check-input") %>
-                <%= b.label(class: "form-check-label") %>
+                <%= displayGrade.radio_button(class: "form-check-input grade-radio", data: { grade: displayGrade.value }) %>
+                <%= displayGrade.label(class: "form-check-label") %>
               </div>
             <% end %>
           </div>
@@ -47,22 +47,10 @@
           </div>
         </fieldset>
         <fieldset class="row mb-3">
-          <% if @member.grade == '1年生' %>
-            <legend class="col-form-label col-sm-2 pt-0">コース</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDisabled" id="flexRadioCheckedDisabled" checked disabled>
-                  <label class="form-check-label" for="flexRadioCheckedDisabled">
-                    コース選択中
-                  </label>
-                </div>
-            </div>
-          <% else %>
-            <legend class="col-form-label col-sm-2 pt-0">コース</legend>
-            <div class="col-sm-10">
-              <div id="additional-options" data-selected-course="<%= @member.course %>"></div>
-            </div>
-          <% end %>
+          <legend class="col-form-label col-sm-2 pt-0">コース</legend>
+          <div class="col-sm-10">
+            <div id="additional-options" data-selected-course="<%= @member.course %>"></div>
+          </div>
         </fieldset>
         <div class="row mb-3">
           <label class="col-sm-2 col-form-label">自己紹介</label>
@@ -73,19 +61,21 @@
         <div class="row mb-3">
           <legend class="col-sm-2 col-form-label">学習中言語</legend>
           <div class="col-sm-10">
-            <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
-              <% if (pl_num & member.object.learning_programming_languages) != 0 %>
-                <div class="form-check form-check-inline">
-                  <%= member.check_box :selected_languages, { multiple: true, checked: true }, pl_num %>
-                  <%= member.label :selected_languages, language, value: pl_num %>
-                </div>
-              <% else %>
-                <div class="form-check form-check-inline">
-                  <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
-                  <%= member.label :selected_languages, language, value: pl_num %>
-                </div>
+            <div class="row row-cols-3 row-cols-lg-6 g-2 g-lg-3">
+              <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
+                <% if (pl_num & member.object.learning_programming_languages) != 0 %>
+                  <div class="col">
+                    <%= member.check_box :selected_languages, { multiple: true, checked: true }, pl_num %>
+                    <%= member.label :selected_languages, language, value: pl_num %>
+                  </div>
+                <% else %>
+                  <div class="col">
+                    <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
+                    <%= member.label :selected_languages, language, value: pl_num %>
+                  </div>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
