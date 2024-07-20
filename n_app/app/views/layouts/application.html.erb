@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
   <head>
     <title>NApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -42,28 +42,26 @@
       </ul>
     </nav>
   </header>
-  <body>
+  <body style="height: 100%; display: flex; flex-direction: column;">
     <br /><br />
-    <div class="container">
-      <% flash.each do |type, msg| %>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <%= msg %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <br />
-      <% end %>
+      <div class="container">
+        <% flash.each do |type, msg| %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <br />
+        <% end %>
 
-      <%= yield %>  
-    </div>
-  <br /><br />
+        <%= yield %>  
+      </div>
+    <br /><br />
   </body>
-  
-  <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
+  <footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
     <div class="container">
       <div class="col-md-4 d-flex align-items-center">
-        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Nectgrams</span>
+        <span class="mb-3 mb-md-0 text-body-secondary">&copy; <%= Time.now.year %> Nectgrams</span>
       </div>
     </div>
   </footer>
-
 </html>
