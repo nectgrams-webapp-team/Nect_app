@@ -13,7 +13,8 @@ Member.create!(
   email: "admin@ac.jp",
   student_id: "TK22000",
   password: "adminkey",
-  member_role: 2
+  member_role: 2,
+  invitation_accepted_at: DateTime.now
 )
 
 5.times do |n|
@@ -21,6 +22,7 @@ Member.create(
   name: "テスト太郎#{n+1}", 
   email: "test#{n+1}@ac.jp", 
   student_id: "TK2200#{n+1}", 
-  password: "abcde#{n+1}"
+  password: "abcde#{n+1}",
+  invitation_accepted_at: DateTime.now
 )
 end

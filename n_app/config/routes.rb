@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'site_admins/admin_index', to: "site_admins#admin_index", as: "admin_index"
 
   get 'site_admins/member_editor', to: "site_admins#member_editor", as: "member_editor"
+  get 'site_admins/member_statistics', to: "site_admins#member_statistics", as: "member_statistics"
+  get 'site_admins/resend_invitation/:id', to: "site_admins#resend_invitation", as: "resend_invitation"
   post "site_admins/increment_grade", to: "site_admins#increment_grade", as: "increment_grade"
   post "site_admins/decrement_grade", to: "site_admins#decrement_grade", as: "decrement_grade"
   patch 'grant_mod_status/:id', to: 'site_admins#grant_mod_status', as: 'grant_mod_status'
