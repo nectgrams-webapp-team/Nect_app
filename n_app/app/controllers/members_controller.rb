@@ -9,9 +9,10 @@ class MembersController < ApplicationController
     @activities = Activity.where(member_id: @member.id)
     @count = Activity.where(member_id: @member.id).count
   end
-
+  
   def edit
     @member = Member.find(params[:id])
+    # @member.grade = @member.calculate_grade(@member.student_id)
   end
 
   def update
@@ -32,6 +33,6 @@ class MembersController < ApplicationController
 
   private
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :course, selected_languages: [])
   end
 end
