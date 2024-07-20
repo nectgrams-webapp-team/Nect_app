@@ -43,19 +43,26 @@
     </nav>
   </header>
   <body>
+    <br /><br />
     <div class="container">
-      <br /><br />
-      <%= yield %>
-      <br /><br />
-    </div>
-  </body>
-  <body class="d-flex flex-column min-vh-100">
-    <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
-      <div class="container">
-        <div class="col-md-4 d-flex align-items-center">
-          <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Nectgrams</span>
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <%= msg %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-      </div>
-    </footer>
+        <br />
+      <% end %>
+
+      <%= yield %>  
+    </div>
+    <br /><br />
   </body>
+  
+  <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
+    <div class="container">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Nectgrams</span>
+      </div>
+    </div>
+  </footer>
 </html>

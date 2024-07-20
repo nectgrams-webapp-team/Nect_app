@@ -1,21 +1,24 @@
-<h1>活動一覧</h1>
-
-<% if member_signed_in? %>
-  <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary' %>
-<% end %>
-
-<% @activities.each do |activity| %>
-    <div class="card mb-3" style="max-width: 540px; height: 120px">
-      <div class="row g-0">
-        <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
-          <%= image_tag activity.get_activity_image, class: 'img-fluid rounded-start' %>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-            <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+<div class = "container">
+  <h1>活動一覧</h1>
+  
+  <% if member_signed_in? %>
+    <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary' %>
+  <% end %>
+  
+  <% @activities.reverse_each do |activity| %>
+      <div class="card mb-3" style="max-width: 540px; height: 120px">
+        <div class="row g-0">
+          <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
+            <%= image_tag activity.get_activity_image, class: 'img-fluid rounded-start' %>
           </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+              <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
+              <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+            </div>
         </div>
       </div>
     </div>
-<% end %>
+  <% end %>
+</div>

@@ -1,5 +1,5 @@
 <%= javascript_include_tag "dynamic_course" %>
-<%= form_with model: @member, method: :patch  do |member| %>
+<%= form_with model: @member, method: :patch do |member| %>
   <div class="card text-bg-light">
     <div class="card-header">
       <h1>メンバー情報の編集</h1>
@@ -24,6 +24,17 @@
             <%= member.text_field :student_id, placeholder: "半角で入力してください", class:"form-control" %>
           </div>
         </div>
+        <div class="row mb-3">
+          <label class="col-sm-2 col-form-label">学年</label>
+          <div class="col-sm-10">
+            <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |b| %>
+              <div class="form-check form-check-inline">
+                <%= b.radio_button(class: "form-check-input") %>
+                <%= b.label(class: "form-check-label") %>
+              </div>
+            <% end %>
+          </div>
+        </div>
         <fieldset class="row mb-3">
           <legend class="col-form-label col-sm-2 pt-0">学科</legend>
           <div class="col-sm-10">
@@ -36,7 +47,7 @@
           </div>
         </fieldset>
         <fieldset class="row mb-3">
-          <% if @member.grade == '1' %>
+          <% if @member.grade == '1年生' %>
             <legend class="col-form-label col-sm-2 pt-0">コース</legend>
             <div class="col-sm-10">
                 <div class="form-check">
@@ -60,18 +71,16 @@
           </div>
         </div>
         <div class="row mb-3">
-          <legend class="col-sm-2 col-form-label">学習中プログラミング言語</legend>
+          <legend class="col-sm-2 col-form-label">学習中言語</legend>
           <div class="col-sm-10">
             <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
               <% if (pl_num & member.object.learning_programming_languages) != 0 %>
                 <div class="form-check form-check-inline">
-                  <p>selected</p>
-                  <%= member.check_box :selected_languages, { multiple: true }, pl_num, {checked: true} %>
+                  <%= member.check_box :selected_languages, { multiple: true, checked: true }, pl_num %>
                   <%= member.label :selected_languages, language, value: pl_num %>
                 </div>
               <% else %>
                 <div class="form-check form-check-inline">
-                  <p>no</p>
                   <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
                   <%= member.label :selected_languages, language, value: pl_num %>
                 </div>
