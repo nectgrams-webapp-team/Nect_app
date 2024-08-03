@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_06_062750) do
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
+    t.string "course"
     t.integer "graduation_year"
     t.integer "member_role", default: 0
     t.index ["email"], name: "index_members_on_email", unique: true
