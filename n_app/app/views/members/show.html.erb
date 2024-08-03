@@ -56,7 +56,7 @@
         <br />
         <% languageList = @member.calculate_select_pl(@member.learning_programming_languages) %>
         <% if languageList.empty? %>
-          <h5>ー　学習している言語なし</h5>
+          <h5>ー　学習中言語なし</h5>
         <% else %>
           <% languageList.each do |displayProgrammingLanguage| %>
             <h5><%= displayProgrammingLanguage %><br /></h5>
@@ -67,7 +67,7 @@
     <div class="d-flex flex-column mb-2">
       <b><h2 class="text-center m-4">記事一覧</h2></b>
       <% if @count > 0 %>
-      <div class="d-flex flex-wrap justify-content-between">
+      <div class="d-flex flex-wrap justify-content-around">
         <% @activities.reverse_each do |activity| %>
           <div class="card mb-2" style="width: 18rem;">
             <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
