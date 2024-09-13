@@ -43,7 +43,6 @@
     </nav>
   </header>
   <body>
-    <br /><br />
     <div class="container">
       <% flash.each do |type, msg| %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -55,7 +54,6 @@
 
       <%= yield %>  
     </div>
-  <br /><br />
   </body>
   
   <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
