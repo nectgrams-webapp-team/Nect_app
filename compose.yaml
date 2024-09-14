@@ -9,7 +9,7 @@ services:
         source: mysqldata
         target: /var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
     ports:
       - '3305:3306'
@@ -35,7 +35,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      MYSQL_PASSWORD: password
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:
