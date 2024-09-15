@@ -1,4 +1,5 @@
 FROM ruby:3.2.0
+ENV RSILS_ENV=${RSILS_ENVIRONMENT}
 ENV APP /n_app
 ENV LANG C.UTF-8
 ENV TZ Asia/Tokyo
@@ -12,3 +13,6 @@ COPY Gemfile $APP/Gemfile
 COPY Gemfile.lock $APP/Gemfile.lock
 RUN bundle install
 
+COPY start.sh /start.sh
+RUN chmod 744 /start.sh
+CMD [ "sh", "/start.sh" ]

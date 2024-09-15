@@ -1,22 +1,6 @@
 services:
-  db:
-    restart: always
-    image: mysql:8.0.39
-    # DBのレコードが日本語だと文字化けするので、utf8mb4をセットする
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - type: volume
-        source: mysqldata
-        target: /var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      TZ: "Asia/Tokyo"
-    ports:
-      - '3306:3306'
   webapp:
-    #buildの"."はカレント(.)にあるDockerfileを参照してbuildしろということ
     build: .
-    #rails7ではrails sではなく.bin/devでwebサーバーを起動させる(development)
     command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
     volumes:
       - type: bind
@@ -30,14 +14,14 @@ services:
         target: /n_app/node_modules
     ports:
       - "3000:3000"
-    depends_on:
-      - db
     stdin_open: true
     tty: true
     environment:
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_DATABASE_USERNAME}  
+      MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}  
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:
   node_modules:
-  mysqldata:
