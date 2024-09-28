@@ -11,6 +11,10 @@ class Member < ApplicationRecord
   has_many :team_members, dependent: :destroy
   has_many :teams, :through => :team_members
 
+  enum :member_role, { user: 0, mod: 1, admin: 2 }
+  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
+  enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
+
   def calculate_graduation_year(student_id)
     # 学籍番号から入学年の下二桁を取得
     enrollment_year = student_id[2..3].to_i
@@ -24,27 +28,26 @@ class Member < ApplicationRecord
     graduation_year = enrollment_year + 4
   end
 
-  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
   PROGRAMMING_LANGUAGES = {
-    1 => "Ruby",
-    2 => "C",
+    1 => "C",
+    2 => "C++",
     4 => "C#",
-    8 => "C++",
-    16 => "Python",
-    32 => "Java",
+    8 => "Python",
+    16 => "Java",
+    32 => "Rust",
     64 => "Go",
-    128 => "PHP",
-    256 => "JavaScript",
-    512 => "R",
-    1024 => "HTML/CSS",
-    2048 => "Swift",
-    4096 => "Kotlin",
-    8192 => "Rust",
-    16384 => "Objective-C",
-    32768 => "TypeScript",
+    128 => "Ruby",
+    256 => "PHP",
+    512 => "JavaScript",
+    1024 => "TypeScript",
+    2048 => "HTML/CSS",
+    4096 => "Swift",
+    8192 => "Objective-C",
+    16384 => "Kotlin",
+    32768 => "R",
     65536 => "SQL"
   }.freeze
-
+  
   def calculate_select_pl(select_pl)
     s_pl = []
     PROGRAMMING_LANGUAGES.each do |key,val|
@@ -52,16 +55,13 @@ class Member < ApplicationRecord
         s_pl.push(val)
       end
     end
-    s_pl.join(" , ")
+    return s_pl
   end
-
+  
   # プロフィール写真
   has_one_attached :profile_image
-
+  
   def get_profile_image
-      (profile_image.attatched?) ? profile_image : 'no_image.png'
+    (profile_image.attatched?) ? profile_image : 'no_image.png'
   end
-
-  enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
-  enum :member_role, { user: 0, mod: 1, admin: 2 }
 end
