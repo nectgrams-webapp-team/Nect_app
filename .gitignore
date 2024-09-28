@@ -40,3 +40,5 @@ n_app/app/assets/builds/*
 
 n_app/node_modules
 n_app/config/local_env.yml
+
+n_app/db/seeds.rb
