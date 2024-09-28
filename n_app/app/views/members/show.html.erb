@@ -1,43 +1,91 @@
-<div class = "container">
-  <h1><%= @member.name %></h1>
-  <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
-    <%= image_tag @member.get_profile_image, class: 'img-fluid rounded-start' %>
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item me-2">
+        <a class="nav-link active" aria-current="true" href="#">プロファイル</a>
+      </li>
+      <div class="d-flex">
+        <% if member_signed_in? && current_member.id == @member.id %>
+          <li class="nav-item me-2">
+            <%= link_to '編集', edit_member_path, class: 'btn btn-outline-info' %>
+          </li>
+          <% if current_member.member_role != "user" %>
+            <li class="nav-item me-2">
+                <%= link_to 'Admin', admin_index_path, class: 'btn btn-outline-warning' %>
+            </li>
+          <% end %>
+          <li class="nav-item me-2">
+            <%= button_to 'ログアウト', destroy_member_session_path, method: :delete, class: 'btn btn-outline-danger' %> 
+          </li>
+        <% end %>
+      </div>
+    </ul>
   </div>
-  <h1><%= @member.grade%></h1>
-  <h2><%= @member.graduation_year %>卒</h2>
-  <h1><%= @member.department %></h1>
-  <p><%= @member.intro %><p>
-  <h1><%= @member.calculate_select_pl(@member.learning_programming_languages)%></h1>
-  <% if @count > 0 %>
-    <h2>記事一覧</h2>
-  <% end %>
-  <% @activities.reverse_each do |activity| %>
-    <div class="card mb-3" style="max-width: 540px; height: 120px">
-      <div class="row g-0">
-        <div class="col-md-4" style="max-width: 200px; max-height: 150px;">
-          <%= image_tag activity.get_activity_image, class: 'img-fluid rounded-start' %>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-            <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
-            <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-          </div>
+  <div class="col-md-4 text-center p-2" style="width: 100%;">
+    <%= image_tag @member.get_profile_image, class: 'img-fluid rounded', style: 'max-width: 200px; max-height: 150px;' %>
+  </div>
+  <div class="card-body">
+    <div class="text-center mb-4">
+      <h1 class="card-title"><%= @member.name %></h1>
+      <p class="card-text"><%= @member.intro %></p>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="d-flex flex-column mb-2">
+        <b><h2>ユーザー詳細</h2></b>
+        <br />
+        <h5>学年：<%= @member.grade%></h5>
+        <br />
+        <h5>卒年：<%= @member.graduation_year %>卒</h5>
+        <br />
+        <h5>メール：<%= @member.email %></h5>
+      </div>
+      <div class="d-flex flex-column mb-2">
+        <b><h2>学科・コース</h2></b>
+        <br />
+        <h5>学科：<br /><%= @member.department %></h5>
+        <br />
+        <h5>コース：</h5>
+        <% if @member.grade != '1年生' %>
+          <h5><%= @member.course %></h5>
+        <% else %>
+          <h5>コース選択中</h5>
+        <% end %>
+      </div>
+      <div class="d-flex flex-column mb-2">
+        <b><h2>学習中言語</h2></b>
+        <br />
+        <% languageList = @member.calculate_select_pl(@member.learning_programming_languages) %>
+        <% if languageList.empty? %>
+          <h5>ー　学習中言語なし</h5>
+        <% else %>
+          <% languageList.each do |displayProgrammingLanguage| %>
+            <h5><%= displayProgrammingLanguage %><br /></h5>
+          <% end %>
+        <% end %>
       </div>
     </div>
-  </div>
-  <% end %>
-  <%= link_to '戻る', :back, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-  <%= link_to 'To top page', root_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-
-  <% if member_signed_in? && current_member.id == @member.id %>
-    <div class="d-flex justify-content-start">
-      <%= link_to 'Profile Edit', edit_member_path, class: 'btn btn-outline-info me-2' %>
-      <% if current_member.member_role != "user" %>
-        <%= link_to 'Admin', admin_index_path, class: 'btn btn-outline-warning' %>
+    <div class="d-flex flex-column mb-2">
+      <b><h2 class="text-center m-4">記事一覧</h2></b>
+      <% if @count > 0 %>
+      <div class="d-flex flex-wrap justify-content-around">
+        <% @activities.reverse_each do |activity| %>
+          <div class="card mb-2" style="width: 18rem;">
+            <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+              <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
+              <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <% else %>
+        <h5>ー　記事なし</h5>
       <% end %>
-      <%= link_to 'Member Invite', new_member_invitation_path, class: 'btn btn-outline-secondary' %>
-      <%= button_to 'Logout', destroy_member_session_path, method: :delete, class: 'btn btn-outline-danger me-2' %> 
     </div>
-  <% end %>
+    <div class="btn-group">
+      <%= link_to 'トップページ', root_path, class:"btn btn-success" %>
+      <%= link_to '戻る', :back, class:"btn btn-danger" %>
+    </div>
+  </div>
 </div>

@@ -42,26 +42,26 @@
       </ul>
     </nav>
   </header>
-  <body>
-    <div class="container">
-      <% flash.each do |type, msg| %>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <%= msg %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <br />
-      <% end %>
+  <body style="min-height: 100svh; display: flex; flex-direction: column;">
+    <br /><br />
+      <div class="container" style="flex-grow: 1">
+        <% flash.each do |type, msg| %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <br />
+        <% end %>
 
-      <%= yield %>  
-    </div>
+        <%= yield %>
+      </div>
+    <br /><br />
   </body>
-  
-  <footer class="footer mt-auto py-3 bg-body-tertiary" data-bs-theme="dark">
+  <footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
     <div class="container">
       <div class="col-md-4 d-flex align-items-center">
-        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Nectgrams</span>
+        <span class="mb-3 mb-md-0 text-body-secondary">&copy; <%= Time.now.year %> Nectgrams</span>
       </div>
     </div>
   </footer>
-
 </html>
