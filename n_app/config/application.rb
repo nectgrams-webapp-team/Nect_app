@@ -1,6 +1,7 @@
 require_relative "boot"
 
-require 'dotenv/load'
+require 'dotenv'
+Dotenv.load
 
 require "rails/all"
 
