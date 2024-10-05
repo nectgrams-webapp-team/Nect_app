@@ -130,10 +130,12 @@ class SiteAdminsController < ApplicationController
 
   def resend_invitation
     @member = Member.find(params[:id])
-    if @member.invite!
-      redirect_to member_editor_path, notice: "Invitation mail successfully sent!"
+    if @member.invite!.deliver!
+      flash[:notice] = "Invitation mail successfully sent!"
+      redirect_to member_editor_path
     else
-      redirect_to member_editor_path, notice: "Invitation mail could not be sent!"
+      flash[:alert] = "Invitation mail could not be sent!"
+      redirect_to member_editor_path
     end
   end
 
