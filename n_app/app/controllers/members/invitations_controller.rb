@@ -1,6 +1,10 @@
 class Members::InvitationsController < Devise::InvitationsController
   before_action :configure_permitted_parameters
 
+  def after_invite_path_for(resource)
+    member_editor_path
+  end
+
   def update
     super do |resource|
       if resource.errors.empty?

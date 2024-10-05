@@ -1,176 +1,76 @@
 <div class="table-responsive">
-<table class="table table-bordered table-light table-hover table-sm table align-middle caption-top">
-  <caption><i class="bi bi-person-lines-fill"></i> List of Users</caption>
-  <thead class="table-secondary">
-    <tr>
-      <th scope="col">Student ID</th>
-      <th scope="col">Member Name</th>
-      <th scope="col">Year</th>
-      <th scope="col">Department</th>
-      <% if current_member.member_role == "admin" %>
-        <th scope="col">Access Level</th>
-        <th scope="col">Member Status</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @members.each do |member| %>
+  <table class="table table-bordered table-light table-hover table-sm table align-middle caption-top">
+    <caption><i class="bi bi-person-lines-fill"></i> List of Users</caption>
+    <thead class="table-secondary">
       <tr>
-        <th scope="row"><%= member.student_id %></th>
-        <td>
-          <%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-        </td>
-        <td><%= member.grade %></td>
-        <td><%= member.department %></td>
+        <th scope="col">Student ID</th>
+        <th scope="col">Member Name</th>
+        <th scope="col">Year</th>
+        <th scope="col">Department</th>
         <% if current_member.member_role == "admin" %>
+          <th scope="col">Access Level</th>
+          <th scope="col">Member Status</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @members.each do |member| %>
+        <tr>
+          <th scope="row"><%= member.student_id %></th>
           <td>
-            <% case member.member_role %>
-            <% when "user" %>
-              <div class="full-width-container">
-                <%= button_to "<i class='bi bi-check-square'></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-primary btn-sm full-width-button" %>
+            <%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+          </td>
+          <td><%= member.grade %></td>
+          <td><%= member.department %></td>
+          <% if current_member.member_role == "admin" %>
+            <%# if member.invitation_accepted? == false %>
+<!--              <td class="table-light"><div class="full-width-container">-->
+                <%#= button_to "<i class=\"bi bi-envelope-at\"></i> Resend Invitation".html_safe, resend_invitation_path(member.id), method: :get, class:"btn btn-sm full-width-button" %>
+<!--              </div></td>-->
+            <%# elsif member.member_role == "user" %>
+            <% if member.member_role == "user" %>
+              <td class="table-primary"><div class="full-width-container">
+                <%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
               </div>
-            <% when "mod" %>
-              <div class="full-width-container">
-                <%= button_to "<i class='bi bi-check-square'></i> Grant Admin Privileges".html_safe, grant_admin_status_path(member.id), method: :patch, class:"btn btn-success btn-sm full-width-button" %>
+            <% elsif member.member_role == "mod" %>
+              <td class="table-success"><div class="full-width-container">
+                <%= button_to "<i class=\"bi bi-person-check\"></i> Grant Admin Privileges".html_safe, grant_admin_status_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
               </div>
             <% else %>
-              <div class="full-width-container">
-                <button type="button" class="btn btn-info active btn-sm full-width-button" aria-pressed="true">
+              <td class="table-info"><div class="full-width-container">
+                <button type="button" class="btn btn-sm full-width-button">
                   <i class="bi bi-exclamation-square"></i> Admin
                 </button>
               </div>
             <% end %>
-          </td>
-          <td>
             <% if member.member_role == "user" %>
-              <div class="full-width-container">
-                <%= link_to destroy_member_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-danger btn-sm full-width-button" do %>
+              <td class="table-danger"><div class="full-width-container">
+                <%= link_to destroy_member_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-sm full-width-button" do %>
                   <i class="bi bi-person-x"></i> Remove Membership
                 <% end %>
-              </div>
+              </div></td>
             <% elsif member.member_role == "mod" %>
-              <div class="full-width-container">
-                <%= button_to "<i class='bi bi-x-square'></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm full-width-button" %>
+              <td class="table-warning"><div class="full-width-container">
+                <%= button_to "<i class='bi bi-x-square'></i> Revoke Mod Privileges".html_safe, revoke_mod_status_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
               </div>
             <% elsif member.member_role == "admin" && member != current_member %>
-              <div class="full-width-container">
-                <%= button_to "<i class='bi bi-x-square'></i> Revoke Admin Privileges".html_safe, revoke_admin_status_path(member.id), method: :patch, class:"btn btn-warning btn-sm full-width-button" %>
+              <td class="table-warning"><div class="full-width-container">
+                <%= button_to "<i class='bi bi-x-square'></i> Revoke Admin Privileges".html_safe, revoke_admin_status_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
               </div>
             <% else %>
-              <div class="full-width-container">
-                <button type="button" class="btn btn-info active btn-sm full-width-button" aria-pressed="true">
+              <td class="table-info"><div class="full-width-container">
+                <button type="button" class="btn btn-sm full-width-button">
                   <i class="bi bi-exclamation-square"></i> Cannot Demote Yourself
                 </button>
               </div>
             <% end %>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 <br />
-<table class="table caption-top">
-  <caption><i class="bi bi-clipboard-data-fill"></i> Statistics on Member Grades</caption>
-  <thead>
-    <tr>
-      <th scope="col">Year</th>
-      <th scope="col">Member Count</th>
-      <th scope="col">Percentage</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @grades.each do |grade| %>
-      <tr>
-        <th scope="row"><%= grade %></th>
-        <td><%= @count[grade].to_i %></td>
-        <% if @memberCount == 0 %>
-          <td>0%</td>
-        <% else %>
-          <td><%= (@count[grade].to_i * 100 / @memberCount.to_i).to_s + "%" %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th scope="row">Total</th>
-      <td><%= @memberCount %></td>
-      <td>100%</td>
-    </tr>
-  </tfoot>
-</table>
-<br />
-<table class="table caption-top">
-  <caption><i class="bi bi-clipboard-data-fill"></i> Statistics on Member Departments</caption>
-  <thead>
-    <tr>
-      <th scope="col">Year</th>
-      <th scope="col">Department</th>
-      <th scope="col">Share</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @grades.each do |grade| %>
-      <tr>
-        <th scope="row"><%= grade %></th>
-        <td>
-          <ul class="list-group list-group-horizontal">
-            <li class="list-group-item" style="flex: 1;">情報工学科</li>
-            <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "情報工学科"]].to_i %></li>
-          </ul>
-          <ul class="list-group list-group-horizontal">
-            <li class="list-group-item" style="flex: 1;">デジタルエンタテインメント学科</li>
-            <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i %></li>
-          </ul>
-        </td>
-        <td>
-          <ul class="list-group">
-            <% if @count[grade].to_i == 0 %>
-              <li class="list-group-item">0%</li>
-              <li class="list-group-item">0%</li>
-            <% else %>
-              <li class="list-group-item"><%= (@departmentCount[[grade, "情報工学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
-              <li class="list-group-item"><%= (@departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <th scope="row">Combined</th>
-      <td>
-        <ul class="list-group list-group-horizontal">
-          <li class="list-group-item" style="flex: 1;">情報工学科</li>
-          <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["情報工学科"].to_i %></li>
-        </ul>
-        <ul class="list-group list-group-horizontal">
-          <li class="list-group-item" style="flex: 1;">デジタルエンタテインメント学科</li>
-          <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["デジタルエンタテインメント学科"].to_i %></li>
-        </ul>
-      </td>
-      <td>
-        <ul class="list-group">
-          <% if @memberCount.to_i == 0 %>
-            <li class="list-group-item">0%</li>
-            <li class="list-group-item">0%</li>
-          <% else %>
-            <li class="list-group-item"><%= (@totalDepartmentCount["情報工学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
-            <li class="list-group-item"><%= (@totalDepartmentCount["デジタルエンタテインメント学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
-          <% end %>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th scope="row">Total</th>
-      <td><%= @memberCount %></td>
-      <td>100%</td>
-    </tr>
-  </tfoot>
-</table>
 <div class="card">
   <div class="card-header">
     Administrative Functions
@@ -182,6 +82,14 @@
     <li class="flex-fill custom-list-item">
       <%= button_to "<i class=\"bi bi-arrow-down-square\"></i> DECREMENT ALL GRADES BY 1 YEAR".html_safe, { :controller => "site_admins", :action => "decrement_grade"}, data: { turbo_method: :delete, turbo_confirm: "<<<DECREMENT ALL GRADES BY 1 YEAR>>>\nPROCEED?" }, class: "list-group-item list-group-item-action list-group-item-warning w-100 text-center" %>
     </li>
+    <% if current_member.member_role == "admin" %>
+      <li class="flex-fill custom-list-item">
+        <%= link_to new_member_invitation_path, class: "list-group-item list-group-item-action list-group-item-info w-100 text-center" do %>
+          <i class="bi bi-envelope-at"></i>
+          INVITE NEW MEMBER BY GMAIL
+        <% end %>
+      </li>
+    <% end %>
     <li class="flex-fill custom-list-item">
       <%= link_to member_editor_path(format: 'xlsx'), class: "list-group-item list-group-item-action list-group-item-success w-100 text-center" do %>
         <i class="bi bi-file-earmark-excel"></i>
@@ -204,7 +112,8 @@
   }
 
   .table td {
-    padding: 0; /* Ensure no padding around cells */
+    padding: 0;
+    margin: 0;
   }
 
   .full-width-container {
