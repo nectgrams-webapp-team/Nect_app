@@ -23,12 +23,11 @@
           <td><%= member.grade %></td>
           <td><%= member.department %></td>
           <% if current_member.member_role == "admin" %>
-            <%# if member.invitation_accepted? == false %>
-<!--              <td class="table-light"><div class="full-width-container">-->
-                <%#= button_to "<i class=\"bi bi-envelope-at\"></i> Resend Invitation".html_safe, resend_invitation_path(member.id), method: :get, class:"btn btn-sm full-width-button" %>
-<!--              </div></td>-->
-            <%# elsif member.member_role == "user" %>
-            <% if member.member_role == "user" %>
+            <% if not member.invitation_accepted_at %>
+              <td class="table-light"><div class="full-width-container">
+                <%= button_to "<i class=\"bi bi-envelope-at\"></i> Resend Invitation".html_safe, resend_invitation_path(member.id), method: :get, class:"btn btn-sm full-width-button" %>
+              </div></td>
+            <% elsif member.member_role == "user" %>
               <td class="table-primary"><div class="full-width-container">
                 <%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
               </div>
