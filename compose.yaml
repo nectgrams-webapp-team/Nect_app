@@ -9,10 +9,10 @@ services:
         source: mysqldata
         target: /var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: password
       TZ: "Asia/Tokyo"
     ports:
-      - '3306:3306'
+      - '3305:3306'
   webapp:
     #buildの"."はカレント(.)にあるDockerfileを参照してbuildしろということ
     build: .
@@ -35,7 +35,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_PASSWORD: password
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:
