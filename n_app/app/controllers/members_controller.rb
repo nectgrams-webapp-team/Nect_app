@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-    @members = Member.all
+    @members = Member.where.not(invitation_accepted_at: nil)
   end
 
   def show

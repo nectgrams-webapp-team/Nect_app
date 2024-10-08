@@ -7,12 +7,12 @@
   <% if f.object.class.require_password_on_accepting %>
     <div class="field">
       <%= f.label :name %><br />
-      <%= f.text_field :name %>
+      <%= f.text_field :name, placeholder: 'IPUT太郎' %>
     </div>
 
     <div class="field">
       <%= f.label :student_id %><br />
-      <%= f.text_field :student_id %>
+      <%= f.text_field :student_id, placeholder: 'TKXXXXXX' %>
     </div>
 
     <div class="field">
