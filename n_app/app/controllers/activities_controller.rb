@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   def index
-    @activities = Activity.all
+    @activities = Activity.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def show
