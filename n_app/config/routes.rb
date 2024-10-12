@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   get "homes/about", to: "homes#about", as: "about"
 
   devise_for :members, controllers: {
-      invitations: 'members/invitations'
+      invitations: 'members/invitations',
+      registrations: 'members/registrations',
     }
 
   resources :members, only: [:index, :show, :edit, :update, :destroy]
