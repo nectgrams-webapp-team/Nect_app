@@ -1,6 +1,15 @@
 class ActivitiesController < ApplicationController
   def index
-    @activities = Activity.order(created_at: :desc).page(params[:page]).per(5)
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @activities = Activity.joins(:member)
+                            .where('activities.title LIKE ? OR activities.body LIKE ? OR members.name LIKE ?', search_term, search_term, search_term)
+                            .order(created_at: :desc)
+                            .page(params[:page])
+                            .per(10)
+    else
+      @activities = Activity.order(created_at: :desc).page(params[:page]).per(5)
+    end
   end
 
   def show
