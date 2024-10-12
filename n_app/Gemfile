@@ -75,8 +75,4 @@ gem 'redcarpet'
 gem 'rouge-rails'
 gem 'caxlsx'
 gem 'carrierwave', '~> 3.0'
-<<<<<<< HEAD
-gem 'dotenv-rails'
-=======
 gem 'dotenv-rails', groups: [:development, :test]
->>>>>>> main
