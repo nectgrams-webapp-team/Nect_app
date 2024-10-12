@@ -33,14 +33,6 @@
     padding: 20px;
   }
 
-  // .fixed-size-image {
-  //   width: 100%; /* Make the image take up the full width of its container */
-  //   max-width: auto; /* Set a maximum width */
-  //   // max-height: ;
-  //   height: auto; /* Maintain aspect ratio */
-  //   object-fit: cover; /* Ensure the image covers the area without distortion */
-  // }
-
   .fixed-height-image {
     max-height: 250px; /* Set the desired height */
     height: auto; /* Maintain aspect ratio */
@@ -49,9 +41,3 @@
     justify-self: center;
     border: rounded;
   }
-
-  // .no-image {
-  //   max-height: 250px; /* Set a maximum width for the placeholder image */
-  //   height: auto; /* Maintain aspect ratio */
-  //   object-fit: cover; /* Ensure the image covers the area without distortion */
-  // }
