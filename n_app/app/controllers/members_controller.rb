@@ -5,20 +5,18 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
     @activities = Activity.where(member_id: @member.id)
     @count = Activity.where(member_id: @member.id).count
   end
   
   def edit
     @member = Member.find(params[:id])
-    # @member.grade = @member.calculate_grade(@member.student_id)
   end
 
   def update
     @member = Member.find(params[:id])
 
-    # Calculate and set graduation year
+    # Calculate and store the graduation year in db
     @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
 
     #選択された言語の値を合計
