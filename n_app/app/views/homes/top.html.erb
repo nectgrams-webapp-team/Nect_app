@@ -37,10 +37,12 @@
   <div class="card-body">
     <div class="container text-center">
       <div class="row justify-content-evenly g-4">
-        <% @activities.last(6).reverse_each do |activity| %>
+      <% @activities.last(6).reverse_each do |activity| %>
         <div class="col-4 d-flex justify-content-center">
-          <div class="card" style="width: 18rem;">
-            <%= image_tag activity.get_activity_image, class: 'img-fluid fixed-height-image rounded-start' %>
+          <div class="card" style="width: 18rem; height: 18rem">
+            <div class="card-img-container"> <!-- Added container div -->
+              <%= image_tag activity.get_activity_image, class: 'img-fluid image-style border rounded' %>
+            </div>
             <div class="card-body">
               <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
               <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
@@ -77,9 +79,20 @@
     left: 0;
   }
 
-  .fixed-height-image {
-    max-height: 250px; /* Set the desired height */
-    height: auto; /* Maintain aspect ratio */
+  .image-style {
+    max-height: 250px;
+    width: 100%; 
+    object-fit: contain; 
+    display: block; 
+    margin: auto; 
+  }
+
+  .card-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 11rem;
+    overflow: hidden; 
   }
 
 </style>
