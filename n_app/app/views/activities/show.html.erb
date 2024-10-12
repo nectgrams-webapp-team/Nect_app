@@ -5,7 +5,7 @@
 		<%== markdown(@activity.body) %>
 	</div>
 	<%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-	<% if member_signed_in? %>
+	<% if member_signed_in? && current_member.id == @activity.member_id %>
 		<%= link_to '編集', edit_activity_path, class: 'link-info link-offset-2 link-underline link-underline-opacity-0' %>
 		<%= button_to "削除", activity_path(@activity.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
 	<% end %>
