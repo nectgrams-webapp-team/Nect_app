@@ -6,7 +6,7 @@ class Members::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    flash[:alert] = "入会をご希望の方はサイト管理者までご連絡ください。"
+    flash[:alert] = "Signing up on your own is prohibited! Please contact the site admins for membership details."
     redirect_to new_member_session_path
   end
 
