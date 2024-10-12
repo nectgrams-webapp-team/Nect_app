@@ -40,7 +40,7 @@
         <% @activities.last(6).reverse_each do |activity| %>
         <div class="col-4 d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
-            <%= image_tag activity.get_activity_image, class: 'img-fluid rounded-start card-img-top' %>
+            <%= image_tag activity.get_activity_image, class: 'img-fluid fixed-height-image rounded-start' %>
             <div class="card-body">
               <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
               <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
@@ -76,4 +76,10 @@
     bottom: 0;
     left: 0;
   }
+
+  .fixed-height-image {
+    max-height: 250px; /* Set the desired height */
+    height: auto; /* Maintain aspect ratio */
+  }
+
 </style>
