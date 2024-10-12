@@ -18,6 +18,9 @@ class MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
 
+    # Calculate and set graduation year
+    @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
+
     #選択された言語の値を合計
     selected_languages = Array(members_params[:selected_languages]).map(&:to_i)
     total_value = selected_languages.sum
@@ -33,6 +36,6 @@ class MembersController < ApplicationController
 
   private
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :course, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :graduation_year, :course, selected_languages: [])
   end
 end
