@@ -1,7 +1,7 @@
 <div class = "member-view">
   <% @members.each do |member| %>
     <div class="member-card">
-      <p class="graduation-year-index">26卒</p>
+      <p class="graduation-year-index"><%=member.graduation_year%>卒</p>
       <%= image_tag member.get_profile_image, class: "profile-image" %>
       <%= link_to member.name, member_path(member.id), class: "member-name"%>
       <p class="one-word"><%= member.intro %><p>
