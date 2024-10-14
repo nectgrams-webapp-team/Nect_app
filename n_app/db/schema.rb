@@ -85,11 +85,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_140724) do
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
-<<<<<<< HEAD
-    t.integer "graduation_year"
-    t.string "course"
-=======
->>>>>>> main
     t.integer "member_role", default: 0
     t.integer "graduation_year"
     t.string "course"
