@@ -5,18 +5,19 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
     @activities = Activity.where(member_id: @member.id)
     @count = Activity.where(member_id: @member.id).count
   end
   
   def edit
     @member = Member.find(params[:id])
-    # @member.grade = @member.calculate_grade(@member.student_id)
   end
 
   def update
     @member = Member.find(params[:id])
+
+    # Calculate and store the graduation year in db
+    @member.graduation_year = @member.calculate_graduation_year(@member.student_id)
 
     #選択された言語の値を合計
     selected_languages = Array(members_params[:selected_languages]).map(&:to_i)
@@ -33,6 +34,6 @@ class MembersController < ApplicationController
 
   private
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :course, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :graduation_year, :course, selected_languages: [])
   end
 end
