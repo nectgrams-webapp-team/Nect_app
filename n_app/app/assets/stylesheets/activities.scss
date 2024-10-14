@@ -32,3 +32,12 @@
     margin: 0 auto; /* 中央に配置 */
     padding: 20px;
   }
+
+  .fixed-height-image {
+    max-height: 250px; /* Set the desired height */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Make the image take up the full width of its container */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    justify-self: center;
+    border: rounded;
+  }
