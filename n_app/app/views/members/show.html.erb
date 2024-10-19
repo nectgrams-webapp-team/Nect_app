@@ -54,11 +54,11 @@
         <% end %>
       </div>
       <div class="d-flex flex-column mb-2">
-        <b><h2>学習中言語</h2></b>
+        <b><h2>学んでるスキル</h2></b>
         <br />
         <% languageList = @member.calculate_select_pl(@member.learning_programming_languages) %>
         <% if languageList.empty? %>
-          <h5>ー　学習中言語なし</h5>
+          <h5>ー学んでるスキルなし</h5>
         <% else %>
           <% languageList.each do |displayProgrammingLanguage| %>
             <h5><%= displayProgrammingLanguage %><br /></h5>
