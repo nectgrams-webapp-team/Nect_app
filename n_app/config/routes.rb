@@ -31,7 +31,10 @@ Rails.application.routes.draw do
     }
 
   resources :members, only: [:index, :show, :edit, :update, :destroy]
-  resources :activities
+  #resources :activities
+  resources :activities do
+    post 'save_draft', on: :collection
+  end
 
   namespace :api, path: 'api', format: :json do
     namespace :v1 do
