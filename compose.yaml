@@ -16,6 +16,8 @@ services:
   webapp:
     #buildの"."はカレント(.)にあるDockerfileを参照してbuildしろということ
     build: .
+    env_file:
+      - .env
     #rails7ではrails sではなく.bin/devでwebサーバーを起動させる(development)
     command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
     volumes:
