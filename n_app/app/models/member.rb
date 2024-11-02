@@ -6,6 +6,7 @@ class Member < ApplicationRecord
   # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
   validates :name, presence: true
+  validates :password, presence: true, length: { within: 8..128 }, format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}\z/, message: "must be at least 8 characters and include at least one letter, one number, and one special character" }, if: :password_required?
 
   has_many :activities, dependent: :destroy
   has_many :team_members, dependent: :destroy
