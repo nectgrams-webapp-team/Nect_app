@@ -85,8 +85,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_140724) do
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
     t.integer "department"
-    t.integer "member_role", default: 0
     t.integer "graduation_year"
+    t.integer "member_role", default: 0
     t.string "course"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
@@ -109,6 +109,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_12_140724) do
     t.integer "master_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
