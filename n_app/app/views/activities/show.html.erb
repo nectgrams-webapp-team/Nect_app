@@ -1,13 +1,42 @@
 <div class="container-activity">
-	<h1><%= @activity.title %></h1>
-	<h5>Created: <%= @activity.created_at.strftime('%Y/%m/%d') %></h5>
+	<div class="article-header">
+		<div class="article-header-title">
+			<h1>
+				<%= @activity.title %>
+			</h1>
+		</div>
+		<div class="article-header-meta">
+			<div class="article-header-time-of-creation">
+				<h5>
+					Created: <%= @activity.created_at.strftime('%Y/%m/%d') %>
+				</h5>
+			</div>
+			<div class="article-editors">
+				<% if member_signed_in? && current_member.id == @activity.member_id %>
+					<%= link_to '編集',
+											edit_activity_path,
+											class: 'btn btn-info btn-sm'
+					%>
+					<%= button_to '削除',
+												activity_path(@activity.id),
+												class: 'article-delete-button link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover',
+												method: :delete,
+												form: {
+													data: {
+														turbo_confirm: '本当に削除しますか？'
+													}
+												}
+					%>
+				<% end %>
+			</div>
+
+		</div>
+	</div>
 	<div class="markdown">
 		<%== markdown(@activity.body) %>
 	</div>
-	<%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-	<% if member_signed_in? && current_member.id == @activity.member_id %>
-		<%= link_to '編集', edit_activity_path, class: 'link-info link-offset-2 link-underline link-underline-opacity-0' %>
-		<%= button_to "削除", activity_path(@activity.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
-	<% end %>
+	<%= link_to '戻る',
+							activities_path,
+							class: 'btn btn-primary'
+	%>
 </div>
-
