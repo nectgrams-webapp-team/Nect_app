@@ -13,6 +13,30 @@
 
 <div class="editor-container">
   <div class="editor">
+    <div class="editor-actions">
+      <%=
+        link_to '戻る',
+                activity_path(@activity.id),
+                class: 'link-offset-2 link-underline link-underline-opacity-0',
+                data: {
+                  turbo_method: :get,
+                  turbo_confirm: '全ての変更を破棄してもよろしいですか？'
+                }
+      %>
+
+      <%=
+        button_to '削除',
+                  activity_path(@activity.id),
+                  class: 'article-delete link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover',
+                  method: :delete,
+                  form: {
+                    data: {
+                      turbo_confirm: '本当に削除しますか？'
+                    }
+                  }
+      %>
+    </div>
+
     <%= form_with model: @activity, method: :patch  do |activity| %>
     
       <div class="mb-3">
@@ -33,11 +57,9 @@
       <div>
         <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
       </div>
-    
+
       <%= activity.submit '変更を保存', class: 'btn btn-primary mt-3' %>
     <% end %>
-    
-    <%= link_to '戻る', activity_path(@activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
   </div>
   
   <div class="preview" id="preview">
