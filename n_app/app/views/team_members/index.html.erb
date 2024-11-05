@@ -1,27 +1,54 @@
-<div class = "container">
-    <h3>チーム <%= @team.name %> のメンバー一覧</h3>
+<div class="card">
+    <div class="card-header">
+        <h3>チーム <%= @team.name %> のメンバー管理</h3>
+    </div>
+    <div class="card-body">
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">仮メンバー</h5>
+                    <p class="card-text"><small class="text-body-secondary">このチームに参加することをリクエストしているユーザです。チーム管理者からチームへの参加リクエストが承諾されて正式メンバーになるのを待っている状態です。</small></p>
+                    
+                    <% @team_members.where(team_id: @team.id, approved: false).each do |member| %>
+                        <div class="card border-warning mb-3" style="width: 100%; background-color: #fcf1c0;">
+                            <div class="card-header text-white" style="background-color: #f5b916;">リクエスト</div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h5 class="card-title" style="margin-right: 10px;"><%= Member.find(member.member_id).name %></h5>
+                                    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+                                        <%= form_with(model: @team_members, method: :patch, url: team_member_path(member.team_id, member.member_id), local: true) do |form| %>
+                                            <%= form.hidden_field :approved, value: true %>
+                                            <%= form.submit '参加を許可', class: "btn btn-success" %>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>                    
+                </div>
+            </div>
 
-    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
-        <h5>仮メンバー</h5>
-        <% @team_members.where(team_id: @team.id, approved: false).each do |member| %>
-            <p><%= Member.find(member.member_id).name %></p>
-            <%= form_with(model: @team_members, method: :patch, url: team_member_path(member.team_id, member.member_id), local: true) do |form| %>
-                <%= form.hidden_field :approved, value: true %>
-                <%= form.submit '参加を許可' %>
-            <% end %>
-        <% end %>
-    <% else %>
-        <h5>仮メンバー</h5>
-        <% @team_members.where(team_id: @team.id, approved: false).each do |member| %>
-            <p><%= Member.find(member.member_id).name %></p>
-        <% end %>
-    <% end %>
-
-    <h5>正式メンバー</h5>
-    <% @team_members.where(team_id: @team.id, approved: true).each do |member| %>
-        <p><%= Member.find(member.member_id).name %></p>
-        <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
-            <%= button_to "退会させる", team_member_path(member.team_id, member.member_id), method: :delete, form: { data: { turbo_confirm: "本当に退会させますか？" } } %>
-        <% end %>
-    <% end %>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">正式メンバー</h5>
+                    <p class="card-text"><small class="text-body-secondary">実際にチームに参加済みのユーザです。チーム管理者がリクエストを正式に承諾し、チームのメンバーとして認められた状態です。</small></p>
+                    
+                    <% @team_members.where(team_id: @team.id, approved: true).each do |member| %>
+                        <div class="card border-success mb-3" style="width: 100%; background-color: #e6f5e6;">
+                            <div class="card-header text-white" style="background-color: #28a745;">メンバー</div>
+                            <div class="card-body">
+                                <!-- フレックスボックスで横並びにする -->
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h5 class="card-title" style="margin-right: 10px;"><%= Member.find(member.member_id).name %></h5>
+                                    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+                                        <%= button_to "退会", team_member_path(member.team_id, member.member_id), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "本当に退会させますか？" } } %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>                    
+            </div>
+        </div>       
+    </div>
 </div>
