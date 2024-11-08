@@ -1,6 +1,17 @@
 <div class="container-activity">
-	<div class="article-author">
-		<%= link_to image_tag(@author.get_profile_image, class: "article-author-profile-image") + @author.name, member_path(@author.id), class: 'article-author-link' %>
+	<div class="article-banner-container">
+		<% if @activity.activity_image.attached? %>
+			<%= image_tag @activity.get_activity_image, alt: @activity.title, class: 'article-banner' %>
+		<% end %>
+	</div>
+	<div class="article-author-container">
+		<%=
+			link_to(
+				image_tag(@author.get_profile_image, class: "article-author-profile-image") + @author.name,
+				member_path(@author.id),
+				class: 'article-author-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'
+			)
+		%>
 	</div>
 	<hr>
 	<div class="article-header-meta">

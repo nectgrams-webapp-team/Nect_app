@@ -42,8 +42,21 @@
   border: rounded;
 }
 
+.article-banner-container {
+  margin: 0 0 16px 0;
+}
+
+.article-banner {
+  max-width: 100%;
+  height: auto;
+}
+
 .article-header-title > * {
   font-weight: 700 !important;
+}
+
+.article-author-container {
+  padding: 16px 0
 }
 
 .article-author-link {
