@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   #resources :activities
   resources :activities do
     post 'save_draft', on: :collection
+    patch 'change_publish', on: :member 
   end
 
   namespace :api, path: 'api', format: :json do
