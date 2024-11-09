@@ -10,8 +10,12 @@
         <% if image.file.present? && image.file.url.present? %>
           <%= image_tag(image.file.url, class: 'd-block w-100', alt: image.title) %>
           <div class="carousel-caption d-none d-md-block text-bg-dark p-3 bg-opacity-25 rounded-pill">
-            <h5><%= image.title %></h5>
-            <p><%= image.caption %></p>
+            <h5>
+              <%= image.title %>
+            </h5>
+            <p>
+              <%= image.caption %>
+            </p>
           </div>
         <% else %>
           <div class="alert alert-danger" role="alert">
@@ -33,23 +37,33 @@
 
 <br />
 <div class="card">
-  <h5 class="card-header">Featured Activities</h5>
+  <h5 class="card-header">
+    Featured Activities
+  </h5>
   <div class="card-body">
     <div class="container text-center">
       <div class="row justify-content-evenly g-4">
-      <% @activities.last(6).reverse_each do |activity| %>
-        <div class="col-4 d-flex justify-content-center">
-          <div class="card" style="width: 18rem; height: 18rem">
-            <div class="card-img-container">
-              <%= image_tag activity.get_activity_image, class: 'img-fluid image-style border rounded' %>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-              <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
-              <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+        <% @activities.last(6).reverse_each do |activity| %>
+          <div class="col-md-4 d-flex justify-content-center">
+            <div class="card" style="width: 18rem; height: 18rem">
+              <div class="card-img-container">
+                <%= image_tag activity.get_activity_image, class: 'img-fluid image-style border rounded' %>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+                </h5>
+                <h6>
+                  <%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+                </h6>
+                <p class="card-text">
+                  <small class="text-body-secondary">
+                    <%= activity.created_at.strftime('%Y/%m/%d') %>
+                  </small>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
         <% end %>
       </div>
     </div>
@@ -79,20 +93,10 @@
     left: 0;
   }
 
-  .image-style {
-    max-height: 200px;
-    height: auto; /* Maintain aspect ratio */
-    max-width: 100%; /* Make the image take up the full width of its container */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
-    justify-self: center;
-  }
-
   .card-img-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 15rem;
     overflow: hidden;
   }
-
 </style>
