@@ -2,7 +2,7 @@
 <br />
 <div class="carousel-editor">
     <% @images.each do |image| %>
-        <%= form_with model: image, url: update_image_path(image.id), local: true, html: { multipart: true, class: "image-form" } do |form| %>
+        <%= form_with model: image, url: site_admins_carousel_image_path(image.id), local: true, html: { multipart: true, class: "image-form" } do |form| %>
             <div class="image-item">
                 <div class="image-display">
                     <% if image.file.present? && image.file.url.present? %>
@@ -27,7 +27,17 @@
                     </div>
                     <div class="image-actions">
                         <%= form.submit "Update", class: "btn btn-primary" %>
-                        <%= link_to 'Delete', delete_image_path(image.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE IMAGE>>>\nPROCEED?" }, class: "btn btn-danger" %>
+                        <%=
+                            link_to(
+                                'Delete',
+                                site_admins_carousel_image_path(image.id),
+                                data: {
+                                    turbo_method: :delete,
+                                    turbo_confirm: "<<<REMOVE IMAGE>>>\nPROCEED?"
+                                },
+                                class: "btn btn-danger"
+                            )
+                        %>
                     </div>
                 </div>
             </div>
@@ -47,7 +57,7 @@
         <% end %>
     <% end %>
 
-    <%= form_with(model: @new_image, url: create_image_path, local: true, html: { multipart: true, class: "new-image-form" }) do |form| %>
+    <%= form_with(model: @new_image, url: site_admins_carousel_images_path, local: true, html: { multipart: true, class: "new-image-form" }) do |form| %>
         <div class="new-image-item">
             <div class="image-display">
                 <figure class="figure">
@@ -86,9 +96,9 @@
 </div>
 
 <br />
-<%= link_to admin_index_site_admins_path, class:"link-offset-2 link-underline link-underline-opacity-0" do %>
-  <i class="bi bi-arrow-left-square"></i>
-  Back To Admin Index
+<%= link_to site_admins_index_path, class:"link-offset-2 link-underline link-underline-opacity-0" do %>
+    <i class="bi bi-arrow-left-square"></i>
+    Back To Admin Index
 <% end %>
 
 <style>

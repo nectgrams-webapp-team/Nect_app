@@ -11,7 +11,7 @@
           </li>
           <% if current_member.member_role != "user" %>
             <li class="nav-item me-2">
-                <%= link_to 'Admin', site_admins_admin_index_path, class: 'btn btn-outline-warning' %>
+                <%= link_to 'Admin', site_admins_index_path, class: 'btn btn-outline-warning' %>
             </li>
           <% end %>
           <li class="nav-item me-2">
