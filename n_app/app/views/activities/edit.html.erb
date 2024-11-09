@@ -33,14 +33,13 @@
       <div>
         <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
       </div>
-    
       <%= activity.submit '変更を保存', class: 'btn btn-primary mt-3' %>
     <% end %>
     
     <%= link_to '戻る', activity_path(@activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
   </div>
   
-  <div class="preview" id="preview">
+  <div class="markdown preview" id="preview">
     <!-- プレビュー表示エリア -->
   </div>
 </div>
