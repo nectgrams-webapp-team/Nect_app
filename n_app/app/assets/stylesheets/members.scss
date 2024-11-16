@@ -29,13 +29,6 @@
   font-family: system-ui;
 }
 
-.profile-image{
-  width: 150px;
-  height: 150px;
-  margin-top: 25px;
-  border-radius: 75px;
-}
-
 .member-name{
   padding: 5px;
   margin-top: 8px;
@@ -117,6 +110,7 @@
   height: 150px;
   margin-top: 25px;
   border-radius: 75px;
+  object-fit: cover;
 }
 
 .card-body {
