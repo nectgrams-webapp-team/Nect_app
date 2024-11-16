@@ -1,9 +1,4 @@
 <div class="container-activity">
-	<div class="article-banner-container">
-		<% if @activity.activity_image.attached? %>
-			<%= image_tag @activity.get_activity_image, alt: @activity.title, class: 'article-banner' %>
-		<% end %>
-	</div>
 	<div class="article-author-container">
 		<%=
 			link_to(
