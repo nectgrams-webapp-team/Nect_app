@@ -154,3 +154,21 @@ h5 {
   flex-direction: column;
   margin-bottom: 10px;
 }
+
+
+.horizontal-scroll-container {
+  display: flex; /* 子要素を横並びにする */
+  overflow-x: auto; /* 横方向のスクロールを許可 */
+  gap: 1rem; /* カード同士の隙間を設定 */
+  padding: 1rem 0; /* 上下に少し余白を追加 */
+}
+
+.horizontal-scroll-container .card {
+  flex: 0 0 auto; /* カードの幅が自動で縮まないように設定 */
+}
+
+.horizontal-scroll-container .card img {
+  width: 100%;       /* カードの幅に合わせて画像の幅を100%に設定 */
+  height: 150px;     /* 画像の高さを固定 */
+  object-fit: cover; /* 画像のはみ出した部分を切り取り、中央部分を表示 */
+}

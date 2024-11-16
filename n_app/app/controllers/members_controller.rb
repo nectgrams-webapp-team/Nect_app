@@ -7,6 +7,8 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     @activities = Activity.where(member_id: @member.id)
     @count = Activity.where(member_id: @member.id).count
+    @activities_published = @activities.where(published: true)
+    @activities_draft = @activities.where(published: false)
   end
   
   def edit
