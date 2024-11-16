@@ -1,38 +1,31 @@
 <div class="container-activity">
-	<div class="article-author-container">
-		<%=
-			link_to(
-				image_tag(@author.get_profile_image, class: "article-author-profile-image") + @author.name,
-				member_path(@author.id),
-				class: 'article-author-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'
-			)
-		%>
-	</div>
-	<hr>
-	<div class="article-header-meta">
-		<div class="article-header-time-of-creation">
-			<h5>
-				Created: <%= @activity.created_at.strftime('%Y/%m/%d') %>
-			</h5>
-		</div>
-		<div class="article-editor-button">
-			<% if member_signed_in? && current_member.id == @activity.member_id %>
-				<%=
-					link_to '編集',
-									edit_activity_path,
-									class: 'btn btn-primary btn-sm px-3',
-									target: '_blank'
-				%>
-			<% end %>
-		</div>
-	</div>
-	<hr>
-	<div class="article-header-title">
-		<h1>
-			<%= @activity.title %>
-		</h1>
-	</div>
-	<div class="markdown">
-		<%== markdown(@activity.body) %>
-	</div>
+    <div class="article-author-container">
+        <%= link_to image_tag(@author.get_profile_image, class: "article-author-profile-image") + @author.name,
+                    member_path(@author.id),
+                    class: 'article-author-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover' %>
+    </div>
+    <hr>
+    <div class="article-header-meta">
+        <div class="article-header-time-of-creation">
+            <h5>
+                Created: <%= @activity.created_at.strftime('%Y/%m/%d') %>
+            </h5>
+        </div>
+        <div class="article-editor-button">
+            <% if member_signed_in? && current_member.id == @activity.member_id %>
+                <%= link_to '編集',
+                            edit_activity_path,
+                            class: 'btn btn-primary btn-sm px-3' %>
+            <% end %>
+        </div>
+    </div>
+    <hr>
+    <div class="article-header-title">
+        <h1>
+            <%= @activity.title %>
+        </h1>
+    </div>
+    <div class="markdown">
+        <%== markdown(@activity.body) %>
+    </div>
 </div>
