@@ -13,39 +13,29 @@
 
 <div class="editor-container">
   <div class="editor">
-    
-    <%= form_with model: @activity, url: activities_path, method: :post  do |activity| %>
-      <div class="mb-3">
+    <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
+      <div class="form-group">
         <label for="formFile" class="form-label">トップ画像の選択</label>
-        <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile'  %>
+        <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
       </div>
     
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <h3 class="col-form-label">記事のタイトル</h3>
-        </div>
-        <div class="col-auto">
-          <%= activity.text_field :title, class: 'form-control' %>
-        </div>
-        <div class="col-auto">
-          <span id="passwordHelpInline" class="form-text">
-            Must be 8-20 characters long.
-          </span>
-        </div>
+      <div class="form-group">
+        <label for="activity_title" class="form-label">記事のタイトル</label>
+        <%= activity.text_field :title, class: 'form-control', id: 'activity_title' %>
       </div>
     
-      <h3 class="form-label">記事の内容</h3>
-      <div>
+      <div class="form-group">
+        <label for="activity_body" class="form-label">本文</label>
         <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
       </div>
-      
-      <%= activity.submit '投稿', class: 'btn btn-primary' %>
+    
+      <%= activity.submit '投稿する', class: 'btn btn-primary mt-3' %>
     <% end %>
     
-    <%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
+    <%= link_to '戻る', activities_path, class: 'btn btn-outline-secondary mt-3' %>
   </div>
   
-  <div class="markdown preview" id="preview">
+  <div class="preview" id="preview">
     <!-- プレビュー表示エリア -->
   </div>
 </div>

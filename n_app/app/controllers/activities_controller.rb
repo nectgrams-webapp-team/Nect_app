@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
                             .page(params[:page])
                             .per(10)
     else
-      @activities = Activity.order(created_at: :desc).page(params[:page]).per(5)
+      @activities = Activity.order(created_at: :desc).page(params[:page]).per(10)
     end
   end
 
