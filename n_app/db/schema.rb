@@ -110,7 +110,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_02_062551) do
     t.integer "master_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
