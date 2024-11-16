@@ -4,7 +4,7 @@ module Api
       include MarkdownHelper
       def preview
         content = markdown(params[:content])
-        render json: { content: }
+        render :json => { content: }
       end
     end
   end
