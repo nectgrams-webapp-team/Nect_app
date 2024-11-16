@@ -1,45 +1,67 @@
 <h1>投稿内容の編集</h1>
 
 <% if @activity.errors.any? %>
-  <div class="alert alert-danger">
-    <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
-    <ul>
-      <% @activity.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+    <div class="alert alert-danger">
+        <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
+        <ul>
+            <% @activity.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
 <% end %>
 
 <div class="editor-container">
-  <div class="editor">
-    <%= form_with model: @activity, method: :patch  do |activity| %>
-    
-      <div class="mb-3">
-        <label for="formFile" class="form-label">トップ画像の選択</label>
-        <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
-      </div>
-    
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <h4 class="col-form-label">記事タイトル</h4>
+    <div class="editor">
+        <div class="editor-actions">
+            <%= link_to '戻る',
+                        activity_path(@activity.id),
+                        class: 'link-offset-2 link-underline link-underline-opacity-0',
+                        data: { turbo_method: :get,
+                                turbo_confirm: '変更した内容は保存されません。よろしいですか？' } %>
+            
+            <%= button_to '削除',
+                          activity_path(@activity.id),
+                          class: 'article-delete link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover',
+                          method: :delete,
+                          form: { data: { turbo_confirm: '本当に削除しますか？' } } %>
         </div>
-        <div class="col-auto">
-          <%= activity.text_field :title, class: 'form-control' %>
-        </div>
-      </div>
+        
+        <%= form_with model: @activity, method: :patch do |activity| %>
+            
+            <div class="mb-3">
+                <label for="formFile" class="form-label">トップ画像の選択</label>
+                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
+            </div>
+            
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <h4 class="col-form-label">記事タイトル</h4>
+                </div>
+                <div class="col-auto">
+                    <%= activity.text_field :title, class: 'form-control' %>
+                </div>
+            </div>
+            
+            <h3 class="form-label">本文</h3>
+            <div>
+                <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
+            </div>
+            <% if @activity.published %>
+                <div class="d-flex justify-content-between mt-3">
+                    <%= activity.submit '保存して投稿', class: 'btn btn-primary' %>
+                    <%= button_tag '下書き保存', type: 'submit', class: 'btn btn-secondary', formaction: change_publish_activity_path(@activity) %>
+                </div>
+            <% else %>
+                <div class="d-flex justify-content-between mt-3">
+                    <%= button_tag '保存して投稿', type: 'submit', class: 'btn btn-primary', formaction: change_publish_activity_path(@activity) %>
+                    <%= activity.submit '下書き保存', class: 'btn btn-secondary' %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
     
-      <h4 class="form-label">本文</h4>
-      <div>
-        <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
-      </div>
-      <%= activity.submit '変更を保存', class: 'btn btn-primary mt-3' %>
-    <% end %>
-    
-    <%= link_to '戻る', activity_path(@activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-  </div>
-  
-  <div class="markdown preview" id="preview">
-    <!-- プレビュー表示エリア -->
-  </div>
+    <div class="markdown preview" id="preview">
+        <!-- プレビュー表示エリア -->
+    </div>
 </div>

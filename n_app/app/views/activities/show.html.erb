@@ -1,12 +1,31 @@
 <div class="container-activity">
-	<h1><%= @activity.title %></h1>
-	<h5>Created: <%= @activity.created_at.strftime('%Y/%m/%d') %></h5>
-	<div class="markdown">
-		<%== markdown(@activity.body) %>
-	</div>
-	<%= link_to '戻る', activities_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-	<% if member_signed_in? && current_member.id == @activity.member_id %>
-		<%= link_to '編集', edit_activity_path, class: 'link-info link-offset-2 link-underline link-underline-opacity-0' %>
-		<%= button_to "削除", activity_path(@activity.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
-	<% end %>
+    <div class="article-author-container">
+        <%= link_to image_tag(@author.get_profile_image, class: "article-author-profile-image") + @author.name,
+                    member_path(@author.id),
+                    class: 'article-author-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover' %>
+    </div>
+    <hr>
+    <div class="article-header-meta">
+        <div class="article-header-time-of-creation">
+            <h5>
+                Created: <%= @activity.created_at.strftime('%Y/%m/%d') %>
+            </h5>
+        </div>
+        <div class="article-editor-button">
+            <% if member_signed_in? && current_member.id == @activity.member_id %>
+                <%= link_to '編集',
+                            edit_activity_path,
+                            class: 'btn btn-primary btn-sm px-3' %>
+            <% end %>
+        </div>
+    </div>
+    <hr>
+    <div class="article-header-title">
+        <h1>
+            <%= @activity.title %>
+        </h1>
+    </div>
+    <div class="markdown">
+        <%== markdown(@activity.body) %>
+    </div>
 </div>
