@@ -49,3 +49,4 @@ n_app/public/uploads
 n_app/node_modules
 
 n_app/.gitignore
+n_app/public/uploads/home/file

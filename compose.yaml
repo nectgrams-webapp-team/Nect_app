@@ -9,7 +9,7 @@ services:
         source: mysqldata
         target: /var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
     ports:
       - '3305:3306'
@@ -18,8 +18,8 @@ services:
     build: .
     env_file:
       - .env
-    #rails7ではrails sではなく.bin/devでwebサーバーを起動させる(development)
-    command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
+    #本番環境用コマンド(production)
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
     volumes:
       - type: bind
         source: ./n_app
@@ -37,7 +37,8 @@ services:
     stdin_open: true
     tty: true
     environment:
-      MYSQL_PASSWORD: password
+      RAILS_ENV: production
+      MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:

@@ -67,9 +67,10 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Log to STDOUT by default
-  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.logger = ActiveSupport::Logger.new("log/production.log", 10, 100.megabytes)
     .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
     .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -109,7 +110,12 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
+  config.hosts << "nect-life.com"
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # クラスをキャッシュするかどうかを設定
+  config.cache_classes = true
+
+  # 静的ファイルを提供するかどうかの設定
+  config.serve_static_files = true
 end
