@@ -17,7 +17,6 @@
 }
 
 .graduation-year-index{
-  background-color: #D9D9D9;
   margin: 0px;
   font-size: 19px;
   width: 58px;
@@ -30,13 +29,6 @@
   font-family: system-ui;
 }
 
-.profile-image{
-  width: 150px;
-  height: 150px;
-  margin-top: 25px;
-  border-radius: 75px;
-}
-
 .member-name{
   padding: 5px;
   margin-top: 8px;
@@ -44,7 +36,7 @@
   text-decoration: none;
   color: black;
   font-family: system-ui;
-  background-image: linear-gradient(to right, #000000 50%, rgb(255, 255, 255) 50%);
+  background-image: linear-gradient(to right, #000000 50%, #ffffff 50%);
   background-position: 100% 0;
   background-size: 210% auto;
   transition: .5s;
@@ -57,11 +49,126 @@
   color: #ffffff;
 }
 
-.one-word{
-  width: 230px;
-  height: 80px;
-  padding: 5px;
-  margin-top: 20px;
-  font-size: 16px;
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 30px auto;
+  max-width: 700px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-button-danger {
+  color: white !important;
+  background-color: #332D2D !important;
+  border-color: inherit !important;
+}
+
+.profile-button-info {
+  color: black !important;
+  background-color: #0dcaf0 !important;
+}
+
+.profile-button-warning {
+  color: black !important;
+  background-color: #ffc107 !important;
+  border-color: inherit !important;
+}
+
+.profile-button-dark {
+  color: white !important;
+  background-color: #332D2D !important;
+  border-color: inherit !important;
+}
+
+.card-header li {
+  display: inline;
+}
+
+.card-header a, .card-header button {
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.profile-image{
+  width: 150px;
+  height: 150px;
+  margin-top: 25px;
+  border-radius: 75px;
+  object-fit: cover;
+}
+
+.card-body {
   text-align: center;
+}
+
+.card-title {
+  font-size: 28px;
+  margin: 0;
+  color: #333;
+}
+
+.card-text {
+  padding-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.content {
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+h5 {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+
+.horizontal-scroll-container {
+  display: flex; /* 子要素を横並びにする */
+  overflow-x: auto; /* 横方向のスクロールを許可 */
+  gap: 1rem; /* カード同士の隙間を設定 */
+  padding: 1rem 0; /* 上下に少し余白を追加 */
+}
+
+.horizontal-scroll-container .card {
+  flex: 0 0 auto; /* カードの幅が自動で縮まないように設定 */
+}
+
+.horizontal-scroll-container .card img {
+  width: 100%;       /* カードの幅に合わせて画像の幅を100%に設定 */
+  height: 150px;     /* 画像の高さを固定 */
+  object-fit: cover; /* 画像のはみ出した部分を切り取り、中央部分を表示 */
 }

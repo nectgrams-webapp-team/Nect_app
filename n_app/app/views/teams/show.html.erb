@@ -1,28 +1,103 @@
 <div class = "container">
-    <h1><%= @team.name %></h1>
-    <h3><%= @team.introduction %></h3>
+    <div class="card">
+        <div class="card-header">
+            Team
+        </div>
+        <div class="card-body">
+            <h1><%= @team.name %></h1>
+            <p class="card-text"><%= @team.introduction %></p>
+            <% if current_member.nil? %>
 
-    <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
-        <h3>作成者：自分</h3>
-        <%= link_to 'メンバー管理', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>
-        <%= link_to 'チーム編集', edit_team_path, class: 'btn btn-outline-primary' %>
-        <%= button_to "チームを削除", team_path(@team.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？この処理によってチームへの参加リクエスト、参加メンバーは取り消されます" } } %>
-    <% else %>
-        <h3>作成者：<%= Member.find(@team.master_id).name %></h3>
-        <%= link_to 'メンバー一覧', team_members_path(team_id: @team.id), class: 'btn btn-outline-primary' %>
-        <% if TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: true).exists? %>
-            <p>参加済み</p>
-        <% elsif TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: false).exists? %>
-            <p>参加リクエスト送信済み</p>
-            <%= button_to "参加リスエスト取り消し", team_member_path(@team.id, current_member.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
-        <% else %>
-            <%= form_with model: TeamMember.new, url: team_members_path, method: :post  do |team_member| %>
-                <%= team_member.hidden_field :team_id, value: @team.id %>
-                <%= team_member.hidden_field :member_id, value: current_member.id %>
-                <%= team_member.submit 'チームに参加' %>
+            <% elsif member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+                <!-- 管理者機能ボタン -->
+                <div class="text-end"> <!-- 右寄せ -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal" style="width: 110px;"> <!-- 青色のボタン -->
+                        管理者機能
+                    </button>
+                </div>
+                <!-- モーダルウィンドウ -->
+                <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="adminModalLabel">管理者機能</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                            <!-- メンバー管理ボタン -->
+                            <li class="list-group-item">
+                                <%= link_to team_members_path(team_id: @team.id), class: 'btn btn-primary w-100 d-flex align-items-center justify-content-center' do %>
+                                    <i class="fas fa-users me-2"></i> メンバー管理
+                                <% end %>
+                            </li>
+                            <!-- チーム編集ボタン -->
+                            <li class="list-group-item">
+                                <%= link_to edit_team_path, class: 'btn btn-primary w-100 d-flex align-items-center justify-content-center' do %>
+                                    <i class="fas fa-edit me-2"></i> チーム編集
+                                <% end %>
+                            </li>
+                            <!-- チーム削除ボタン -->
+                            <li class="list-group-item">
+                                <%= button_to team_path(@team.id), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？この処理によってチームへの参加リクエスト、参加メンバーは取り消されます" } }, class: 'btn btn-danger w-100 d-flex align-items-center justify-content-center' do %>
+                                    <i class="fas fa-trash me-2"></i> チーム削除
+                                <% end %>
+                            </li>
+                        </ul>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <% elsif TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: true).exists? or 
+            TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: false).exists? or
+            !current_member.nil? %>
+                <div class="text-end">
+                    <%= link_to 'メンバー一覧', team_members_path(team_id: @team.id), class: 'btn btn-primary' %>
+                </div>            
             <% end %>
-        <% end %>
-    <% end %>
+        </div>
+        <ul class="list-group list-group-flush">
+            <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+                <li class="list-group-item">Created by：自分</li>
+            <% else %>
+                <li class="list-group-item">Created by：<%= Member.find(@team.master_id).name %></li>
+            <% end %>
+        
+            <% if member_signed_in? && current_member.id == Member.find(@team.master_id).id %>
+                <li class="list-group-item">status：チーム管理者</li>
+            <% else %>
+                <% if current_member.nil? %>
 
+                <% elsif TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: true).exists? %>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="background-color: #befacc; font-weight: normal;">
+                            status：<span style="font-weight: bold;">メンバー（チームに所属済み）</span>
+                        </li>
+                    </ul>
+                <% elsif TeamMember.where(team_id: @team.id, member_id: current_member.id, approved: false).exists? %>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #f2c8b1;">
+                            <span style="font-weight: bold;">status：参加リクエスト送信済み</span>
+                            <%= button_to "参加リクエスト取り消し", team_member_path(@team.id, current_member.id), method: :delete, class: 'btn btn-danger text-white' %>
+                        </li>
+                    </ul>
+                <% else %>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center"> <!-- d-flex、justify-content-between、align-items-centerクラスを追加 -->
+                            status：チームに未参加
+                            <%= form_with model: TeamMember.new, url: team_members_path, method: :post  do |team_member| %>
+                                <%= team_member.hidden_field :team_id, value: @team.id %>
+                                <%= team_member.hidden_field :member_id, value: current_member.id %>
+                                <%= team_member.submit 'チームに参加', class: 'btn btn-success' %>
+                            <% end %>
+                        </li>
+                    </ul>
+                <% end %>
+            <% end %>
+        </ul>
+    </div>
     <%= link_to '戻る', teams_path, class: 'link-offset-2 link-underline link-underline-opacity-0' %>
 </div>

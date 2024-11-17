@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width: 5%;" scope="row">#</th>
+        <td style="width: 15%;">Event Title</td>
+        <td style="width: 40%;">Event Description</td>
+        <td style="width: 20%;">Date of Event</td>
+        <td style="width: 20%;">Event Actions</td>
+    </tr>
+    </thead>
+</table>
+
+<% @event_history.each do |event_history| %>
+    <%= render 'event_form',
+               event_history: event_history,
+               url: site_admins_event_history_path(event_history.id),
+               submit_text: "Update Event",
+               submit_class: "btn-primary",
+               delete_path: site_admins_event_history_path(event_history.id) %>
+<% end %>
+
+<%= render 'event_form',
+           event_history: @new_event_history,
+           url: site_admins_event_histories_path,
+           submit_text: "Create Event",
+           submit_class: "btn-success",
+           delete_path: nil %>
+
+<br />
+<%= link_to site_admins_index_path, class: "link-offset-2 link-underline link-underline-opacity-0" do %>
+    <i class="bi bi-arrow-left-square"></i> Back To Admin Index
+<% end %>
