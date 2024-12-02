@@ -36,6 +36,9 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
+    unless @activity.member == current_member.id
+      redirect_to activity_path(params[:id])
+    end
   end
 
   def update
@@ -85,6 +88,7 @@ class ActivitiesController < ApplicationController
   end
 
   private
+
   def activity_params
     params.require(:activity).permit(:title, :body, :activity_image, :published)
   end
