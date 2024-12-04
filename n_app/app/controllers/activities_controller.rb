@@ -36,7 +36,7 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
-    unless @activity.member == current_member.id
+    unless @activity.member == current_member
       redirect_to activity_path(params[:id])
     end
   end
