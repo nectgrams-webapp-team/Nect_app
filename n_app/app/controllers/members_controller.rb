@@ -38,6 +38,12 @@ class MembersController < ApplicationController
     end
   end
 
+  def courses_by_department
+    department = params[:department].to_sym
+    courses = Member::DEPARTMENT_COURSES[department] || []
+    render json: { courses: courses }
+  end
+
   private
 
   def members_params

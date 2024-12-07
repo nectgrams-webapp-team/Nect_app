@@ -28,4 +28,19 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      activity: "Activity"
+      event_history: "Event History"
+      home: "Home"
+      member: "Member"
+      team: "Team"
+      team_member: "Team Member"
+    attributes:
+      member:
+        grades:
+          freshman:  "Freshman"
+          sophomore: "Sophomore"
+          junior:    "Junior"
+          senior:    "Senior"
+          graduate:  "Graduate"

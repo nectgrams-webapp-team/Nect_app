@@ -21,6 +21,15 @@ module NApp
 
     config.time_zone = 'Tokyo'
 
+    # Where the I18n library should search for translation files
+    I18n.load_path += Dir[Rails.root.join("lib", "locale", "*.{rb,yml}")]
+
+    # Permitted locales available for the application
+    I18n.available_locales = [:en, :ja]
+
+    # Set default locale to something other than :en
+    I18n.default_locale = :ja
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

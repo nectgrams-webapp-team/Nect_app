@@ -7,7 +7,12 @@ Rails.application.routes.draw do
     registrations: 'members/registrations',
   }
 
-  resources :members, only: [:index, :show, :edit, :update, :destroy]
+  resources :members, only: [:index, :show, :edit, :update, :destroy] do
+    collection do
+      get 'courses_by_department'
+    end
+  end
+
   # resources :activities
   resources :activities do
     post 'save_draft', on: :collection

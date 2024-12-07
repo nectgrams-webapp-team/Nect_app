@@ -7,7 +7,7 @@
             <th scope="col">Member Name</th>
             <th scope="col">Year</th>
             <th scope="col">Department</th>
-            <% if current_member.member_role == "admin" %>
+            <% if current_member.member_role == :admin %>
                 <th scope="col">Access Level</th>
                 <th scope="col">Member Status</th>
             <% end %>
@@ -22,16 +22,16 @@
                 </td>
                 <td><%= member.grade %></td>
                 <td><%= member.department %></td>
-                <% if current_member.member_role == "admin" %>
+                <% if current_member.member_role == :admin %>
                     <% if not member.invitation_accepted_at %>
                         <td class="table-light"><div class="full-width-container">
                             <%= button_to "<i class=\"bi bi-envelope-at\"></i> Resend Invitation".html_safe, resend_invitation_site_admins_members_manager_path(member.id), method: :get, class:"btn btn-sm full-width-button" %>
                         </div></td>
-                    <% elsif member.member_role == "user" %>
+                    <% elsif member.member_role == :user %>
                         <td class="table-primary"><div class="full-width-container">
                             <%= button_to "<i class=\"bi bi-check-square\"></i> Grant Mod Privileges".html_safe, grant_mod_status_site_admins_members_manager_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
                         </div>
-                    <% elsif member.member_role == "mod" %>
+                    <% elsif member.member_role == :mod %>
                         <td class="table-success"><div class="full-width-container">
                             <%= button_to "<i class=\"bi bi-person-check\"></i> Grant Admin Privileges".html_safe, grant_admin_status_site_admins_members_manager_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
                         </div>
@@ -42,17 +42,17 @@
                             </button>
                         </div>
                     <% end %>
-                    <% if member.member_role == "user" %>
+                    <% if member.member_role == :user %>
                         <td class="table-danger"><div class="full-width-container">
                             <%= link_to site_admins_members_manager_path(member.id), data: { turbo_method: :delete, turbo_confirm: "<<<REMOVE MEMBERSHIP>>>\nPROCEED?" }, class:"btn btn-sm full-width-button" do %>
                                 <i class="bi bi-person-x"></i> Remove Membership
                             <% end %>
                         </div></td>
-                    <% elsif member.member_role == "mod" %>
+                    <% elsif member.member_role == :mod %>
                         <td class="table-warning"><div class="full-width-container">
                             <%= button_to "<i class='bi bi-x-square'></i> Revoke Mod Privileges".html_safe, revoke_mod_status_site_admins_members_manager_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
                         </div>
-                    <% elsif member.member_role == "admin" && member != current_member %>
+                    <% elsif member.member_role == :admin && member != current_member %>
                         <td class="table-warning"><div class="full-width-container">
                             <%= button_to "<i class='bi bi-x-square'></i> Revoke Admin Privileges".html_safe, revoke_admin_status_site_admins_members_manager_path(member.id), method: :patch, class:"btn btn-sm full-width-button" %>
                         </div>
@@ -107,7 +107,7 @@
                 )
             %>
         </li>
-        <% if current_member.member_role == "admin" %>
+        <% if current_member.member_role == :admin %>
             <li class="flex-fill custom-list-item">
                 <%= link_to new_member_invitation_path, class: "list-group-item list-group-item-action list-group-item-info w-100 text-center" do %>
                     <i class="bi bi-envelope-at"></i>
