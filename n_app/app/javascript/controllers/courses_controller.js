@@ -67,6 +67,7 @@ export default class extends Controller {
                 cache[department].forEach((course) => {
                     courses.appendChild(this.createRadioButton('member[course]', course, `member_department_${course}`, course, course === checkedCourse));
                 });
+                return;
             }
 
             try {
