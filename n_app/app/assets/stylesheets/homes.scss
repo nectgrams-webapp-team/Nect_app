@@ -74,3 +74,72 @@
     }
   }
 }
+
+
+.header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+/* メインコンテンツのスタイル */
+.content {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* セクションスタイル */
+.about-section {
+  padding: 20px;
+}
+
+/* 各段落のスタイル */
+.about-section p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  text-align: justify;
+}
+
+/* 特定のクラスの装飾 */
+.intro {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.motto {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4CAF50;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* 強調文字のスタイル */
+.about-section strong {
+  color: #4CAF50;
+}
+
+/* メディアクエリ（レスポンシブ対応） */
+@media (max-width: 768px) {
+  .content {
+    padding: 15px;
+  }
+
+  .about-section p {
+    font-size: 0.9rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+}
