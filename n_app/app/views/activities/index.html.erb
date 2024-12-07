@@ -11,19 +11,20 @@
     <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary mb-4' %>
   <% end %>
 
-  <div class="posts-entry">
+  <div class="activities">
     <% @activities.each do |activity| %>
-      <div class="blog-entry">
-        <div class="image-container">
-          <% image_class = 'fixed-height-image border rounded' %>
-          <%= image_tag activity.get_activity_image, alt: "Image", class: image_class %>
-        </div>
-        <div class="content">
-          <h2 class="text-center"><%= activity.title %></h2>
-          <p class="card-text text-center"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-          <p class="author text-center"><%= activity.member.name %></p>
-          <p class="read-more text-center"><%= link_to 'Read', activity_path(activity.id), class: 'btn btn-sm btn-outline-primary' %></p>
-        </div>
+      <div class="activity-area">
+        <%= link_to activity_path(activity.id), class: 'activity-link-sheet' do %><% end %>
+          <section class="image-container">
+            <%= image_tag activity.get_activity_image, alt: "Image", class: 'image-field' %>
+          </section>
+          <section class="activity-info">
+            <h3><%= activity.title %></h3>
+            <p><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+            <div class="author">
+              <%= link_to activity.member.name, member_path(activity.member.id) %>
+            </div>
+          </section>
       </div>
     <% end %>
   </div>
