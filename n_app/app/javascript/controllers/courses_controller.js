@@ -62,16 +62,21 @@ export default class extends Controller {
         }
 
         if (department) {
+            const courseRadio = (course) => {
+                return this.createRadioButton('member[course]',course, `member_department_${course}`, course, course === checkedCourse);
+            }
+
             if (department in cache) {
                 courses.innerHTML = '';
                 cache[department].forEach((course) => {
-                    courses.appendChild(this.createRadioButton('member[course]', course, `member_department_${course}`, course, course === checkedCourse));
+                    courses.appendChild(courseRadio(course));
                 });
                 return;
             }
 
             try {
-                const response = await fetch(`/members/courses_by_department?department=${encodeURIComponent(department)}`);
+                const query = `/members/courses_by_department?department=${encodeURIComponent(department)}`;
+                const response = await fetch(query);
                 if (!response.ok) {
                     throw new Error(`${response.status}`);
                 }
@@ -81,7 +86,7 @@ export default class extends Controller {
 
                 courses.innerHTML = '';
                 data.courses.forEach((course) => {
-                    courses.appendChild(this.createRadioButton('member[course]', course, `member_department_${course}`, course, course === checkedCourse));
+                    courses.appendChild(courseRadio(course));
                 });
             } catch (error) {
                 console.error('Error fetching data;', error);
