@@ -41,7 +41,7 @@
         <p>新しい活動</p>
     </div>
     <div class="recent-activity-lists">
-        <% @activities.last(6).reverse_each do |activity| %>
+        <% @activities.last(4).reverse_each do |activity| %>
             <% if activity.published == true %>
                 <%= link_to activity_path(activity.id), class: 'recent-activity-card' do %>
                     <%= image_tag activity.get_activity_image, class: 'activity-image' %>
