@@ -39,9 +39,17 @@ class MembersController < ApplicationController
   end
 
   def courses_by_department
-    department = params[:department].to_sym
-    courses = Member::DEPARTMENT_COURSES[department] || []
-    render json: { courses: courses }
+    departments = params[:departments]
+    department_courses = {}
+    departments.each do |department|
+      department_courses[department] = {}
+      courses = Member::DEPARTMENT_COURSES[department.to_sym] || []
+      courses.each do |course|
+        department_courses[department][course] = t("activerecord.attributes.member.courses.#{course}")
+      end
+    end
+
+    render json: department_courses
   end
 
   private

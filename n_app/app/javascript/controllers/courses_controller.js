@@ -57,39 +57,40 @@ export default class extends Controller {
 
         if (grade === 'freshman') {
             courses.innerHTML = '';
-            courses.appendChild(this.createRadioButton('member[course]', '', 'member_department_no_course', 'WIP', true));
+            courses.appendChild(this.createRadioButton('member[course]', 'no_course', 'member_department_no_course', 'NULL_VALUE', true));
             return;
         }
 
         if (department) {
-            const courseRadio = (course) => {
-                return this.createRadioButton('member[course]',course, `member_department_${course}`, course, course === checkedCourse);
+            const courseRadio = (courseValue, courseLabel) => {
+                return this.createRadioButton('member[course]', courseValue, `member_department_${courseValue}`, courseLabel, courseValue === checkedCourse);
             }
 
             if (department in cache) {
                 courses.innerHTML = '';
-                cache[department].forEach((course) => {
-                    courses.appendChild(courseRadio(course));
-                });
+                for (const [value, label] of Object.entries(cache[department])) {
+                    courses.appendChild(courseRadio(value, label));
+                }
+
                 return;
             }
 
             try {
-                const query = `/members/courses_by_department?department=${encodeURIComponent(department)}`;
+                const query = `/api/v1/members/courses_by_department?departments[]=${encodeURIComponent(department)}`;
                 const response = await fetch(query);
                 if (!response.ok) {
                     throw new Error(`${response.status}`);
                 }
 
                 const data = await response.json();
-                cache[department] = data.courses;
+                cache[department] = data[department];
 
                 courses.innerHTML = '';
-                data.courses.forEach((course) => {
-                    courses.appendChild(courseRadio(course));
-                });
+                for (const [value, label] of Object.entries(data[department])) {
+                    courses.appendChild(courseRadio(value, label));
+                }
             } catch (error) {
-                console.error('Error fetching data;', error);
+                console.error('Error in fetching data from the api: ', error);
                 courses.innerHTML = '<p>Error: Failed To Load Courses</p>';
             }
         }
