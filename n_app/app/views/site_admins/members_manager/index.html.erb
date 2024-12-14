@@ -20,8 +20,8 @@
                 <td>
                     <%= link_to member.name, member_path(member.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
                 </td>
-                <td><%= member.grade %></td>
-                <td><%= member.department %></td>
+                <td><%= grade_translation(member.grade) %></td>
+                <td><%= department_translation(member.department) %></td>
                 <% if current_member.admin? %>
                     <% if not member.invitation_accepted_at %>
                         <td class="table-light"><div class="full-width-container">

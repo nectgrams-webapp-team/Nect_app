@@ -35,7 +35,7 @@
           <b><h2>ユーザー詳細</h2></b>
         </div>
         <div class="content">
-          <h5>学年：<%= Member.human_attribute_name("grades.#{@member.grade}") %></h5>
+          <h5>学年：<%= grade_translation(@member.grade) %></h5>
         </div>
         <div class="content">
           <h5>卒年：<%= @member.graduation_year %>卒</h5>
@@ -51,15 +51,10 @@
           <b><h2>学科・コース</h2></b>
         </div>
         <div class="content">
-          <h5>学科： <%= Member.human_attribute_name("departments.#{@member.department}") %></h5>
+          <h5>学科： <%= department_translation(@member.department) %></h5>
         </div>
         <div class="content">
-          <h5>コース： </h5>
-          <% if @member.freshman? %>
-            <h5>コース選択中</h5>
-          <% else %>
-            <h5><%= Member.human_attribute_name("courses.#{@member.course}") %></h5>
-          <% end %>
+          <h5>コース： <%= course_translation(@member.course) %></h5>
         </div>
       </div>
       <div class="flex-column">

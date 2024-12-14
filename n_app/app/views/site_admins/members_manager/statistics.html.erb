@@ -11,7 +11,7 @@
         <tbody>
         <% Member.grades.keys.each do |grade| %>
             <tr>
-                <th scope="row"><%= Member.human_attribute_name("grades.#{grade}") %></th>
+                <th scope="row"><%= grade_translation(grade) %></th>
                 <td><%= @grade_count[grade].to_i %></td>
                 <% if @member_count == 0 %>
                     <td>0%</td>
@@ -44,11 +44,11 @@
         <tbody>
         <% Member.grades.keys.each do |grade| %>
             <tr>
-                <th scope="row"><%= Member.human_attribute_name("grades.#{grade}") %></th>
+                <th scope="row"><%= grade_translation(grade) %></th>
                 <td>
                     <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item" style="flex: 1;"><%= Member.human_attribute_name("departments.#{department}") %></li>
+                            <li class="list-group-item" style="flex: 1;"><%= department_translation(department) %></li>
                             <li class="list-group-item flex-fill" style="flex: 1;"><%= @department_count[[grade, department.to_s]].to_i %></li>
                         </ul>
                     <% end %>
@@ -72,7 +72,7 @@
             <td>
                 <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
                     <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item" style="flex: 1;"><%= Member.human_attribute_name("departments.#{department}") %></li>
+                        <li class="list-group-item" style="flex: 1;"><%= department_translation(department) %></li>
                         <li class="list-group-item flex-fill" style="flex: 1;"><%= @total_department_count[department.to_s].to_i %></li>
                     </ul>
                 <% end %>

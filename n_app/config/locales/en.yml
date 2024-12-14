@@ -38,6 +38,8 @@ en:
       team_member: "Team Member"
     attributes:
       member:
+        name: "Name"
+        student_id: "Student ID"
         grade: "Grade"
         department: "Department"
         course: "Course"
@@ -45,18 +47,23 @@ en:
         user: "User"
         mod: "Mod"
         admin: "Admin"
+        nil: "Not Set"
       member/grades:
         freshman: "Freshman"
         sophomore: "Sophomore"
         junior: "Junior"
         senior: "Senior"
         graduate: "Graduate"
+        nil: "Not Set"
       member/departments:
         information_technology: "Information Technology"
         digital_entertainment: "Digital Entertainment"
+        nil: "Not Set"
       member/courses:
         ai_strategy: "AI Strategy"
         iot_systems: "IoT Systems"
         robotics_development: "Robotics Development"
         game_production: "Game Production"
         cg_animation: "CG Animation"
+        work_in_progress: "Selection in Progress"
+        nil: "Not Set"

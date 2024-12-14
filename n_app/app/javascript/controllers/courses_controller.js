@@ -52,12 +52,18 @@ export default class extends Controller {
         const courses = this.coursesWrapperTarget;
         const checkedCourse = courses.dataset.checkedCourse;
 
+        courses.parentNode.hidden = false;
         courses.innerHTML = '';
-        courses.innerHTML = '<p>Loading courses...</p>';
+        if (grade && department) {
+            courses.innerHTML = '<p>Loading courses...</p>';
+        } else {
+            courses.innerHTML = '<p>Select Both Grade and Department to Proceed!</p>';
+        }
 
         if (grade === 'freshman') {
+            courses.parentNode.hidden = true;
             courses.innerHTML = '';
-            courses.appendChild(this.createRadioButton('member[course]', 'no_course', 'member_department_no_course', 'NULL_VALUE', true));
+            courses.appendChild(this.createRadioButton('member[course]', 'work_in_progress', 'member_department_no_course', '', true));
             return;
         }
 
