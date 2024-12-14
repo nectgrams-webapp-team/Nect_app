@@ -14,12 +14,12 @@
   <div class="activities">
     <% @activities.each do |activity| %>
       <div class="activity-area">
-        <%= link_to activity_path(activity.id), class: 'activity-link-sheet' do %><% end %>
+        <%= link_to activity_path(activity.id), class: 'activity-link-sheet' do %><% end %>  
           <section class="image-container">
             <%= image_tag activity.get_activity_image, alt: "Image", class: 'image-field' %>
           </section>
           <section class="activity-info">
-            <h3><%= activity.title %></h3>
+            <h3><%= truncate(activity.title, length: 60) %></h3>
             <p><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
             <div class="author">
               <%= link_to activity.member.name, member_path(activity.member.id) %>
