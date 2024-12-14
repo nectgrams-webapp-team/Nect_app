@@ -1,38 +1,35 @@
 <div class="container">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="header">
     <h1>活動一覧</h1>
-      <%= form_with url: activities_path, method: :get, local: true, class: 'd-flex' do %>
-      <%= text_field_tag :search, params[:search], class: 'form-control me-2', placeholder: 'Enter activity or author' %>
+    <%= form_with url: activities_path, method: :get, local: true, class: 'search-form' do %>
+      <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter activity or author' %>
       <%= submit_tag 'Search', class: 'btn btn-outline-primary' %>
-      <% end %>
+    <% end %>
   </div>
 
   <% if member_signed_in? %>
     <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary mb-4' %>
   <% end %>
 
-  <div class="row posts-entry justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8 mx-auto"> 
-      <% @activities.each do |activity| %>
-        <div class="blog-entry row mb-4 border-bottom pb-4"> 
-          <div class="col-12 col-md-7 mb-3 mb-md-0 d-flex justify-content-center"> 
-            <% image_class = 'img-fluid fixed-height-image border rounded' %>
-            <%= image_tag activity.get_activity_image, alt: "Image", class: image_class %>
-          </div>
-          <div class="col-12 col-md-5 d-flex flex-column"> 
-            <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-            <h2><%= activity.title %></h2>
-            <p class="my-3"><%= activity.member.name %></p>
-            <p class="mt-auto"><%= link_to 'Read', activity_path(activity.id), class: 'btn btn-sm btn-outline-primary' %></p>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-          <%= paginate @activities, theme: 'bootstrap-5' %>
-        </div>
+  <div class="activities">
+    <% @activities.each do |activity| %>
+      <div class="activity-area">
+        <%= link_to activity_path(activity.id), class: 'activity-link-sheet' do %><% end %>  
+          <section class="image-container">
+            <%= image_tag activity.get_activity_image, alt: "Image", class: 'image-field' %>
+          </section>
+          <section class="activity-info">
+            <h3><%= truncate(activity.title, length: 60) %></h3>
+            <p><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+            <div class="author">
+              <%= link_to activity.member.name, member_path(activity.member.id) %>
+            </div>
+          </section>
       </div>
-    </div>
+    <% end %>
+  </div>
+
+  <div class="pagination">
+    <%= paginate @activities, theme: 'bootstrap-5' %>
   </div>
 </div>
