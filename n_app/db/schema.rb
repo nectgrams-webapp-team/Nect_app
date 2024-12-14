@@ -82,13 +82,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_103016) do
     t.integer "invitations_count", default: 0
     t.string "name"
     t.string "student_id"
-    t.integer "grade"
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
-    t.string "department"
     t.integer "graduation_year"
     t.integer "member_role", default: 0
     t.string "course"
+    t.integer "grade"
+    t.string "department"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_members_on_invited_by_id"
