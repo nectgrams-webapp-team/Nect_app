@@ -19,8 +19,10 @@ services:
     env_file:
       - .env
     #本番環境用コマンド(production)
-#    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
-    command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+    # We still need the development environment!
+    # TODO -> Finally create dev and prod versions
+    # command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
     volumes:
       - type: bind
         source: ./n_app
@@ -38,7 +40,9 @@ services:
     stdin_open: true
     tty: true
     environment:
-      RAILS_ENV: development
+      # TODO -> Finally make separate dev and prod versions
+      # RAILS_ENV: development
+      RAILS_ENV: production
       MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
 volumes:
