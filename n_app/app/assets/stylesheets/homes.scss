@@ -75,71 +75,145 @@
   }
 }
 
+//Aboutページ
 
 .header {
-  background-color: #4CAF50;
-  color: white;
   text-align: center;
   padding: 20px 0;
+
+  .title {
+    margin: 0;
+    font-size: 3.5rem;
+  }
 }
 
-.title {
-  margin: 0;
-  font-size: 2.5rem;
+#about-body {
+  margin-bottom: 200px;
+  margin-top: 60px;
+
+  .container {
+    margin: auto;
+
+    p {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 30px 0;
+    }
+
+    strong {
+      font-size: 1.5rem;
+    }
+  }
 }
 
-/* メインコンテンツのスタイル */
-.content {
-  max-width: 800px;
-  margin: 30px auto;
+
+/* Timeline container */
+.timeline {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical line in the middle */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background-color: #333;
+  transform: translateX(-50%);
+}
+
+/* Timeline item */
+.timeline-item {
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Connector circle */
+.timeline-item::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 4px solid #333;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* Timeline content box */
+.timeline-content {
+  background: #fff;
   padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* セクションスタイル */
-.about-section {
-  padding: 20px;
-}
-
-/* 各段落のスタイル */
-.about-section p {
-  margin-bottom: 20px;
-  font-size: 1rem;
-  text-align: justify;
-}
-
-/* 特定のクラスの装飾 */
-.intro {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-.motto {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #4CAF50;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 45%;
   text-align: center;
-  margin: 20px 0;
+  z-index: 2;
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Break long words (alternate property) */
+  word-break: break-word; /* Break long words forcibly */
+  box-sizing: border-box; /* Include padding and border in width calculations */
 }
 
-/* 強調文字のスタイル */
-.about-section strong {
-  color: #4CAF50;
+/* Ensures text does not overflow from timeline content */
+.timeline-content h2, .timeline-content p {
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-/* メディアクエリ（レスポンシブ対応） */
-@media (max-width: 768px) {
-  .content {
-    padding: 15px;
+/* Alternating content alignment */
+.timeline-item:nth-child(odd) .timeline-content {
+  margin-right: auto;
+  text-align: right;
+  padding-right: 15px; /* Adjust padding for better alignment */
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: auto;
+  text-align: left;
+  padding-left: 15px; /* Adjust padding for better alignment */
+}
+
+/* Date styling */
+.date {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .timeline::before {
+    left: 50%; /* Keep the line centered on small screens */
   }
 
-  .about-section p {
-    font-size: 0.9rem;
+  .timeline-content {
+    width: 80%; /* Expand content width for small screens */
+    text-align: center;
+    padding: 10px; /* Reduce padding for better fit */
   }
 
-  .intro {
-    font-size: 1rem;
+  .timeline-item:nth-child(odd) .timeline-content,
+  .timeline-item:nth-child(even) .timeline-content {
+    margin: auto;
+    text-align: center;
   }
 }

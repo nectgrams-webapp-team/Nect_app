@@ -1,39 +1,24 @@
 <header class="header">
-    <h1 class="title">Nect Life について</h1>
+    <h1 class="title"><strong>Nect Life</strong> について</h1>
 </header>
-<!--<div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">-->
-<!--    <p>Nect Life は、東京国際工科専門職大学（IPUT）の「プログラミングサークル」が運営するオリジナルブログです。私たちは別名『Nectgrams』として活動しており、サークル名の由来は-->
-<!--        Nect(nectere:つなぐ、結ぶ) + gram(プログラムの gram ) + s(複数形)です。Nectgrams -> ネクトグラムズ</p>-->
-<!--    <p>私たちのモットーは「作りたいものを作る！」です。</p>-->
-<!--    <p>プログラミングを中心したものづくりを行なっています。しかし、メンバーの中にはCG制作をしている人いるので、プログラミング以外でも全然OK！</p>-->
-<!--    <p>ものづくりを通じて学生がつながり合えるサークルを目指しています！</p>-->
-<!--    <p>しかし、ただ作るだけでなく、自分の作品をオープンキャンパスや外部イベントで展示するなど、積極的に外へ発信することにも取り組んでいます。</p>-->
-<!--    <p>この取り組みから、学生同士のつながりだけでなく大学側のつながりも増えてきていおり、活動の幅や機会が増えて来ています！</p>-->
-<!--    <p>『Nect Life』は、そんな日々の活動を記録し、より多くの人に届けるために開発しているブログです。</p>-->
-<!--    <p>作品の創意工夫や苦労した点は、展示会などでは全てを伝えきれません。</p>-->
-<!--    <p>しかし、Nect Life-->
-<!--        を通じて、技術的にニッチな工夫やシンプルな学びの記事などを投稿することで、サークル活動をさらに盛り上げていきたいと考えています！</p>-->
 
-<!--    <p>Nect Life から、より多くの人が Nectgrams とつながれること願っています！</p>-->
-<!--</div>-->
-
-<main class="content">
-    <section class="about-section">
-        <p class="intro">
-            Nect Life は、東京国際工科専門職大学（IPUT）の「プログラミングサークル」が運営するオリジナルブログです。
-            私たちは別名『Nectgrams』として活動しており、サークル名の由来は
-            <strong>Nect</strong> (nectere:つなぐ、結ぶ) + <strong>gram</strong> (プログラムの gram) +
-            <strong>s</strong> (複数形)です。
+<div id="about-body">
+    <div class="container">
+        <p class="text-1"><strong>Nect Life</strong>
+            は、ある大学の「<strong>プログラミングサークル</strong>」が運営するオリジナルブログです!
         </p>
-        <p class="motto"><strong>私たちのモットーは「作りたいものを作る！」です。</strong></p>
-        <p>プログラミングを中心に、ものづくりを行なっていますが、メンバーにはCG制作をしている人もいるので、プログラミング以外でも大歓迎です！</p>
-        <p>私たちは、学生がつながり合えるサークルを目指し、作品の展示や発信も積極的に行っています。</p>
-        <p>
-            <strong>『Nect Life』</strong>は、そんな日々の活動を記録し、より多くの人に届けるために開発したブログです。
-            技術的にニッチな工夫や学びを投稿し、サークル活動をさらに盛り上げていきたいと考えています！
+        <p class="text-2">私たちは別名『<strong>Nectgrams</strong>』として活動しており、サークル名の由来は</p>
+        <p class="text-3"><strong>Nect</strong> (nectere:つなぐ、結ぶ) + <strong>gram</strong> (プログラムの gram) +
+            <strong>s</strong>
+            (複数形)です。</p>
+        <p class="text-4">私たちのモットーは「<strong>作りたいものを作る！</strong>」です。</p>
+        <p class="text-5">プログラミングを中心に、ものづくりを行なっていますが、メンバーにはCG制作をしている人もいるので、プログラミング以外でも大歓迎です！</p>
+        <p class="text-6">私たちは、学生がつながり合えるサークルを目指し、作品の展示や発信も積極的に行っています。</p>
+        <p class="text-7">『<strong>Nect Life</strong>』は、そんな日々の活動を記録し、より多くの人に届けるために開発したブログです。
         </p>
-    </section>
-</main>
+        <p class="text-8">今後もサークルメンバーの日々の活動を投稿し、Nectgramsをさらに盛り上げていきます！</p>
+    </div>
+</div>
 
 <h1 class="d-flex justify-content-center pb-5">Timeline of Nectgrams</h1>
 <div class="timeline">
@@ -47,118 +32,3 @@
         </div>
     <% end %>
 </div>
-
-<style>
-    /* CSS for the timeline component */
-
-    /* Timeline container */
-    .timeline {
-        position: relative;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* Vertical line in the middle */
-    .timeline::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 4px;
-        background-color: #333;
-        transform: translateX(-50%);
-    }
-
-    /* Timeline item */
-    .timeline-item {
-        position: relative;
-        width: 100%;
-        padding: 20px 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-    }
-
-    /* Connector circle */
-    .timeline-item::before {
-        content: '';
-        width: 20px;
-        height: 20px;
-        background: #fff;
-        border: 4px solid #333;
-        border-radius: 50%;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1;
-    }
-
-    /* Timeline content box */
-    .timeline-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        position: relative;
-        width: 45%;
-        text-align: center;
-        z-index: 2;
-        word-wrap: break-word; /* Break long words */
-        overflow-wrap: break-word; /* Break long words (alternate property) */
-        word-break: break-word; /* Break long words forcibly */
-        box-sizing: border-box; /* Include padding and border in width calculations */
-    }
-
-    /* Ensures text does not overflow from timeline content */
-    .timeline-content h2, .timeline-content p {
-        margin: 0;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
-
-    /* Alternating content alignment */
-    .timeline-item:nth-child(odd) .timeline-content {
-        margin-right: auto;
-        text-align: right;
-        padding-right: 15px; /* Adjust padding for better alignment */
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-        margin-left: auto;
-        text-align: left;
-        padding-left: 15px; /* Adjust padding for better alignment */
-    }
-
-    /* Date styling */
-    .date {
-        display: block;
-        margin-top: 10px;
-        font-size: 0.85em;
-        color: #666;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-        .timeline::before {
-            left: 50%; /* Keep the line centered on small screens */
-        }
-
-        .timeline-content {
-            width: 80%; /* Expand content width for small screens */
-            text-align: center;
-            padding: 10px; /* Reduce padding for better fit */
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content,
-        .timeline-item:nth-child(even) .timeline-content {
-            margin: auto;
-            text-align: center;
-        }
-    }
-</style>
