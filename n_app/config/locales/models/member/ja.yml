@@ -1,12 +1,7 @@
 ja:
   activerecord:
     models:
-      activity: "活動"
-      event_history: "イベント歴史"
-      home: "ホーム"
       member: "メンバー"
-      team: "チーム"
-      team_member: "チームメンバー"
     attributes:
       member:
         name: "名前"

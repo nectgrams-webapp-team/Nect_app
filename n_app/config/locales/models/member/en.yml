@@ -30,12 +30,7 @@
 en:
   activerecord:
     models:
-      activity: "Activity"
-      event_history: "Event History"
-      home: "Home"
       member: "Member"
-      team: "Team"
-      team_member: "Team Member"
     attributes:
       member:
         name: "Name"
