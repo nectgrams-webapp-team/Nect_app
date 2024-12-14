@@ -38,9 +38,25 @@ en:
       team_member: "Team Member"
     attributes:
       member:
-        grades:
-          freshman:  "Freshman"
-          sophomore: "Sophomore"
-          junior:    "Junior"
-          senior:    "Senior"
-          graduate:  "Graduate"
+        grade: "Grade"
+        department: "Department"
+        course: "Course"
+      member/role:
+        user: "User"
+        mod: "Mod"
+        admin: "Admin"
+      member/grades:
+        freshman: "Freshman"
+        sophomore: "Sophomore"
+        junior: "Junior"
+        senior: "Senior"
+        graduate: "Graduate"
+      member/departments:
+        information_technology: "Information Technology"
+        digital_entertainment: "Digital Entertainment"
+      member/courses:
+        ai_strategy: "AI Strategy"
+        iot_systems: "IoT Systems"
+        robotics_development: "Robotics Development"
+        game_production: "Game Production"
+        cg_animation: "CG Animation"

@@ -9,14 +9,14 @@
         </tr>
         </thead>
         <tbody>
-        <% @grades.each do |grade| %>
+        <% Member.grades.keys.each do |grade| %>
             <tr>
-                <th scope="row"><%= grade %></th>
-                <td><%= @count[grade].to_i %></td>
-                <% if @memberCount == 0 %>
+                <th scope="row"><%= Member.human_attribute_name("grades.#{grade}") %></th>
+                <td><%= @grade_count[grade].to_i %></td>
+                <% if @member_count == 0 %>
                     <td>0%</td>
                 <% else %>
-                    <td><%= (@count[grade].to_i * 100 / @memberCount.to_i).to_s + "%" %></td>
+                    <td><%= (@grade_count[grade].to_i * 100 / @member_count.to_i).to_s + "%" %></td>
                 <% end %>
             </tr>
         <% end %>
@@ -24,7 +24,7 @@
         <tfoot>
         <tr>
             <th scope="row">Total</th>
-            <td><%= @memberCount %></td>
+            <td><%= @member_count %></td>
             <td>100%</td>
         </tr>
         </tfoot>
@@ -42,27 +42,26 @@
         </tr>
         </thead>
         <tbody>
-        <% @grades.each do |grade| %>
+        <% Member.grades.keys.each do |grade| %>
             <tr>
-                <th scope="row"><%= grade %></th>
+                <th scope="row"><%= Member.human_attribute_name("grades.#{grade}") %></th>
                 <td>
-                    <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item" style="flex: 1;">IT</li>
-                        <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "情報工学科"]].to_i %></li>
-                    </ul>
-                    <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item" style="flex: 1;">DE</li>
-                        <li class="list-group-item flex-fill" style="flex: 1;"><%= @departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i %></li>
-                    </ul>
+                    <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item" style="flex: 1;"><%= Member.human_attribute_name("departments.#{department}") %></li>
+                            <li class="list-group-item flex-fill" style="flex: 1;"><%= @department_count[[grade, department.to_s]].to_i %></li>
+                        </ul>
+                    <% end %>
                 </td>
                 <td>
                     <ul class="list-group">
-                        <% if @count[grade].to_i == 0 %>
+                        <% if @grade_count[grade].to_i == 0 %>
                             <li class="list-group-item">0%</li>
                             <li class="list-group-item">0%</li>
                         <% else %>
-                            <li class="list-group-item"><%= (@departmentCount[[grade, "情報工学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
-                            <li class="list-group-item"><%= (@departmentCount[[grade, "デジタルエンタテインメント学科"]].to_i * 100 / @count[grade].to_i).to_s + "%" %></li>
+                            <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
+                                <li class="list-group-item"><%= (@department_count[[grade, department.to_s]].to_i * 100 / @grade_count[grade].to_i).to_s + "%" %></li>
+                            <% end %>
                         <% end %>
                     </ul>
                 </td>
@@ -71,23 +70,22 @@
         <tr>
             <th scope="row">Combined</th>
             <td>
-                <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item" style="flex: 1;">IT</li>
-                    <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["情報工学科"].to_i %></li>
-                </ul>
-                <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item" style="flex: 1;">DE</li>
-                    <li class="list-group-item flex-fill" style="flex: 1;"><%= @totalDepartmentCount["デジタルエンタテインメント学科"].to_i %></li>
-                </ul>
+                <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" style="flex: 1;"><%= Member.human_attribute_name("departments.#{department}") %></li>
+                        <li class="list-group-item flex-fill" style="flex: 1;"><%= @total_department_count[department.to_s].to_i %></li>
+                    </ul>
+                <% end %>
             </td>
             <td>
                 <ul class="list-group">
-                    <% if @memberCount.to_i == 0 %>
+                    <% if @member_count.to_i == 0 %>
                         <li class="list-group-item">0%</li>
                         <li class="list-group-item">0%</li>
                     <% else %>
-                        <li class="list-group-item"><%= (@totalDepartmentCount["情報工学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
-                        <li class="list-group-item"><%= (@totalDepartmentCount["デジタルエンタテインメント学科"].to_i * 100 / @memberCount.to_i).to_s + "%" %></li>
+                        <% Member::DEPARTMENT_COURSES.keys.each do |department| %>
+                            <li class="list-group-item"><%= (@total_department_count[department.to_s].to_i * 100 / @member_count.to_i).to_s + "%" %></li>
+                        <% end %>
                     <% end %>
                 </ul>
             </td>
@@ -96,7 +94,7 @@
         <tfoot>
         <tr>
             <th scope="row">Total</th>
-            <td><%= @memberCount %></td>
+            <td><%= @member_count %></td>
             <td>100%</td>
         </tr>
         </tfoot>

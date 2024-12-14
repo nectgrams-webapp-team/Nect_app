@@ -3,15 +3,6 @@ require_relative "boot"
 require 'dotenv'
 Dotenv.load
 
-I18n.load_path += Dir[File.expand_path("config/locales") + "/*.yml"]
-I18n.available_locales = [:en, :ja]
-I18n.default_locale = :ja
-
-require "i18n/backend/fallbacks"
-I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-I18n.fallbacks.map(:ja => :en)
-I18n.fallbacks[:ja] # => [:ja, :en]
-
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems

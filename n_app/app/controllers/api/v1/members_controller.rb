@@ -7,7 +7,7 @@ class Api::V1::MembersController < ApplicationController
       department_courses[department] = {}
       courses = Member::DEPARTMENT_COURSES[department.to_sym] || []
       courses.each do |course|
-        department_courses[department][course] = t("activerecord.attributes.member.courses.#{course}")
+        department_courses[department][course] = Member.human_attribute_name("courses.#{course}")
       end
     end
 
