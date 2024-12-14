@@ -42,14 +42,14 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'localhost',
+    domain:               'nect-life.com',
     user_name:            ENV['SMTP_USER_NAME'],
     password:             ENV['SMTP_PASSWORD'],
     authentication:       'plain',
     enable_starttls_auto: true
   }
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'nect-life.com', protocol: 'https' }
 
   config.action_mailer.perform_caching = false
 
@@ -86,6 +86,7 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  host = 'localhost' #←先ほどの上のコードのhost名と合わせる
-  Rails.application.routes.default_url_options[:host] = host
+  #host = 'localhost' #←先ほどの上のコードのhost名と合わせる
+  #Rails.application.routes.default_url_options[:host] = host
+  config.hosts << "nect-life.com"
 end

@@ -1,102 +1,86 @@
 <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <% @images.each_with_index do |image, index| %>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
-    <% end %>
-  </div>
-  <div class="carousel-inner">
-    <% @images.each_with_index do |image, index| %>
-      <div class="carousel-item <%= 'active' if index == 0 %>">
-        <% if image.file.present? && image.file.url.present? %>
-          <%= image_tag(image.file.url, class: 'd-block w-100', alt: image.title) %>
-          <div class="carousel-caption d-none d-md-block text-bg-dark p-3 bg-opacity-25 rounded-pill">
-            <h5>
-              <%= image.title %>
-            </h5>
-            <p>
-              <%= image.caption %>
-            </p>
-          </div>
-        <% else %>
-          <div class="alert alert-danger" role="alert">
-            An image is missing and cannot be displayed.
-          </div>
+    <div class="carousel-indicators">
+        <% @images.each_with_index do |image, index| %>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
         <% end %>
-      </div>
-    <% end %>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+    </div>
+    <div class="carousel-inner">
+        <% @images.each_with_index do |image, index| %>
+            <div class="carousel-item <%= 'active' if index == 0 %>">
+                <% if image.file.present? && image.file.url.present? %>
+                    <%= image_tag(image.file.url, class: 'd-block w-100', alt: image.title) %>
+                    <div class="carousel-caption d-none d-md-block text-bg-dark p-3 bg-opacity-25 rounded-pill">
+                        <h5>
+                            <%= image.title %>
+                        </h5>
+                        <p>
+                            <%= image.caption %>
+                        </p>
+                    
+                    </div>
+                <% else %>
+                    <div class="alert alert-danger" role="alert">
+                        An image is missing and cannot be displayed.
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
-<br />
-<div class="card">
-  <h5 class="card-header">
-    Featured Activities
-  </h5>
-  <div class="card-body">
-    <div class="container text-center">
-      <div class="row justify-content-evenly g-4">
-        <% @activities.last(6).reverse_each do |activity| %>
-          <div class="col-md-4 d-flex justify-content-center">
-            <div class="card" style="width: 18rem; height: 18rem">
-              <div class="card-img-container">
-                <%= image_tag activity.get_activity_image, class: 'img-fluid image-style border rounded' %>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-                </h5>
-                <h6>
-                  <%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %>
-                </h6>
-                <p class="card-text">
-                  <small class="text-body-secondary">
-                    <%= activity.created_at.strftime('%Y/%m/%d') %>
-                  </small>
-                </p>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
+<div class="recent-activities-area">
+    <div class="title">
+        <p>新しい活動</p>
     </div>
-    <br />
-    <%= link_to 'Read more', activities_path, class:"btn btn-primary" %>
-  </div>
+    <div class="recent-activity-lists">
+        <% @activities.last(6).reverse_each do |activity| %>
+            <% if activity.published == true %>
+                <%= link_to activity_path(activity.id), class: 'recent-activity-card' do %>
+                    <%= image_tag activity.get_activity_image, class: 'activity-image' %>
+                    <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
+                    <p class="activity-title"><%= truncate(activity.title, length: 36) %></p>
+                    <%= image_tag activity.member.get_profile_image, class: 'icon-img' %>
+                <% end %>
+            <% end %>
+        <% end %>
+    </div>
 </div>
+
 
 <style>
-  .carousel-inner {
-    height: 400px; /* Set the desired height for the carousel */
-  }
+    .carousel-inner {
+        height: 400px; /* Set the desired height for the carousel */
 
-  .carousel-item img {
-    max-height: 100%; /* Make the images fit the height of the carousel */
-    max-width: 100%; /* Make the images fit the width of the carousel */
-    width: auto; /* Ensure images maintain aspect ratio */
-    height: auto; /* Ensure images maintain aspect ratio */
-    object-fit: contain; /* Ensure images fit within the carousel without distortion */
-  }
+    }
 
-  .carousel-item {
-    position: absolute !important; /* Bootstrap is insistent */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+    .carousel-item img {
+        max-height: 100%; /* Make the images fit the height of the carousel */
+        max-width: 100%; /* Make the images fit the width of the carousel */
+        width: auto; /* Ensure images maintain aspect ratio */
+        height: auto; /* Ensure images maintain aspect ratio */
+        object-fit: contain; /* Ensure images fit within the carousel without distortion */
+    }
 
-  .card-img-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+    .carousel-item {
+        position: absolute !important; /* Bootstrap is insistent */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .card-img-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
 </style>

@@ -1,41 +1,54 @@
 <h1>新しい活動記事を投稿</h1>
 
 <% if @activity.errors.any? %>
-  <div class="alert alert-danger">
-    <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
-    <ul>
-      <% @activity.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+    <div class="alert alert-danger">
+        <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
+        <ul>
+            <% @activity.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
 <% end %>
 
 <div class="editor-container">
-  <div class="editor">
-    <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
-      <div class="form-group">
-        <label for="formFile" class="form-label">トップ画像の選択</label>
-        <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
-      </div>
+    <div class="editor">
+        <div class="editor-actions">
+            <%= link_to '戻る',
+                        activities_path,
+                        class: 'link-offset-2 link-underline link-underline-opacity-0',
+                        data: { turbo_method: :get,
+                                turbo_confirm: '変更した内容は保存されません。よろしいですか？' } %>
+        </div>
+        
+        <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">トップ画像の選択</label>
+                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
+            </div>
+            
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <h3 class="col-form-label">記事タイトル</h3>
+                </div>
+                <div class="col-auto">
+                    <%= activity.text_field :title, class: 'form-control' %>
+                </div>
+            </div>
+            
+            <h3 class="form-label">記事の内容</h3>
+            <div>
+                <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <%= activity.submit '記事を投稿', class: 'btn btn-primary' %>
+                <%= button_tag '下書き保存', type: 'submit', formaction: save_draft_activities_path, class: 'btn btn-secondary' %>
+            </div>
+        <% end %>
+    </div>
     
-      <div class="form-group">
-        <label for="activity_title" class="form-label">記事のタイトル</label>
-        <%= activity.text_field :title, class: 'form-control', id: 'activity_title' %>
-      </div>
-    
-      <div class="form-group">
-        <label for="activity_body" class="form-label">本文</label>
-        <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
-      </div>
-    
-      <%= activity.submit '投稿する', class: 'btn btn-primary mt-3' %>
-    <% end %>
-    
-    <%= link_to '戻る', activities_path, class: 'btn btn-outline-secondary mt-3' %>
-  </div>
-  
-  <div class="preview" id="preview">
-    <!-- プレビュー表示エリア -->
-  </div>
+    <div class="markdown preview" id="preview">
+        <!-- プレビュー表示エリア -->
+    </div>
 </div>

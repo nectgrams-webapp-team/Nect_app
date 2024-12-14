@@ -4,6 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+.idea
 # Ignore bundler config.
 n_app/.bundle
 
@@ -48,3 +49,4 @@ n_app/public/uploads
 n_app/node_modules
 
 n_app/.gitignore
+n_app/public/uploads/home/file
