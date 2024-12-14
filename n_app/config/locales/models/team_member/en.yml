@@ -3,6 +3,6 @@ en:
     models:
       team_member:
         one: "Team Member"
-        other: "Teams Members"
+        other: "Team Members"
     attributes:
       team_member:
