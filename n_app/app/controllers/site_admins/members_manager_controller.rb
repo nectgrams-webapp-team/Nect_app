@@ -4,7 +4,7 @@ class SiteAdmins::MembersManagerController < SiteAdmins::BaseController
     before_action :validate_admin, only: [:destroy, :grant_mod_status, :revoke_mod_status, :resend_invitation]
 
     def validate_admin
-        unless current_member.member_role == :admin
+        unless current_member.admin?
             flash[:error] = "You must be an admin to use this feature."
             redirect_to site_admins_members_manager_index_path
         end
