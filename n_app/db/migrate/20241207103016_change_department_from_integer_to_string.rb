@@ -6,13 +6,13 @@ class ChangeDepartmentFromIntegerToString < ActiveRecord::Migration[7.1]
     Member.reset_column_information
 
     Member.find_each do |member|
-      case member.department
+      case member.department_integer_type
       when 1
-        member.update!(department: "information_technology")
+        member.update_column(:department, "information_technology")
       when 2
-        member.update!(department: "digital_entertainment")
+        member.update_column(:department, "digital_entertainment")
       else
-        member.update!(department: nil)
+        member.update_column(:department, nil)
       end
     end
 
@@ -26,13 +26,13 @@ class ChangeDepartmentFromIntegerToString < ActiveRecord::Migration[7.1]
     Member.reset_column_information
 
     Member.find_each do |member|
-      case member.department
+      case member.department_string_type
       when "information_technology"
-        member.update!(department: 1)
+        member.update_column(:department, 1)
       when "digital_entertainment"
-        member.update!(department: 2)
+        member.update_column(:department, 2)
       else
-        member.update!(department: nil)
+        member.update_column(:department, nil)
       end
     end
 
