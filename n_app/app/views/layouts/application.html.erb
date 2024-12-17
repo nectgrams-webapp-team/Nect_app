@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NApp</title>
+<head>
+    <title>Nect Life</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
-  <header>
+</head>
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="<%= root_path %>">
-          <img src="<%= asset_path('logo.png') %>" width="50" height="50" class="d-inline-block align-text-top">
-          Nectgrams
-        </a>
-
-        <!-- ハンバーガーボタン -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- ナビゲーションメニュー -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <%= link_to 'About', about_path, class: 'nav-link text-light' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Members', members_path, class: 'nav-link text-light' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Activities', activities_path, class: 'nav-link text-light' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Teams', teams_path, class: 'nav-link text-light' %>
-            </li>
-            <% if member_signed_in? %>
-              <li class="nav-item">
-                <%= link_to 'YourPage', member_path(current_member.id), class: 'nav-link text-light' %>
-              </li>
-            <% else %>
-              <li class="nav-item">
-                <%= link_to 'Login', new_member_session_path, class: 'nav-link text-light' %>
-              </li>
-            <% end %>
-          </ul>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="<%= root_path %>">
+                <img src="<%= asset_path('logo.png') %>" width="50" height="50" class="d-inline-block align-text-top">
+                Nect Life
+            </a>
+            
+            <!-- ハンバーガーボタン -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- ナビゲーションメニュー -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <%= link_to 'About', about_path, class: 'nav-link text-light' %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'Members', members_path, class: 'nav-link text-light' %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'Activities', activities_path, class: 'nav-link text-light' %>
+                    </li>
+                    <li class="nav-item">
+                        <%= link_to 'Teams', teams_path, class: 'nav-link text-light' %>
+                    </li>
+                    <% if member_signed_in? %>
+                        <li class="nav-item">
+                            <%= link_to 'YourPage', member_path(current_member.id), class: 'nav-link text-light' %>
+                        </li>
+                    <% else %>
+                        <li class="nav-item">
+                            <%= link_to 'Login', new_member_session_path, class: 'nav-link text-light' %>
+                        </li>
+                    <% end %>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
-  </header>
-  <body style="min-height: 100svh; display: flex; flex-direction: column;">
-    <br /><br />
-    <div class="container" style="flex-grow: 1">
-      <% flash.each do |type, msg| %>
+</header>
+<body style="min-height: 100svh; display: flex; flex-direction: column;">
+<br/><br/>
+<div class="container" style="flex-grow: 1">
+    <% flash.each do |type, msg| %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <%= msg %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <br />
-      <% end %>
-
-      <%= yield %>
-    </div>
-    <br /><br />
-  </body>
-  <footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
+        <br/>
+    <% end %>
+    
+    <%= yield %>
+</div>
+<br/><br/>
+</body>
+<footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
     <div class="container">
-      <div class="col-md-4 d-flex align-items-center">
-        <span class="mb-3 mb-md-0 text-body-secondary">&copy; <%= Time.now.year %> Nectgrams</span>
-      </div>
+        <div class="col-md-4 d-flex align-items-center">
+            <span class="mb-3 mb-md-0 text-body-secondary">&copy; <%= Time.now.year %> Nectgrams</span>
+        </div>
     </div>
-  </footer>
+</footer>
 </html>
