@@ -2,9 +2,10 @@
 
 class SiteAdmins::MembersManagerController < SiteAdmins::BaseController
     before_action :validate_admin, only: [:destroy, :grant_mod_status, :revoke_mod_status, :resend_invitation]
+    include ApplicationHelper
 
     def validate_admin
-        unless current_member.member_role == "admin"
+        unless current_member.admin?
             flash[:error] = "You must be an admin to use this feature."
             redirect_to site_admins_members_manager_index_path
         end
@@ -16,15 +17,25 @@ class SiteAdmins::MembersManagerController < SiteAdmins::BaseController
         respond_to do |format|
             format.html
             format.xlsx do
-                filename = "member_data_export_#{Time.now.strftime('%Y%m%d')}.xlsx"
+                filename = "nectgrams_members_export_#{Time.now.strftime('%Y%m%d')}.xlsx"
 
                 p = Axlsx::Package.new
-                p.workbook.add_worksheet(name: "Member Data Sheet") do |sheet|
+                p.workbook.add_worksheet(name: "Members_Data") do |sheet|
 
-                    sheet.add_row ["Student ID", "Name", "Grade", "Department"]
+                    sheet.add_row [
+                                    Member.human_attribute_name("student_id"),
+                                    Member.human_attribute_name("name"),
+                                    Member.human_attribute_name("grade"),
+                                    Member.human_attribute_name("department"),
+                                  ]
 
                     @members.each do |record|
-                        sheet.add_row [record.student_id, record.name, record.grade, record.department]
+                        sheet.add_row [
+                                        record.student_id,
+                                        record.name,
+                                        grade_translation(record.grade),
+                                        department_translation(record.department),
+                                      ]
                     end
                 end
 
@@ -47,29 +58,24 @@ class SiteAdmins::MembersManagerController < SiteAdmins::BaseController
     def statistics
         @members = Member.all
 
-        #TODO
-        # Refactor the enums that lead to this...
-        # I am paying for my incompetence here... sad!
-        @grades = ['1年生', '2年生', '3年生', '4年生', 'OM']
+        @member_count = @members.count
+        @grade_count = @members.group(:grade).count
 
-        @memberCount = @members.count
-        @count = @members.group(:grade).count
-
-        @totalDepartmentCount = @members.group(:department).count
+        @total_department_count = @members.group(:department).count
 
         @grouped_members = @members.group_by{|member| [member.grade, member.department]}
-        @departmentCount = @grouped_members.transform_values(&:count)
+        @department_count = @grouped_members.transform_values(&:count)
     end
 
     def increment_grade
         @members = Member.all
-        @members.where.not(grade: 5).update_all('grade = grade + 1')
+        @members.where.not(grade: 4).update_all('grade = grade + 1')
         redirect_to site_admins_members_manager_index_path, notice: "Grades incremented successfully!"
     end
 
     def decrement_grade
         @members = Member.all
-        @members.where.not(grade: 1).update_all('grade = grade - 1')
+        @members.where.not(grade: 0).update_all('grade = grade - 1')
         redirect_to site_admins_members_manager_index_path, notice: "Grades decremented successfully!"
     end
 

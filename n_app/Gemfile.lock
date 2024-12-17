@@ -124,6 +124,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.12.1)
+      devise (>= 4.9.0)
     devise_invitable (2.0.9)
       actionmailer (>= 5.0)
       devise (>= 4.6)
@@ -331,6 +333,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 4.9)
+  devise-i18n
   devise_invitable (~> 2.0.0)
   dotenv-rails
   jbuilder

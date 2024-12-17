@@ -1,0 +1,35 @@
+ja:
+  activerecord:
+    models:
+      member: "メンバー"
+    attributes:
+      member:
+        name: "名前"
+        student_id: "学籍番号"
+        grade: "学年"
+        department: "学科"
+        course: "コース"
+      member/role:
+        user: "ユーザー"
+        mod: "Mod"
+        admin: "管理者"
+        nil: "未設定"
+      member/grades:
+        freshman: "1年生"
+        sophomore: "2年生"
+        junior: "3年生"
+        senior: "4年生"
+        graduate: "OM"
+        nil: "未設定"
+      member/departments:
+        information_technology: "情報工学科"
+        digital_entertainment: "デジタルエンタテインメント学科"
+        nil: "未設定"
+      member/courses:
+        ai_strategy: "AI戦略コース"
+        iot_systems: "IoTシステムコース"
+        robotics_development: "ロボット開発コース"
+        game_production: "ゲームプロデュースコース"
+        cg_animation: "CGアニメーションコース"
+        work_in_progress: "選択中"
+        nil: "未設定"

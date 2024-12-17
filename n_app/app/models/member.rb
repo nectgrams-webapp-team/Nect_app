@@ -12,6 +12,14 @@ class Member < ApplicationRecord
   has_many :team_members, dependent: :destroy
   has_many :teams, :through => :team_members
 
+  enum member_role: { user: 0, mod: 1, admin: 2 }
+  enum grade: { freshman: 0, sophomore: 1, junior: 2, senior: 3, graduate: 4 }
+
+  DEPARTMENT_COURSES = {
+      information_technology: [:ai_strategy, :iot_systems, :robotics_development],
+      digital_entertainment: [:game_production, :cg_animation]
+  }.freeze
+
   def calculate_graduation_year(student_id)
     # 学籍番号から入学年の下二桁を取得
     enrollment_year = student_id[2..3].to_i
@@ -61,8 +69,4 @@ class Member < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.png'
   end
-
-  enum :grade, { '1年生': '1', '2年生': '2', '3年生': '3', '4年生': '4', 'OM': '5' }
-  enum :department, { "情報工学科": 1, "デジタルエンタテインメント学科": 2 }
-  enum :member_role, { user: 0, mod: 1, admin: 2 }
 end

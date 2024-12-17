@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      event_history:
+        one: "Event History"
+        other: "Event Histories"
+    attributes:
+      event_history:

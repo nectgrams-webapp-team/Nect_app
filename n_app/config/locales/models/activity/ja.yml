@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      activity:
+        one: "活動"
+        other: "活動"
+    attributes:
+      activity:
