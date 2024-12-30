@@ -9,7 +9,7 @@ services:
         source: mysqldata
         target: /var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
     ports:
       - '3305:3306'
@@ -43,7 +43,7 @@ services:
       # TODO -> Finally make separate dev and prod versions
       # RAILS_ENV: development
       RAILS_ENV: production
-      MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:
