@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      team_member:
+        one: "Team Member"
+        other: "Team Members"
+    attributes:
+      team_member:
