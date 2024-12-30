@@ -1,4 +1,3 @@
-<%= javascript_include_tag "dynamic_course" %>
 <div class="card text-bg-light">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
@@ -10,7 +9,7 @@
                     <li class="nav-item me-2">
                         <%= link_to '編集', edit_member_path, class: 'btn btn-outline-info profile-button-info' %>
                     </li>
-                    <% if current_member.member_role != "user" %>
+                    <% unless current_member.user? %>
                         <li class="nav-item me-2">
                             <%= link_to 'Admin', site_admins_index_path, class: 'btn btn-outline-warning' %>
                         </li>
@@ -22,7 +21,7 @@
             </div>
         </ul>
     </div>
-    <div class="card-body">
+    <div class="card-body" data-controller="courses">
         <%= form_with model: @member, method: :patch do |member| %>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">プロフィール画像</label>
@@ -50,31 +49,29 @@
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">学年</label>
-                <div class="col-sm-10">
-                    <%= member.collection_radio_buttons(:grade, Member.grades, :first, :first) do |displayGrade| %>
+                <div class="col-sm-10" id="grades-wrapper">
+                    <%= member.collection_radio_buttons(:grade, Member.grades.keys, :to_s, ->(grade) { grade_translation(grade) }) do |radio| %>
                         <div class="form-check form-check-inline">
-                            <%= displayGrade.radio_button(class: "form-check-input grade-radio", data: { grade: displayGrade.value }) %>
-                            <%= displayGrade.label(class: "form-check-label") %>
+                            <%= radio.radio_button(class: "form-check-input", data: { action: "change->courses#selectGrade", courses_target: "gradeRadio" }) %>
+                            <%= radio.label(class: "form-check-label") %>
                         </div>
                     <% end %>
                 </div>
             </div>
             <fieldset class="row mb-3">
-                <legend class="col-form-label col-sm-2 pt-0">学科</legend>
-                <div class="col-sm-10">
-                    <%= member.collection_radio_buttons(:department, Member.departments, :first, :first) do |displayDepartments| %>
+                <legend class="col-form-label col-sm-2 pt-0" >学科</legend>
+                <div class="col-sm-10" id="departments-wrapper">
+                    <%= member.collection_radio_buttons(:department, Member::DEPARTMENT_COURSES.keys, :to_s, ->(department) { department_translation(department) }) do |radio| %>
                         <div class="form-check">
-                            <%= displayDepartments.radio_button(class: "form-check-input", data: { department: displayDepartments.value }) %>
-                            <%= displayDepartments.label(class: "form-check-label") %>
+                            <%= radio.radio_button(class: "form-check-input", data: { action: "change->courses#selectDepartment", courses_target: "departmentRadio" }) %>
+                            <%= radio.label(class: "form-check-label") %>
                         </div>
                     <% end %>
                 </div>
             </fieldset>
-            <fieldset class="row mb-3">
+            <fieldset class="row mb-3" hidden="hidden">
                 <legend class="col-form-label col-sm-2 pt-0">コース</legend>
-                <div class="col-sm-10">
-                    <div id="additional-options" data-selected-course="<%= @member.course %>"></div>
-                </div>
+                <div class="col-sm-10" id="courses-wrapper" data-checked-course="<%= @member.course %>" data-courses-target="coursesWrapper"></div>
             </fieldset>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">自己紹介</label>

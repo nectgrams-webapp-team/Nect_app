@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_02_062551) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_14_161746) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,14 +82,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_02_062551) do
     t.integer "invitations_count", default: 0
     t.string "name"
     t.string "student_id"
-    t.string "grade"
     t.integer "learning_programming_languages", default: 0
     t.text "intro"
-    t.integer "department"
     t.integer "graduation_year"
     t.integer "member_role", default: 0
+    t.integer "grade"
+    t.string "department"
     t.string "course"
-    t.integer "member_role", default: 0
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["invitation_token"], name: "index_members_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_members_on_invited_by_id"
