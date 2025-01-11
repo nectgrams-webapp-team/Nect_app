@@ -9,7 +9,7 @@ services:
         source: mysqldata
         target: /var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
     ports:
       - '3305:3306'
@@ -19,10 +19,10 @@ services:
     env_file:
       - .env
     #本番環境用コマンド(production)
-    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
     # We still need the development environment!
     # TODO -> Finally create dev and prod versions
-    command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
+    # command: bash -c "rm -f tmp/pids/server.pid && ./bin/dev"
     volumes:
       - type: bind
         source: ./n_app
@@ -41,9 +41,9 @@ services:
     tty: true
     environment:
       # TODO -> Finally make separate dev and prod versions
-      RAILS_ENV: development
-      # RAILS_ENV: production
-      MYSQL_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
+      # RAILS_ENV: development
+      RAILS_ENV: production
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       TZ: "Asia/Tokyo"
 volumes:
   gemdata:
