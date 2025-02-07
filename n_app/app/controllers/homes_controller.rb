@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
   def top
-    @activities = Activity.all
+    @activities = Activity.where(published: true).last(4).reverse
     @images = Home.all
   end
 
