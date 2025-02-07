@@ -2,7 +2,7 @@ class Activity < ApplicationRecord
   belongs_to :member
   has_one_attached :activity_image
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 60 }
   validates :body, presence: true
 
   def get_activity_image
