@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def title(*titles)
+    content_for :title, titles.join(' | ')
+  end
+
   def grade_translation(grade)
     grade ? Member.human_attribute_name("grades.#{grade}") : Member.human_attribute_name("grades.nil")
   end

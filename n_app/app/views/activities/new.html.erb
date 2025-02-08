@@ -1,8 +1,10 @@
+<%= title "新しい活動記事を投稿" %>
+
 <h1>新しい活動記事を投稿</h1>
 
 <% if @activity.errors.any? %>
     <div class="alert alert-danger">
-        <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
+      <p><strong>エラーがあります</strong></p>
         <ul>
             <% @activity.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
