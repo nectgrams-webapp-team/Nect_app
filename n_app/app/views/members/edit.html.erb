@@ -84,21 +84,11 @@
             <div class="row mb-3">
                 <legend class="col-sm-2 col-form-label">学習中言語</legend>
                 <div class="col-sm-10">
-                    <div class="row row-cols-3 row-cols-lg-6 g-2 g-lg-3">
-                        <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
-                            <% if (pl_num & member.object.learning_programming_languages) != 0 %>
-                                <div class="col">
-                                    <%= member.check_box :selected_languages, { multiple: true, checked: true }, pl_num %>
-                                    <%= member.label :selected_languages, language, value: pl_num %>
-                                </div>
-                            <% else %>
-                                <div class="col">
-                                    <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
-                                    <%= member.label :selected_languages, language, value: pl_num %>
-                                </div>
-                            <% end %>
-                        <% end %>
-                    </div>
+                <div class="row row-cols-3 row-cols-lg-6 g-2 g-lg-3">
+                    <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
+                      <%= programming_language_checkbox(member, pl_num, language) %>
+                    <% end %>
+                </div>
                 </div>
             </div>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
