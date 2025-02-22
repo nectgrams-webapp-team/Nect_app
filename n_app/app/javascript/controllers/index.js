@@ -5,5 +5,7 @@
 import {application} from "./application"
 
 import CoursesController from "./courses_controller"
+import Tops from "./home/top"
 
 application.register("courses", CoursesController)
+application.register("top", Tops)
