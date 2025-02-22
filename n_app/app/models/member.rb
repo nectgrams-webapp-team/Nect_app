@@ -47,10 +47,41 @@ class Member < ApplicationRecord
     1024 => "TypeScript",
     2048 => "HTML/CSS",
     4096 => "Swift",
-    8192 => "Objective-C",
-    16384 => "Kotlin",
-    32768 => "R",
-    65536 => "SQL"
+    8192 => "Kotlin",
+    16384 => "R",
+    32768 => "SQL"
+  }.freeze
+
+  FRAMEWORKS = {
+    2 => "Ruby on Rails",
+    4 => "Vue.js",
+    8 => "Flask",
+    16 => "CakePHP",
+    32 => "Laravel",
+    64 => "Gin",
+    128 => "SwiftUI"
+  }.freeze
+
+  LIBRARIES = {
+    2 => "React",
+    4 => "jQuery",
+    8 => "Numpy",
+    16 => "matplotlib"
+  }.freeze
+
+  GAME_ENGINES = {
+    2 => "Unreal Engine",
+    4 => "Unity",
+    8 => "Godot",
+    16 => "Construct 3",
+    32 => "CryEngine",
+    64 => "Defold"
+  }.freeze
+
+  GRAPHICS_3D = {
+    4 => "Blender",
+    8 => "Maya",
+    16 => "Cinema"
   }.freeze
 
   def calculate_select_pl(select_pl)
@@ -61,6 +92,29 @@ class Member < ApplicationRecord
       end
     end
     return s_pl
+  end
+
+  def calculate_selected_attr(selected_attr, hash_str)
+    s_attr = []
+    case hash_str
+    when "PROGRAMMING_LANGUAGES"
+      hash = PROGRAMMING_LANGUAGES
+    when "FRAMEWORKS"
+      hash = FRAMEWORKS
+    when "LIBRARIES"
+      hash = LIBRARIES
+    when "GAME_ENGINES"
+      hash = GAME_ENGINES
+    else "GRAPHICS_3D"
+      hash = GRAPHICS_3D
+    end
+
+    hash.each do |key,val|
+      if (selected_attr & key) != 0
+        s_attr.push(val)
+      end
+    end
+    return s_attr
   end
 
   # プロフィール写真
