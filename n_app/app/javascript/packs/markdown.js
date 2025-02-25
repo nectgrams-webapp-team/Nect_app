@@ -1,69 +1,79 @@
-window.addEventListener('turbo:load', function(){
+// プレビュー機能
+window.addEventListener('turbo:load', () => {
     let editArea = document.getElementById('article_markdown_content') // テキストエリア
     let previewArea = document.getElementById('preview') // プレビューエリア
     if (!editArea || !previewArea) return // テキストエリアとプレビューエリアがなかったらリターン
 
-    // タイピングが1秒停止したらプレビューする、タイピングし続ける時はプレビューしない。
-    editArea.addEventListener('keyup', delay(function() {
-        preview()
-    }, 500))
-
     // CSRFトークンを取得する関数
-    function getCsrfToken() {
+    const getCsrfToken = () => {
         const metaElem = document.querySelector("meta[name='csrf-token']");
-        if (!metaElem) {
-            throw Error("meta[name=csrf-token] is not found.");
-        }
-        const csrfToken = metaElem.getAttribute("content");
-        if (!csrfToken) {
-            throw Error("csrf token is not set");
-        }
+        if (!metaElem) throw new Error("meta[name='csrf-token'] is not found.");
+
+        const csrfToken = metaElem.content;
+        if (!csrfToken) throw new Error("CSRF token is not set.");
+
         return csrfToken;
-        }
+    };
 
     // POST リクエストして、マークダウンした形のHTMLを取得する
-    function preview() {
-        let content = editArea.value
+    const preview = async () => {
+        try {
+            const content = editArea.value;
+            const token = getCsrfToken();
 
-        const token = getCsrfToken(); // CSRFトークンを取得
+            const response = await fetch('/api/v1/activities/preview', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token
+                },
+                method: 'POST',
+                body: JSON.stringify({content})
+            });
 
-        fetch('/api/v1/activities/preview', {
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': token
-        },
-        method: 'POST',
-        body: JSON.stringify({ content })
-        })
-        .then((response) => response.json())
-        .then(data => {
-            previewArea.innerHTML = data.content
-            console.log('Updated preview')
-        })
-        .catch(() => console.warn('Error occurred while updating preview'))
-    }
+            if (!response.ok) throw new Error('Failed to fetch preview');
+
+            const data = await response.json();
+            previewArea.innerHTML = data.content;
+            //console.log('Updated preview');
+        } catch (error) {
+            //console.warn('Error occurred while updating preview:', error);
+        }
+    };
 
     // 遅延ファンクションの定義
-    function delay(callback, ms) {
-        let timer = 0
-        return function() {
-        let context = this, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            callback.apply(context, args)
-        }, ms || 0);
-        }
-    }
-    })
+    const delay = (callback, ms = 0) => {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => callback(...args), ms);
+        };
+    };
 
-window.copy = function(e) {
-    // クリックしたボタンに紐づくコードの範囲の定義
-    let code = e.closest('.highlight-wrap').querySelector('.rouge-code')
-        
-    // クリップボードにコードをコピーしてから、ボタンのテキストを変更する
-    navigator.clipboard.writeText(code.innerText)
-        .then(() => e.innerText = 'Copied')
-    
-    // 任意：コピーしたコードが選択されたようにする 
-    window.getSelection().selectAllChildren(code)
-}
+    // タイピングが0.5秒停止したらプレビューする、タイピングし続ける時はプレビューしない。
+    editArea.addEventListener('keyup', delay(preview, 500));
+});
+
+// コードのコピー機能
+const copy = async (e) => {
+    try {
+        const code = e.closest('.highlight-wrap')?.querySelector('.rouge-code');
+        if (!code) throw new Error("Code block not found.");
+
+        await navigator.clipboard.writeText(code.innerText);
+
+        const originalText = e.innerText;
+        e.innerText = 'Copied!';
+
+        setTimeout(() => (e.innerText = originalText), 2500);
+    } catch (error) {
+        console.warn("Failed to copy:", error);
+    }
+};
+// ボタンにイベントリスナーを設定
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".copy-btn").forEach((button) =>
+        button.addEventListener("click", (event) => copy(event.target))
+    );
+});
+
+// 画像のドラッグ&ドロップ保存機能
