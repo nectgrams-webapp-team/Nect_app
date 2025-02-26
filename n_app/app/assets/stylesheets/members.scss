@@ -144,16 +144,23 @@ h5 {
 
 .flex-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .flex-column {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
 }
 
+.skills-field {
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
+  text-align: center;
+}
 
 .horizontal-scroll-container {
   display: flex; /* 子要素を横並びにする */
@@ -170,4 +177,27 @@ h5 {
   width: 100%;       /* カードの幅に合わせて画像の幅を100%に設定 */
   height: 150px;     /* 画像の高さを固定 */
   object-fit: cover; /* 画像のはみ出した部分を切り取り、中央部分を表示 */
+}
+
+// editページ
+.learning-block {
+  text-align: left;
+  padding-bottom: 25px;
+}
+
+// showページ
+.learning_field {
+  max-width: 100px !important;
+  border: 2px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.no-padding-top {
+  padding-top: 0px !important;
+}
+
+.bordered-div {
+  border: 2px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
 }
