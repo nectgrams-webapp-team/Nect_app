@@ -181,9 +181,23 @@ h5 {
 
 // editページ
 .learning-block {
+  text-align: left;
   padding-bottom: 25px;
 }
 
+// showページ
+.learning_field {
+  max-width: 100px !important;
+  border: 2px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 .no-padding-top {
   padding-top: 0px !important;
+}
+
+.bordered-div {
+  border: 2px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
 }

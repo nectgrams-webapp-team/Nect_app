@@ -75,14 +75,16 @@
             <h5>学んでるスキルなし</h5>
           <% else %>
             <% skill2dList.each do |attrList| %>
-              <div class="flex-column">
-                <% index = skill2dList.find_index(attrList) %>
-                <% if attrList.empty? == false %>
-                  <h4><%= Member::ATTR_DICT[index] %></h4>
-                  <% attrList.each do |skill| %>
-                    <h5><%= skill %></h5>
+              <div class="bordered-div">
+                <div class="flex-column learning-field">
+                  <% index = skill2dList.find_index(attrList) %>
+                  <% if attrList.empty? == false %>
+                    <h4><%= Member::ATTR_DICT[index] %></h4>
+                    <% attrList.each do |skill| %>
+                      <h5><%= skill %></h5>
+                    <% end %>
                   <% end %>
-                <% end %>
+                </div>
               </div>
             <% end %>
           <% end %>
