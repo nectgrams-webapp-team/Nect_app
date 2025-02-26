@@ -59,7 +59,7 @@
           <h5>コース： <%= course_translation(@member.course) %></h5>
         </div>
       </div>
-      <div class="flex-column">
+      <div class="skills-field">
         <div class="content">
           <b><h2>学習中スキル</h2></b>
         </div>
@@ -75,9 +75,15 @@
             <h5>学んでるスキルなし</h5>
           <% else %>
             <% skill2dList.each do |attrList| %>
-              <% attrList.each do |skill| %>
-                <h5><%= skill %></h5>
-              <% end %>
+              <div class="flex-column">
+                <% index = skill2dList.find_index(attrList) %>
+                <% if attrList.empty? == false %>
+                  <h4><%= Member::ATTR_DICT[index] %></h4>
+                  <% attrList.each do |skill| %>
+                    <h5><%= skill %></h5>
+                  <% end %>
+                <% end %>
+              </div>
             <% end %>
           <% end %>
         </div>
