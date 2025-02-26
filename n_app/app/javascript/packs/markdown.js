@@ -130,7 +130,10 @@ window.addEventListener('turbo:load', () => {
                 headers: {'X-CSRF-Token': getCsrfToken()},
             });
 
-            if (!response.ok) throw new Error("画像アップロードに失敗しました");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`画像アップロードに失敗しました: ${errorData.message}`);
+            }
 
             const data = await response.json();
             const imageUrl = data.url;
