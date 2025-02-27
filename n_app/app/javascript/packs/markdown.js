@@ -1,19 +1,19 @@
+// CSRFトークンの取得
+const getCsrfToken = () => {
+    const metaElem = document.querySelector("meta[name='csrf-token']");
+    if (!metaElem) throw new Error("meta[name='csrf-token'] is not found.");
+
+    const csrfToken = metaElem.content;
+    if (!csrfToken) throw new Error("CSRF token is not set.");
+
+    return csrfToken;
+};
+
 // プレビュー機能
 window.addEventListener('turbo:load', () => {
     const editArea = document.getElementById('article_markdown_content') // テキストエリア
     const previewArea = document.getElementById('preview') // プレビューエリア
     if (!editArea || !previewArea) return // テキストエリアとプレビューエリアがなかったらリターン
-
-    // CSRFトークンを取得する関数
-    const getCsrfToken = () => {
-        const metaElem = document.querySelector("meta[name='csrf-token']");
-        if (!metaElem) throw new Error("meta[name='csrf-token'] is not found.");
-
-        const csrfToken = metaElem.content;
-        if (!csrfToken) throw new Error("CSRF token is not set.");
-
-        return csrfToken;
-    };
 
     // POST リクエストして、マークダウンした形のHTMLを取得する
     const preview = async () => {
@@ -80,17 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener('turbo:load', () => {
     const dragDropArea = document.getElementById('article_markdown_content')
     if (!dragDropArea) return
-
-    // CSRFトークンを取得する関数
-    const getCsrfToken = () => {
-        const metaElem = document.querySelector("meta[name='csrf-token']");
-        if (!metaElem) throw new Error("meta[name='csrf-token'] is not found.");
-
-        const csrfToken = metaElem.content;
-        if (!csrfToken) throw new Error("CSRF token is not set.");
-
-        return csrfToken;
-    };
 
     // カーソル位置に保存された画像のURLを挿入する関数
     const insertAtCursor = (dragDropArea, text) => {
