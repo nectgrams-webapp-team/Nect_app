@@ -1,139 +1,159 @@
 // CSRFトークンの取得
 const getCsrfToken = () => {
-    const metaElem = document.querySelector("meta[name='csrf-token']");
-    if (!metaElem) throw new Error("meta[name='csrf-token'] is not found.");
+    const meta_elem = document.querySelector("meta[name='csrf-token']");
+    if (!meta_elem) throw new Error("meta[name='csrf-token'] is not found.\nCSRFトークンが取得できません。");
 
-    const csrfToken = metaElem.content;
-    if (!csrfToken) throw new Error("CSRF token is not set.");
+    const csrf_token = meta_elem.content;
+    if (!csrf_token) throw new Error("CSRF token is not set.\nCSRFトークンが無効です。");
 
-    return csrfToken;
+    return csrf_token;
 };
 
+// プレビュー表示
+const preview = async (content, t) => {
+    const response = await fetch('/api/v1/activities/preview', {
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': t
+        },
+        method: 'POST',
+        body: JSON.stringify({content})
+    });
+
+    if (!response.ok) throw new Error('適切なレスポンスを取得できませんでした。');
+    return await response.json();
+};
+
+
 // プレビュー機能
-window.addEventListener('turbo:load', () => {
-    const editArea = document.getElementById('article_markdown_content') // テキストエリア
-    const previewArea = document.getElementById('preview') // プレビューエリア
-    if (!editArea || !previewArea) return // テキストエリアとプレビューエリアがなかったらリターン
+window.addEventListener('turbo:load', async () => {
+    const edit_area = document.getElementById('article_markdown_content')
+    const preview_area = document.getElementById('preview')
+    // テキストエリアとプレビューエリアがなかったら終了
+    if (!edit_area || !preview_area) return
 
-    // POST リクエストして、マークダウンした形のHTMLを取得する
-    const preview = async () => {
+    const updatePreview = async () => {
         try {
-            const content = editArea.value;
             const token = getCsrfToken();
-
-            const response = await fetch('/api/v1/activities/preview', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': token
-                },
-                method: 'POST',
-                body: JSON.stringify({content})
-            });
-
-            if (!response.ok) throw new Error('Failed to fetch preview');
-
-            const data = await response.json();
-            previewArea.innerHTML = data.content;
-            //console.log('Updated preview');
+            const data = await preview(edit_area.value, token);
+            preview_area.innerHTML = data.content;
         } catch (error) {
-            //console.warn('Error occurred while updating preview:', error);
+            console.error('Error occurred while updating preview:\n', error);
+            preview_area.innerHTML = "エラーが発生しました。\nもう一度やり直してください。";
         }
     };
 
-    // 遅延ファンクションの定義
-    const delay = (callback, ms = 0) => {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => callback(...args), ms);
-        };
-    };
+    // 初回ロード時にプレビュー表示
+    await updatePreview();
 
-    // タイピングが0.5秒停止したらプレビューする、タイピングし続ける時はプレビューしない。
-    editArea.addEventListener('keyup', delay(preview, 500));
+    // タイピング1秒毎にプレビュー表示
+    edit_area.addEventListener('keyup', () => {
+        setTimeout(updatePreview, 2000)
+    });
 });
 
 // コードのコピー機能
 const copy = async (e) => {
-    try {
-        const code = e.closest('.highlight-wrap')?.querySelector('.rouge-code');
-        if (!code) throw new Error("Code block not found.");
+    const code = e.closest('.highlight-wrap')?.querySelector('.rouge-code');
+    if (!code) throw new Error("Code block not found.\nコードブロックが見つかりません。");
 
-        await navigator.clipboard.writeText(code.innerText);
+    await navigator.clipboard.writeText(code.innerText);
 
-        const originalText = e.innerText;
-        e.innerText = 'Copied!';
+    const original_text = e.innerText;
+    e.innerText = 'Copied!';
 
-        setTimeout(() => (e.innerText = originalText), 2500);
-    } catch (error) {
-        console.warn("Failed to copy:", error);
-    }
+    setTimeout(() => (e.innerText = original_text), 2500);
 };
 // ボタンにイベントリスナーを設定
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".copy-btn").forEach((button) =>
-        button.addEventListener("click", (event) => copy(event.target))
-    );
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+        button.addEventListener("click", async (event) => {
+            try {
+                await copy(event.target)
+            } catch (error) {
+                console.error("Failed to copy:", error);
+            }
+        });
+    });
 });
 
-// 画像のドラッグ&ドロップ保存機能
+// 画像のドラッグ&ドロップ挿入機能
 window.addEventListener('turbo:load', () => {
-    const dragDropArea = document.getElementById('article_markdown_content')
-    if (!dragDropArea) return
+    const drag_drop_area = document.getElementById('article_markdown_content');
+    if (!drag_drop_area) return
 
     // カーソル位置に保存された画像のURLを挿入する関数
-    const insertAtCursor = (dragDropArea, text) => {
-        const startPos = dragDropArea.selectionStart;
-        const endPos = dragDropArea.selectionEnd;
-        const beforeText = dragDropArea.value.substring(0, startPos);
-        const afterText = dragDropArea.value.substring(endPos, dragDropArea.value.length);
+    const insertAtCursor = (drag_drop_area, text) => {
+        const start_pos = drag_drop_area.selectionStart;
+        const end_pos = drag_drop_area.selectionEnd;
+        const before_text = drag_drop_area.value.substring(0, start_pos);
+        const after_text = drag_drop_area.value.substring(end_pos, drag_drop_area.value.length);
 
-        dragDropArea.value = beforeText + text + afterText;
-        dragDropArea.selectionStart = dragDropArea.selectionEnd = startPos + text.length;
+        drag_drop_area.value = before_text + text + after_text;
+        drag_drop_area.selectionStart = drag_drop_area.selectionEnd = start_pos + text.length;
     };
 
-    dragDropArea.addEventListener("dragover", (event) => {
+    drag_drop_area.addEventListener("dragover", (event) => {
         event.preventDefault();
-        dragDropArea.style.background = "#444444";
+        drag_drop_area.style.background = "#444444";
     });
-    dragDropArea.addEventListener("dragleave", () => {
-        dragDropArea.style.background = "white";
+    drag_drop_area.addEventListener("dragleave", () => {
+        drag_drop_area.style.background = "white";
     });
 
-    dragDropArea.addEventListener("drop", async (event) => {
+    drag_drop_area.addEventListener("drop", async (event) => {
         event.preventDefault();
-        dragDropArea.style.background = "white";
+        drag_drop_area.style.background = "white";
 
         const file = event.dataTransfer.files[0];
+        const form_data = new FormData();
+        const token = getCsrfToken()
 
         if (!file || !file.type.startsWith("image/")) {
-            alert("画像ファイルのみアップロード可能です。");
+            alert("画像ファイルのみアップロード可能です。\n( .jpg .png .jpeg )");
             return;
         }
-        const formData = new FormData();
-        formData.append("image", file);
+
+        const max_file_size = 8;
+        const file_size = file.size / (1024 * 1024); // MB単位に変換
+
+        if (file_size > max_file_size) {
+            alert(`画像のデータ量が大きいです。\n${max_file_size}MB 以下の画像を利用してください。\n（現在のサイズ: ${file_size.toFixed(2)}MB）`);
+            return;
+        }
+
+        form_data.append("image", file);
         try {
             const response = await fetch('/api/v1/activities/upload', {
                 method: 'POST',
-                body: formData,
-                headers: {'X-CSRF-Token': getCsrfToken()},
+                body: form_data,
+                headers: {'X-CSRF-Token': token},
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`画像アップロードに失敗しました: ${errorData.message}`);
+                alert(`画像アップロードに失敗しました: ${errorData.message}`);
             }
 
             const data = await response.json();
-            const imageUrl = data.url;
+            const image_url = data.url;
 
-            // Markdown 形式で `dragDropArea` に画像を挿入
-            const markdownImage = `\n![画像](${imageUrl})\n`;
-            dragDropArea.focus();
-            insertAtCursor(dragDropArea, markdownImage);
+            // Markdown 形式で `drag_drop_area` に画像を挿入
+            const markdown_image = `![画像](${image_url})\n`;
+            drag_drop_area.focus();
+            insertAtCursor(drag_drop_area, markdown_image);
 
-        } catch (error) {
-            console.error("画像アップロードエラー:", error);
+            // プレビューに表示
+            const edit_area = document.getElementById('article_markdown_content');
+            const preview_area = document.getElementById('preview');
+
+            setTimeout(async () => {
+                const data = await preview(edit_area.value, token);
+                preview_area.innerHTML = data.content;
+            }, 1000);
+
+        } catch {
+            console.error("画像アップロードエラー");
         }
     });
 });
