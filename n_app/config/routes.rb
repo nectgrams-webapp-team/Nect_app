@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :api, path: 'api', format: :json do
     namespace :v1 do
       post '/activities/preview', to: 'activities#preview'
+      post '/activities/upload', to: 'activities#upload'
       get 'members/courses_by_department', to: 'members#courses_by_department'
     end
   end

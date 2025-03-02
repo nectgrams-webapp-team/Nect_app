@@ -4,7 +4,7 @@
 
 <% if @activity.errors.any? %>
     <div class="alert alert-danger">
-      <p><strong>エラーがあります</strong></p>
+        <p><strong>エラーがあります</strong></p>
         <ul>
             <% @activity.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
