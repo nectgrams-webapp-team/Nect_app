@@ -27,6 +27,8 @@ class ActivitiesController < ApplicationController
     if @activity.save
       redirect_to activities_path
     else
+      flash[:alert] = "プレビューを表示したい場合は、エラー内容を修正後に一度保存して、編集を実行してください。"
+
       render :new, status: :unprocessable_entity
     end
   end
