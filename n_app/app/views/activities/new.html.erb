@@ -4,7 +4,7 @@
 
 <% if @activity.errors.any? %>
     <div class="alert alert-danger">
-      <p><strong>エラーがあります</strong></p>
+        <p><strong>エラーがあります</strong></p>
         <ul>
             <% @activity.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
@@ -12,6 +12,8 @@
         </ul>
     </div>
 <% end %>
+
+<div id="error-message" style="color: red; display: none; font-weight: bold;"></div>
 
 <div class="editor-container">
     <div class="editor">
@@ -25,8 +27,8 @@
         
         <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
             <div class="mb-3">
-                <label for="formFile" class="form-label">トップ画像の選択</label>
-                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'formFile' %>
+                <label for="top_image" class="form-label">トップ画像の選択</label>
+                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'top_image' %>
             </div>
             
             <div class="row g-3 align-items-center">
