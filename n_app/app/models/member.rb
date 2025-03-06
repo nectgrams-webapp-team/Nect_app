@@ -79,9 +79,17 @@ class Member < ApplicationRecord
   }.freeze
 
   GRAPHICS_3D = {
-    4 => "Blender",
-    8 => "Maya",
-    16 => "Cinema"
+    2 => "Blender",
+    4 => "Maya",
+    8 => "Cinema"
+  }.freeze
+
+  ATTR_DICT = {
+    0 => "言語",
+    1 => "フレームワーク",
+    2 => "ライブラリ",
+    3 => "ゲームエンジン",
+    4 => "3Dグラフィックス"
   }.freeze
 
   def calculate_select_pl(select_pl)
@@ -105,7 +113,7 @@ class Member < ApplicationRecord
       hash = LIBRARIES
     when "GAME_ENGINES"
       hash = GAME_ENGINES
-    else "GRAPHICS_3D"
+    else
       hash = GRAPHICS_3D
     end
 
