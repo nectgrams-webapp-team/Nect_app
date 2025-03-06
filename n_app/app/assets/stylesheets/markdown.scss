@@ -291,5 +291,10 @@
     @include richText_code;
     text-align: left;
   }
+
+  img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
 }
   

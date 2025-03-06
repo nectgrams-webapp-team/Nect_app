@@ -41,7 +41,7 @@ class CustomRenderHTML < Redcarpet::Render::HTML
 
   # コピーボタンの定義。クリックするとJavaScriptファンクションが実行される
   def copy_button
-    "<button onclick='copy(this)'>Copy</button>"
+    '<button class="copy-btn">Copy</button>'
   end
 
   # コードブロックの言語、ファイル名、コピーボタンを設置する
