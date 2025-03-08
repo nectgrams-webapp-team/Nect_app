@@ -1,7 +1,6 @@
 module Api
   module V1
     class ActivitiesController < ApplicationController
-      require "mini_magick"
       include MarkdownHelper
 
       def preview
@@ -14,7 +13,6 @@ module Api
 
         # 挿入された画像を取得
         dragged_image = params[:image]
-        file_size = dragged_image.tempfile.size
 
         # 画像を圧縮
         compressed_image = MiniMagick::Image.open(dragged_image.tempfile.path)
