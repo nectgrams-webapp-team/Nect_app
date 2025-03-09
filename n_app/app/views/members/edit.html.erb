@@ -1,3 +1,4 @@
+<!-- filepath: /Users/kazutakurose/Desktop/IPUT/Nect_app/n_app/app/views/members/edit.html.erb -->
 <%= title "プロファイルを編集" %>
 
 <div class="card text-bg-light">
@@ -82,23 +83,35 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <legend class="col-sm-2 col-form-label">学習中言語</legend>
+                <legend class="col-sm-2 col-form-label no-padding-top">学習中言語</legend>
                 <div class="col-sm-10">
-                    <div class="row row-cols-3 row-cols-lg-6 g-2 g-lg-3">
-                        <% Member::PROGRAMMING_LANGUAGES.each do |pl_num, language| %>
-                            <% if (pl_num & member.object.learning_programming_languages) != 0 %>
-                                <div class="col">
-                                    <%= member.check_box :selected_languages, { multiple: true, checked: true }, pl_num %>
-                                    <%= member.label :selected_languages, language, value: pl_num %>
-                                </div>
-                            <% else %>
-                                <div class="col">
-                                    <%= member.check_box :selected_languages, { multiple: true }, pl_num, {} %>
-                                    <%= member.label :selected_languages, language, value: pl_num %>
-                                </div>
-                            <% end %>
-                        <% end %>
-                    </div>
+                  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3 learning-block">
+                    <%= learning_checkbox(member, :learning_programming_languages, :selected_languages, Member::PROGRAMMING_LANGUAGES) %>
+                  </div>
+                </div>
+                <legend class="col-sm-2 col-form-label no-padding-top">学習中フレームワーク</legend>
+                <div class="col-sm-10">
+                  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3 learning-block">
+                    <%= learning_checkbox(member, :learning_frameworks, :selected_frameworks, Member::FRAMEWORKS) %>
+                  </div>
+                </div>
+                <legend class="col-sm-2 col-form-label no-padding-top">学習中ライブラリ</legend>
+                <div class="col-sm-10">
+                  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3 learning-block">
+                    <%= learning_checkbox(member, :learning_libraries, :selected_libraries, Member::LIBRARIES) %>
+                  </div>
+                </div>
+                <legend class="col-sm-2 col-form-label no-padding-top">学習中ゲームエンジン</legend>
+                <div class="col-sm-10">
+                  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3 learning-block">
+                    <%= learning_checkbox(member, :learning_game_engines, :selected_game_engines, Member::GAME_ENGINES) %>
+                  </div>
+                </div>
+                <legend class="col-sm-2 col-form-label no-padding-top">学習中3Dグラフィック</legend>
+                <div class="col-sm-10">
+                  <div class="row row-cols-3 row-cols-lg-3 g-2 g-lg-3 learning-block">
+                    <%= learning_checkbox(member, :learning_graphics_3D, :selected_graphics_3d, Member::GRAPHICS_3D) %>
+                  </div>
                 </div>
             </div>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">

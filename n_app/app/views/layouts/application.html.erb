@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= favicon_link_tag('tab-icon.png') %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= favicon_link_tag 'tab-icon.png', type: 'image/png' %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <header>
@@ -34,9 +34,9 @@
                     <li class="nav-item">
                         <%= link_to 'Activities', activities_path, class: 'nav-link text-light' %>
                     </li>
-                    <li class="nav-item">
-                        <%= link_to 'Teams', teams_path, class: 'nav-link text-light' %>
-                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <%#= link_to 'Teams', teams_path, class: 'nav-link text-light' %>
+                    <!--                    </li>-->
                     <% if member_signed_in? %>
                         <li class="nav-item">
                             <%= link_to 'YourPage', member_path(current_member.id), class: 'nav-link text-light' %>

@@ -19,7 +19,7 @@ class MembersController < ApplicationController
     end
   end
 
-  def update
+   def update
     @member = Member.find(params[:id])
 
     # Calculate and store the graduation year in db
@@ -27,11 +27,26 @@ class MembersController < ApplicationController
 
     # 選択された言語の値を合計
     selected_languages = Array(members_params[:selected_languages]).map(&:to_i)
-    total_value = selected_languages.sum
-    @member.learning_programming_languages = total_value
+    sum_languages = selected_languages.sum
+    @member.learning_programming_languages = sum_languages
 
-    # selected_languagesを除外してパラメータ保存
-    if @member.update(members_params.except(:selected_languages))
+    selected_frameworks = Array(members_params[:selected_frameworks]).map(&:to_i)
+    sum_frameworks = selected_frameworks.sum
+    @member.learning_frameworks = sum_frameworks
+
+    selected_libraries = Array(members_params[:selected_libraries]).map(&:to_i)
+    sum_libraries = selected_libraries.sum
+    @member.learning_libraries = sum_libraries
+
+    selected_game_engines = Array(members_params[:selected_game_engines]).map(&:to_i)
+    sum_game_engines = selected_game_engines.sum
+    @member.learning_game_engines = sum_game_engines
+
+    selected_graphics_3d = Array(members_params[:selected_graphics_3d]).map(&:to_i)
+    sum_graphics_3d = selected_graphics_3d.sum
+    @member.learning_graphics_3D = sum_graphics_3d
+
+    if @member.update(members_params.except(:selected_languages, :selected_frameworks, :selected_libraries, :selected_game_engines, :selected_graphics_3d))
       redirect_to member_path(@member.id)
     else
       render :edit
@@ -41,6 +56,6 @@ class MembersController < ApplicationController
   private
 
   def members_params
-    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :graduation_year, :course, selected_languages: [])
+    params.require(:member).permit(:name, :email, :student_id, :grade, :intro, :profile_image, :department, :graduation_year, :course, selected_languages: [], selected_frameworks: [], selected_libraries: [], selected_game_engines: [], selected_graphics_3d: [])
   end
 end

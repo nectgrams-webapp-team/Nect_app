@@ -59,17 +59,33 @@
           <h5>コース： <%= course_translation(@member.course) %></h5>
         </div>
       </div>
-      <div class="flex-column">
+      <div class="skills-field">
         <div class="content">
-          <b><h2>学んでるスキル</h2></b>
+          <b><h2>学習中スキル</h2></b>
         </div>
         <div class="content">
-          <% languageList = @member.calculate_select_pl(@member.learning_programming_languages) %>
-          <% if languageList.empty? %>
-            <h5>ー学んでるスキルなし</h5>
+          <% languageList = @member.calculate_selected_attr(@member.learning_programming_languages, "PROGRAMMING_LANGUAGES") %>
+          <% frameworkList = @member.calculate_selected_attr(@member.learning_frameworks, "FRAMEWORKS") %>
+          <% libraryList = @member.calculate_selected_attr(@member.learning_libraries, "LIBRARIES") %>
+          <% game_engineList = @member.calculate_selected_attr(@member.learning_game_engines, "GAME_ENGINES") %>
+          <% graphics_3dList = @member.calculate_selected_attr(@member.learning_graphics_3D, "GRAPHICS_3D") %>
+          <% skill2dList = Array[languageList, frameworkList, libraryList, game_engineList, graphics_3dList] %>
+
+          <% if skill2dList.all?(&:empty?) %>
+            <h5>学んでるスキルなし</h5>
           <% else %>
-            <% languageList.each do |language| %>
-              <h5><%= language %></h5>
+            <% skill2dList.each do |attrList| %>
+              <div class="bordered-div">
+                <div class="flex-column learning-field">
+                  <% index = skill2dList.find_index(attrList) %>
+                  <% if attrList.empty? == false %>
+                    <h4><%= Member::ATTR_DICT[index] %></h4>
+                    <% attrList.each do |skill| %>
+                      <h5><%= skill %></h5>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
             <% end %>
           <% end %>
         </div>
