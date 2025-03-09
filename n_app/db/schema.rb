@@ -88,8 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_13_074938) do
     t.integer "learning_game_engines", default: 0
     t.integer "learning_graphics_3D", default: 0
     t.text "intro"
-    t.integer "member_role", default: 0
     t.integer "graduation_year"
+    t.integer "member_role", default: 0
     t.integer "grade"
     t.string "department"
     t.string "course"
