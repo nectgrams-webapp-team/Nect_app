@@ -115,10 +115,11 @@ window.addEventListener('turbo:load', () => {
         }
 
         const max_file_size = 8;
-        const file_size = file.size / (1024 * 1024); // MB単位に変換
+        // MB単位
+        const file_size = file.size / (1024 * 1024);
 
         if (file_size > max_file_size) {
-            alert(`画像のデータ量が大きいです。\n${max_file_size}MB 以下の画像を利用してください。\n（現在のサイズ: ${file_size.toFixed(2)}MB）`);
+            alert(`画像のデータ量が大きいです。\n${max_file_size}MB 未満の画像を利用してください。\n（現在のサイズ: ${file_size.toFixed(2)}MB）`);
             return;
         }
 

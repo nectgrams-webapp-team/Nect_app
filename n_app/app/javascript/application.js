@@ -16,7 +16,7 @@ document.addEventListener('turbo:load', () => {
         if (!file) return;
 
         if (file_size > max_file_size) {
-            error_message.textContent = `エラー：画像のデータ量が大きいです。（最大 ${max_file_size}MB）\n現在のサイズ：${file_size.toFixed(2)}MB`;
+            error_message.textContent = `エラー：画像のデータ量が大きいです。（${max_file_size}MB 未満）\n現在のサイズ：${file_size.toFixed(2)}MB`;
             error_message.style.display = "block";
             event.target.value = "";
         } else {
