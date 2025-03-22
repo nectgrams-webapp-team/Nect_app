@@ -24,56 +24,94 @@ const preview = async (content, t) => {
     return await response.json();
 };
 
-
-// プレビュー機能
-window.addEventListener('turbo:load', async () => {
+const updatePreview = async () => {
     const edit_area = document.getElementById('article_markdown_content')
     const preview_area = document.getElementById('preview')
-    // テキストエリアとプレビューエリアがなかったら終了
+
     if (!edit_area || !preview_area) return
 
-    const updatePreview = async () => {
-        try {
-            const token = getCsrfToken();
-            const data = await preview(edit_area.value, token);
-            preview_area.innerHTML = data.content;
-        } catch (error) {
-            console.error('Error occurred while updating preview:\n', error);
-            preview_area.innerHTML = "エラーが発生しました。\nもう一度やり直してください。";
-        }
-    };
+    try {
+        const token = getCsrfToken();
+        const data = await preview(edit_area.value, token);
+        preview_area.innerHTML = data.content;
+    } catch (error) {
+        console.error('Error occurred while updating preview:\n', error);
+        preview_area.innerHTML = "エラーが発生しました。\nもう一度やり直してください。";
+    }
+};
 
-    // 初回ロード時にプレビュー表示
-    await updatePreview();
+const keyupPreviewUpdate = () => {
 
-    // タイピング1秒毎にプレビュー表示
-    edit_area.addEventListener('keyup', () => {
-        setTimeout(updatePreview, 2000)
-    });
+}
+// プレビュー機能
+//初回ロード時
+document.addEventListener('turbo:load', async () => {
+    await updatePreview(); // ✅ 初回の `updatePreview()` を1回だけ実行
+}, {once: true});
+
+// document.addEventListener('turbo:load', async () => {
+//     const edit_area = document.getElementById('article_markdown_content')
+//     // const preview_area = document.getElementById('preview')
+//     // テキストエリアとプレビューエリアがなかったら終了
+//     if (!edit_area) return
+//
+//     // タイピング1秒毎にプレビュー表示
+//     edit_area.addEventListener('keyup', () => {
+//         setTimeout(updatePreview, 2000)
+//     });
+// });
+document.addEventListener('turbo:load', () => {
+    const edit_area = document.getElementById('article_markdown_content');
+    if (!edit_area) return;
+
+    console.log("✏️ キー入力のイベントを登録");
+
+    // ✅ 既存の `keyup` イベントを削除してから追加（念のための保険）
+    edit_area.removeEventListener('keyup', handlePreviewUpdate);
+    edit_area.addEventListener('keyup', handlePreviewUpdate);
 });
+
+// 🔥 `setTimeout` を制御するためのグローバル変数
+let previewTimeout;
+
+const handlePreviewUpdate = async () => {
+    console.log("⌨️ キー入力検知！");
+
+    // ✅ すでにセットされた `setTimeout` がある場合はクリアして上書き
+    clearTimeout(previewTimeout);
+
+    // ✅ 2000ms 後に `updatePreview()` を実行する `setTimeout` をセット
+    previewTimeout = setTimeout(() => {
+        console.log("🕒 updatePreview 実行！");
+        updatePreview();
+    }, 2000);
+};
 
 // コードのコピー機能
 const copy = async (e) => {
     const code = e.closest('.highlight-wrap')?.querySelector('.rouge-code');
+    // console.log(code);
     if (!code) throw new Error("Code block not found.\nコードブロックが見つかりません。");
-
-    await navigator.clipboard.writeText(code.innerText);
+    await navigator.clipboard.writeText(code.textContent);
 
     const original_text = e.innerText;
     e.innerText = 'Copied!';
 
     setTimeout(() => (e.innerText = original_text), 2500);
 };
+
+async function copyHandler(event) {
+    try {
+        await copy(event.currentTarget); // event.target → event.currentTarget に変更
+    } catch (error) {
+        console.error("Failed to copy:", error);
+    }
+}
+
 // ボタンにイベントリスナーを設定
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('turbo:load', () => {
     document.querySelectorAll(".copy-btn").forEach((button) => {
-        button.addEventListener("click", async (event) => {
-            try {
-                await copy(event.target)
-            } catch (error) {
-                console.error("Failed to copy:", error);
-            }
-        });
+        button.addEventListener("click", copyHandler, {once: true});
     });
 });
 
@@ -99,7 +137,7 @@ window.addEventListener('turbo:load', () => {
     });
     drag_drop_area.addEventListener("dragleave", () => {
         drag_drop_area.style.background = "white";
-    });
+    }, {once: true});
 
     drag_drop_area.addEventListener("drop", async (event) => {
         event.preventDefault();
