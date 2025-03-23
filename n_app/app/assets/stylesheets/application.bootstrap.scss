@@ -7,5 +7,120 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #212529;
+  width: 100%;
+
+  .nav-top {
+    display: flex;
+    align-items: center;
+    height: 54px;
+    padding: 12px 150px 0;
+
+    .root {
+      margin-right: auto;
+
+      .nectlife-log {
+        height: 40px;
+      }
+    }
+
+    .login-profile {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      .profile-icon-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        object-fit: cover;
+      }
+
+      .new-activity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
+        background-color: white;
+        border-radius: 10px;
+        width: 90px;
+        height: 36px;
+        transition: background-color 0.5s;
+
+        &:hover {
+          background-color: #31aae2;
+        }
+
+        .new-activity-bottom {
+          height: 100%;
+          width: 100%;
+          text-decoration: none;
+          font-weight: bold;
+          color: black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: color 0.5s;
+
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-bottom {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin: 0 0 0 15px;
+      padding: 0 0 12px 0;
+
+      .nav-link {
+        font-size: 18px;
+        color: white;
+        margin: 0 30px;
+
+        .nav-link-a {
+          font-weight: bold;
+          color: white;
+          text-decoration: none;
+          position: relative;
+          display: inline-block;
+          transition: .3s;
+
+          &:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            content: '';
+            width: 0;
+            height: 2px;
+            background-color: #31aae2;
+            transition: .3s;
+            transform: translateX(-50%);
+          }
+
+          &:hover:after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
 
 
