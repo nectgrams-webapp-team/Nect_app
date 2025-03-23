@@ -20,7 +20,7 @@ nav {
     display: flex;
     align-items: center;
     height: 54px;
-    padding: 12px 150px 0;
+    padding: 12px 7% 0;
 
     .root {
       margin-right: auto;
@@ -73,6 +73,25 @@ nav {
           }
         }
       }
+
+      .log-in {
+        width: 70px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        color: black;
+        font-weight: bold;
+        transition: background-color 0.5s, color 0.5s;
+
+        &:hover {
+          background-color: #31aae2;
+          color: white;
+        }
+      }
     }
   }
 
@@ -116,6 +135,58 @@ nav {
           &:hover:after {
             width: 100%;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  nav {
+    .nav-top {
+      padding: 8px 5% 0;
+    }
+
+    .nav-bottom {
+      .nav-links {
+        .nav-link {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  nav {
+    .nav-top {
+      .root {
+        .nectlife-log {
+          height: 30px;
+        }
+      }
+
+      .login-profile {
+        .profile-icon-img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .new-activity {
+          display: none;
+        }
+
+        .log-in {
+          height: 30px;
+        }
+      }
+    }
+
+    .nav-bottom {
+      .nav-links {
+        .nav-link {
+          font-size: 15px;
+          margin: 0 20px;
         }
       }
     }
