@@ -1,17 +1,13 @@
 <%= title "活動一覧" %>
 
-<div class="container">
-    <div class="header">
-        <h1>活動一覧</h1>
-        <%= form_with url: activities_path, method: :get, local: true, class: 'search-form' do %>
-            <%= text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Enter activity or author' %>
-            <%= submit_tag 'Search', class: 'btn btn-outline-primary' %>
+<div class="activities-container">
+    <div class="activities-header">
+        <h1 class="activities-title">活動一覧</h1>
+        <%= form_with url: activities_path, method: :get, local: true, class: "activity-search-form" do %>
+            <%= text_field_tag :search, params[:search], placeholder: 'Enter activity or author', class: "activity-search-input" %>
+            <%= submit_tag 'Search', class: "activity-search-button" %>
         <% end %>
     </div>
-    
-    <% if member_signed_in? %>
-        <%= link_to '新規投稿', new_activity_path, class: 'btn btn-outline-primary mb-4' %>
-    <% end %>
     
     <div class="activities">
         <% @activities.each do |activity| %>
@@ -23,13 +19,23 @@
                         <%= image_tag activity.get_activity_image, alt: "Image", class: 'image-field' %>
                     </section>
                     <section class="activity-info">
-                        <h3><%= truncate(activity.title, length: 60) %></h3>
+                        <h3 class="activity-title"><%= activity.title %></h3>
                         <p><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
                         <div class="author">
                             <%= link_to activity.member.name, member_path(activity.member.id) %>
                         </div>
                     </section>
                 </div>
+                <article class="activity-area-smartphone">
+                    <%= link_to "", activity_path(activity.id), tabindex: "-1", aria: { hidden: true }, class: "background-link" %>
+                    <h3 class="activity-title"><%= activity.title %></h3>
+                    <div class="activity-info">
+                        <p class="post-day"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
+                        <%= image_tag activity.member.get_profile_image, class: 'author-icon' %>
+                        <%= link_to activity.member.name, member_path(activity.member.id), class: "author-name" %>
+                    </div>
+                </article>
+            
             <% end %>
         <% end %>
     </div>
