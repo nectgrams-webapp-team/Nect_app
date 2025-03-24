@@ -10,7 +10,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <header>
-    <nav>
+    <nav class="header-nav">
         <div class="nav-top">
             <div class="root">
                 <%= link_to root_path do %>
@@ -46,9 +46,9 @@
         </div>
     </nav>
 </header>
-<body style="min-height: 100svh; display: flex; flex-direction: column;">
-<br/><br/>
-<div class="container" style="flex-grow: 1">
+
+<body>
+<div class="container">
     <% flash.each do |type, msg| %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <%= msg %>
@@ -59,8 +59,8 @@
     
     <%= yield %>
 </div>
-<br/><br/>
 </body>
+
 <footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
     <div class="container">
         <div class="col-md-4 d-flex align-items-center">
