@@ -24,3 +24,7 @@ document.addEventListener('turbo:load', () => {
         }
     });
 });
+
+window.addEventListener('beforeunload', (event) => {
+    event.preventDefault();
+});
