@@ -1,7 +1,5 @@
 <%= title "新しい活動記事を投稿" %>
 
-<h1>新しい活動記事を投稿</h1>
-
 <% if @activity.errors.any? %>
     <div class="alert alert-danger">
         <p><strong>エラーがあります</strong></p>
@@ -15,44 +13,26 @@
 
 <div id="error-message" style="color: red; display: none; font-weight: bold;"></div>
 
-<div class="editor-container">
-    <div class="editor">
-        <div class="editor-actions">
-            <%= link_to '戻る',
-                        activities_path,
-                        class: 'link-offset-2 link-underline link-underline-opacity-0',
-                        data: { turbo_method: :get,
-                                turbo_confirm: '変更した内容は保存されません。よろしいですか？' } %>
-        </div>
+<div class="new-activity-container">
+    <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
+        <section class="action-button">
+            <%= button_tag '下書き保存', type: 'submit', formaction: save_draft_activities_path %>
+            <%= activity.submit '記事を投稿' %>
+        </section>
         
-        <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
-            <div class="mb-3">
-                <label for="top_image" class="form-label">トップ画像の選択</label>
-                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'top_image' %>
+        <section class="activity-title-section">
+            <%= activity.text_field :title, placeholder: "記事のタイトルを入力してください。（60字以内）", class: "activity-title-input" %>
+        </section>
+        
+        <section class="activity-top-image-section">
+            <%= activity.label :activity_image, 'トップ画像を選択する', class: "file_label" %>
+            <%= activity.file_field :activity_image, accept: "image/*", type: 'file', class: "file_field" %>
+        </section>
+        
+        <section class="markdown-area">
+            <%= activity.text_area :body, placeholder: "Markdown記法で記事を書いてみよう！", id: 'article_markdown_content' %>
+            <div class="markdown" id="preview">
             </div>
-            
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <h3 class="col-form-label">記事タイトル</h3>
-                </div>
-                <div class="col-auto">
-                    <%= activity.text_field :title, class: 'form-control' %>
-                </div>
-            </div>
-            
-            <h3 class="form-label">記事の内容</h3>
-            <div>
-                <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
-            </div>
-            
-            <div class="d-flex justify-content-between">
-                <%= activity.submit '記事を投稿', class: 'btn btn-primary' %>
-                <%= button_tag '下書き保存', type: 'submit', formaction: save_draft_activities_path, class: 'btn btn-secondary' %>
-            </div>
-        <% end %>
-    </div>
-    
-    <div class="markdown preview" id="preview">
-        <!-- プレビュー表示エリア -->
-    </div>
+        </section>
+    <% end %>
 </div>
