@@ -1,12 +1,13 @@
-<%= title "メンバー一覧" %>
+<%= title "Members" %>
 
-<div class = "member-view">
-  <% @members.each do |member| %>
-    <div class="member-card">
-      <p class="graduation-year-index"><%=member.graduation_year%>卒</p>
-      <%= image_tag member.get_profile_image, class: "profile-image" %>
-      <%= link_to member.name, member_path(member.id), class: "member-name"%>
-      <p class="one-word"><%= member.intro %></p>
-    </div>
-  <% end %>
+<p class="members-title">Members</p>
+<div class="members-view">
+    <% @members.each do |member| %>
+        <div class="member-card">
+            <p class="graduation-year-index"><%= member.graduation_year %>卒</p>
+            <%= image_tag member.get_profile_image, class: "profile-image" %>
+            <%= link_to member.name, member_path(member.id), class: "member-name" %>
+            <p class="one-word"><%= member.intro %></p>
+        </div>
+    <% end %>
 </div>
