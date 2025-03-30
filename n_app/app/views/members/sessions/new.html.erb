@@ -1,26 +1,41 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="log-in-container">
+    <h2>Log in</h2>
+    
+    <div class="iput-one-container">
+        <p>
+            このサイトは、
+            <strong>プログラミングサークルのメンバー限定</strong>
+            になっています。
+            <br>
+            興味がある場合は、<strong><%= link_to "IPUT ONE", "https://iput-one.com/index.php/circle/460ef47aaaa785a43d655226cf0d0930/", class: "iput-one-url" %></strong>
+            から気軽に参加申請を！
+            <br>
+            <span class="notes-1">*申請にはアカウント登録する必要があります。</span>
+        </p>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "members/shared/links" %>
+    <div class="log-in-area">
+        <%= form_with(model: resource, scope: resource_name, url: session_path(resource_name), local: true) do |f| %>
+            <div class="field">
+                <%= f.label :email %><br/>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            </div>
+            
+            <div class="field">
+                <%= f.label :password %><br/>
+                <%= f.password_field :password, autocomplete: "current-password" %>
+            </div>
+            
+            <% if devise_mapping.rememberable? %>
+                <div class="field">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                </div>
+            <% end %>
+            
+            <div class="log-in-button">
+                <%= f.submit "Log in" %>
+            </div>
+            <%= render "members/shared/links" %>
+        <% end %>
+    </div>
+</div>
