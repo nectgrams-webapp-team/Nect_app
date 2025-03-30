@@ -1,7 +1,4 @@
 <%= title "投稿内容の編集" %>
-
-<h1>投稿内容の編集</h1>
-
 <% if @activity.errors.any? %>
     <div class="alert alert-danger">
         <p><strong>タイトル</strong> または <strong>本文</strong> が未記入です</p>
@@ -15,57 +12,32 @@
 
 <div id="error-message" style="color: red; display: none; font-weight: bold;"></div>
 
-<div class="editor-container">
-    <div class="editor">
-        <div class="editor-actions">
-            <%= link_to '戻る',
-                        activity_path(@activity.id),
-                        class: 'link-offset-2 link-underline link-underline-opacity-0',
-                        data: { turbo_method: :get,
-                                turbo_confirm: '変更した内容は保存されません。よろしいですか？' } %>
-            
-            <%= button_to '削除',
-                          activity_path(@activity.id),
-                          class: 'article-delete link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover',
-                          method: :delete,
-                          form: { data: { turbo_confirm: '本当に削除しますか？' } } %>
-        </div>
-        
-        <%= form_with model: @activity, method: :patch do |activity| %>
-            
-            <div class="mb-3">
-                <label for="top_image" class="form-label">トップ画像の選択</label>
-                <%= activity.file_field :activity_image, accept: "image/*", class: 'form-control', type: 'file', id: 'top_image' %>
-            </div>
-            
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <h4 class="col-form-label">記事タイトル</h4>
-                </div>
-                <div class="col-auto">
-                    <%= activity.text_field :title, class: 'form-control' %>
-                </div>
-            </div>
-            
-            <h3 class="form-label">本文</h3>
-            <div>
-                <%= activity.text_area :body, class: 'form-control text-area-large', id: 'article_markdown_content' %>
-            </div>
+<div class="markdown-container">
+    <%= button_to '削除する', activity_path(@activity.id), class: "delete-activity", method: :delete, form: { data: { turbo_confirm: '本当に削除しますか？' } } %>
+    <%= form_with model: @activity, method: :patch do |activity| %>
+        <section class="action-button">
             <% if @activity.published %>
-                <div class="d-flex justify-content-between mt-3">
-                    <%= activity.submit '保存して投稿', class: 'btn btn-primary' %>
-                    <%= button_tag '下書き保存', type: 'submit', class: 'btn btn-secondary', formaction: change_publish_activity_path(@activity) %>
-                </div>
+                <%= button_tag '下書き保存', type: 'submit', class: "save-draft", formaction: change_publish_activity_path(@activity) %>
+                <%= activity.submit '記事を投稿', class: "post-activity" %>
             <% else %>
-                <div class="d-flex justify-content-between mt-3">
-                    <%= button_tag '保存して投稿', type: 'submit', class: 'btn btn-primary', formaction: change_publish_activity_path(@activity) %>
-                    <%= activity.submit '下書き保存', class: 'btn btn-secondary' %>
-                </div>
+                <%= activity.submit '下書き保存', type: 'submit', class: "save-draft", formaction: change_publish_activity_path(@activity) %>
+                <%= button_tag '記事を投稿', class: "post-activity" %>
             <% end %>
-        <% end %>
-    </div>
-    
-    <div class="markdown preview" id="preview">
-        <!-- プレビュー表示エリア -->
-    </div>
+        </section>
+        
+        <section class="activity-title-section">
+            <%= activity.text_field :title, placeholder: "記事のタイトルを入力してください。（60字以内）", class: "activity-title-input" %>
+        </section>
+        
+        <section class="activity-top-image-section">
+            <%= activity.label :activity_image, 'トップ画像を選択する', class: "file_label" %>
+            <%= activity.file_field :activity_image, accept: "image/*", type: 'file', class: "file_field" %>
+        </section>
+        
+        <section class="markdown-area">
+            <%= activity.text_area :body, placeholder: "Markdown記法で記事を書いてみよう！", id: 'article_markdown_content' %>
+            <div class="markdown" id="preview">
+            </div>
+        </section>
+    <% end %>
 </div>

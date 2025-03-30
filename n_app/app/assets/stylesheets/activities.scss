@@ -194,16 +194,70 @@
 }
 
 //new.html.erb
-.new-activity-container {
-  width: 1640px;
+.markdown-container {
+  max-width: 1640px;
   margin: 0 auto;
-  padding: 12px 16px;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  .delete-activity {
+    position: absolute;
+    padding: 0 8px;
+    text-align: center;
+    border: solid 1px red;
+    color: red;
+    background-color: white;
+    border-radius: 5px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
+
+    .save-draft {
+      padding: 0 8px;
+      text-align: center;
+      border: solid 1px #484848;
+      color: #484848;
+      background-color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-right: 30px;
+
+      &:hover {
+        background-color: #484848;
+        color: white;
+      }
+    }
+
+    .post-activity {
+      padding: 0 8px;
+      text-align: center;
+      border: solid 1px #0059ff;
+      color: #0059ff;
+      background-color: white;
+      border-radius: 5px;
+      font-weight: bold;
+
+      &:hover {
+        background-color: #0059ff;
+        color: white;
+      }
+    }
+  }
 
   .activity-title-section {
     width: 100%;
-    margin: 12px 0;
+    margin: 4px 0;
     height: 40px;
 
     .activity-title-input {
@@ -211,27 +265,29 @@
       height: 100%;
       padding: 0 10px;
       font-size: 20px;
+      border: none;
+      border-radius: 4px;
     }
   }
 
   .activity-top-image-section {
-    margin: 8px 0;
+    margin-bottom: 4px;
 
     .file_label {
-      height: 20px;
+      font-size: 14px;
     }
 
-    .file_field {
+    input[type="file"] {
+      border: none;
       background-color: white;
       width: 100%;
-      border: solid 1px #767676;
-      border-radius: 4px;
+      border-radius: 2px;
     }
   }
 
   .markdown-area {
     width: 100%;
-    height: 600px;
+    height: 74vh;
     display: flex;
 
     #article_markdown_content {
@@ -239,7 +295,7 @@
       background-color: white;
       width: 50%;
       padding: 4px 8px;
-      border: solid 1px #767676;
+      border-right: solid 1px #767676;
       border-radius: 4px 0 0 4px;
       word-wrap: break-word;
     }
@@ -248,7 +304,7 @@
       width: 50%;
       padding: 4px 8px;
       background-color: white;
-      border: solid 1px #767676;
+      border-left: solid 1px #767676;
       border-radius: 0 4px 4px 0;
       overflow-y: auto;
     }
@@ -256,8 +312,9 @@
 }
 
 @media screen and (max-width: 1640px) {
-  .new-activity-container {
-    width: 100%;
+  .markdown-container {
+    width: 98%;
+
   }
 }
 
