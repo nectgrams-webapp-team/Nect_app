@@ -1,33 +1,54 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  text-align: center;
-}
-
-h3, p {
-  text-align: center;
-}
-
-.container {
+//index.html.erb
+.activities-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
   box-sizing: border-box;
-  .header {
+
+  .activities-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    .activity-search-input {
+      width: 200px;
+      height: 38px;
+      margin-right: 10px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: 2px solid #dee2e7;
+
+      &:focus {
+        box-shadow: 0 0 8px #72cefc;
+      }
+    }
+
+    .activity-search-button {
+      width: 76px;
+      height: 38px;
+      background-color: white;
+      border: 2px solid #0c6efc;
+      color: #0c6efc;
+      border-radius: 5px;
+      padding: 6px 12px;
+      transition: color 0.5s, background-color 0.5s;
+
+      &:hover {
+        background-color: #0c6efc;
+        color: white;
+      }
+    }
   }
+
   .activities {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     position: relative;
+
     .activity-area {
       color: inherit;
       display: flex;
@@ -42,25 +63,31 @@ h3, p {
       max-width: 1000px;
       margin-bottom: 20px;
       position: relative;
+      background-color: white;
+
       &:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
+
       .activity-link-sheet {
-        inset: 0px;
+        inset: 0;
         position: absolute;
       }
+
       .image-container {
         flex: 0 0 30%;
         margin-right: 20px;
         display: flex;
         justify-content: center;
-        .image-field  {
+
+        .image-field {
           max-height: 180px;
           max-width: 100%;
           width: auto;
           height: auto;
         }
       }
+
       .activity-info {
         flex: 0 0 65%;
         display: flex;
@@ -69,14 +96,340 @@ h3, p {
         max-width: calc(100% - 220px);
         padding-top: 20px;
         height: 100%;
-        // position: relative;
+
+        .activity-title {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-weight: bold;
+        }
       }
+
+
       .author {
         position: absolute;
         bottom: 0;
         margin-bottom: 25px;
       }
     }
+
+    .activity-area-smartphone {
+      display: none;
+    }
+  }
+}
+
+//show.html.erb
+.activity-container {
+  width: 820px;
+  margin: 15px auto;
+  padding: 32px 56px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px #444444;
+  background-color: white;
+
+  .author {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    height: 40px;
+
+    .author-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 32px;
+      object-fit: cover;
+    }
+
+    .author-name {
+      margin: 0 0 0 8px;
+      text-decoration-color: #31AAE2FF;
+      text-underline-offset: 2px;
+      color: black;
+      font-weight: bolder;
+      font-size: 15px;
+    }
+
+    .edit-activity {
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 45px;
+      height: 35px;
+      border-radius: 10px;
+      background-color: #008c19;
+      transition: background-color 0.5s;
+
+      &:hover {
+        background-color: #3ea453;
+      }
+
+      .edit-activity-button {
+        text-decoration: none;
+        font-size: 15px;
+        color: #ffffff;
+        letter-spacing: 1px;
+        text-align: center;
+        width: 100%;
+        padding-left: 2px;
+        font-weight: bold;
+      }
+    }
+
+  }
+
+  .activity-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+  }
+
+  .created-day {
+    font-size: 14px;
+    margin-bottom: 60px;
+  }
+}
+
+//new.html.erb
+.markdown-container {
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .delete-activity {
+    position: absolute;
+    padding: 0 8px;
+    text-align: center;
+    border: solid 1px red;
+    color: red;
+    background-color: white;
+    border-radius: 5px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
+
+    .save-draft {
+      padding: 0 8px;
+      text-align: center;
+      border: solid 1px #484848;
+      color: #484848;
+      background-color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-right: 30px;
+
+      &:hover {
+        background-color: #484848;
+        color: white;
+      }
+    }
+
+    .post-activity {
+      padding: 0 8px;
+      text-align: center;
+      border: solid 1px #0059ff;
+      color: #0059ff;
+      background-color: white;
+      border-radius: 5px;
+      font-weight: bold;
+
+      &:hover {
+        background-color: #0059ff;
+        color: white;
+      }
+    }
+  }
+
+  .activity-title-section {
+    width: 100%;
+    margin: 4px 0;
+    height: 40px;
+
+    .activity-title-input {
+      width: 100%;
+      height: 100%;
+      padding: 0 10px;
+      font-size: 20px;
+      border: none;
+      border-radius: 4px;
+    }
+  }
+
+  .activity-top-image-section {
+    margin-bottom: 4px;
+
+    .file_label {
+      font-size: 14px;
+    }
+
+    input[type="file"] {
+      border: none;
+      background-color: white;
+      width: 100%;
+      border-radius: 2px;
+    }
+  }
+
+  .markdown-area {
+    width: 100%;
+    height: 74vh;
+    display: flex;
+
+    #article_markdown_content {
+      all: unset;
+      background-color: white;
+      width: 50%;
+      padding: 4px 8px;
+      border-right: solid 1px #767676;
+      border-radius: 4px 0 0 4px;
+      word-wrap: break-word;
+    }
+
+    #preview {
+      width: 50%;
+      padding: 4px 8px;
+      background-color: white;
+      border-left: solid 1px #767676;
+      border-radius: 0 4px 4px 0;
+      overflow-y: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 1640px) {
+  .markdown-container {
+    width: 98%;
+
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .activity-container {
+    width: 575px;
+    padding: 32px 20px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .activities-container {
+    width: 97%;
+    padding: 0;
+    margin: 0 auto;
+
+    .activities-header {
+      flex-flow: column;
+
+      .activities-title {
+        margin: 10px 0;
+      }
+
+      .activity-search-form {
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+
+        input[type="submit"] {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+
+    .activities {
+      all: unset;
+
+
+      .activity-area {
+        display: none;
+      }
+
+      .activity-area-smartphone {
+        display: block;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 100%;
+        height: 150px;
+        margin-bottom: 20px;
+        position: relative;
+        padding: 20px 10px 10px 10px;
+        background-color: white;
+
+        .background-link {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+        }
+
+        .activity-title {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 25px;
+          height: 58px;
+          font-weight: 900;
+        }
+
+        .activity-info {
+          display: flex;
+          align-items: center;
+
+          .post-day {
+            margin: 0;
+            font-size: 14px;
+            color: #8d8d8d;
+          }
+
+          .author-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 32px;
+            margin-left: auto;
+            object-fit: cover;
+          }
+
+          .author-name {
+            margin: 0 0 0 8px;
+            z-index: 2;
+            text-decoration-color: #31AAE2FF;
+            text-underline-offset: 2px;
+            color: black;
+            font-weight: bolder;
+            font-size: 15px;
+          }
+        }
+
+      }
+    }
+  }
+
+  //show.html.erb
+  .activity-container {
+    width: 95%;
+    padding: 32px 20px;
+    margin-bottom: 100px;
   }
 }
 

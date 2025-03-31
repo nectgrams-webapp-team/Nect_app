@@ -1,58 +1,58 @@
-<div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <% @images.each_with_index do |image, index| %>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>" aria-current="<%= 'true' if index == 0 %>" aria-label="Slide <%= index + 1 %>"></button>
-        <% end %>
-    </div>
-    <div class="carousel-inner">
-        <% @images.each_with_index do |image, index| %>
-            <div class="carousel-item <%= 'active' if index == 0 %>">
-                <% if image.file.present? && image.file.url.present? %>
-                    <%= image_tag(image.file.url, class: 'd-block w-100', alt: image.title) %>
-                    <div class="carousel-caption d-none d-md-block text-bg-dark p-3 bg-opacity-25 rounded-pill">
-                        <h5>
-                            <%= image.title %>
-                        </h5>
-                        <p>
-                            <%= image.caption %>
-                        </p>
-                    
-                    </div>
-                <% else %>
-                    <div class="alert alert-danger" role="alert">
-                        An image is missing and cannot be displayed.
-                    </div>
+<div class="top-container">
+    <!--    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">-->
+    <!--        <div class="carousel-indicators">-->
+    <%# @images.each_with_index do |image, index| %>
+    <!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%#= index %>" class="<%#= 'active' if index == 0 %>" aria-current="<%#= 'true' if index == 0 %>" aria-label="Slide <%#= index + 1 %>"></button>-->
+    <%# end %>
+    <!--        </div>-->
+    <!--        <div class="carousel-inner">-->
+    <%# @images.each_with_index do |image, index| %>
+    <!--                <div class="carousel-item <%#= 'active' if index == 0 %>">-->
+    <%# if image.file.present? && image.file.url.present? %>
+    <%#= image_tag(image.file.url, class: 'd-block w-100', alt: image.title) %>
+    <!--                        <div class="carousel-caption d-none d-md-block text-bg-dark p-3 bg-opacity-25 rounded-pill">-->
+    <!--                            <h5>-->
+    <%#= image.title %>
+    <!--                            </h5>-->
+    <!--                            <p>-->
+    <%#= image.caption %>
+    <!--                            </p>-->
+    
+    <!--                        </div>-->
+    <%# else %>
+    <!--                        <div class="alert alert-danger" role="alert">-->
+    <!--                            An image is missing and cannot be displayed.-->
+    <!--                        </div>-->
+    <%# end %>
+    <!--                </div>-->
+    <%# end %>
+    <!--        </div>-->
+    <!--        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">-->
+    <!--            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <!--            <span class="visually-hidden">Previous</span>-->
+    <!--        </button>-->
+    <!--        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">-->
+    <!--            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <!--            <span class="visually-hidden">Next</span>-->
+    <!--        </button>-->
+    <!--    </div>-->
+    
+    <div class="recent-activities-area">
+        <div class="title">
+            <p>New Activities!</p>
+        </div>
+        <div class="recent-activity-lists" data-controller="top">
+            <% @activities.each do |activity| %>
+                <%= link_to activity_path(activity.id), class: 'recent-activity-card' do %>
+                    <%= responsive_activity_image_tag activity.get_activity_image, class: 'activity-image' %>
+                    <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
+                    <p class="activity-title"><%= truncate(activity.title, length: 36) %></p>
+                    <%= image_tag activity.member.get_profile_image, class: 'icon-img' %>
                 <% end %>
-            </div>
-        <% end %>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<div class="recent-activities-area">
-    <div class="title">
-        <p>新しい活動</p>
-    </div>
-    <div class="recent-activity-lists" data-controller="top">
-        <% @activities.each do |activity| %>
-            <%= link_to activity_path(activity.id), class: 'recent-activity-card' do %>
-                <%= responsive_activity_image_tag activity.get_activity_image, class: 'activity-image' %>
-                <%#= image_tag activity.get_activity_image, class: 'activity-image' %>
-                <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
-                <p class="activity-title"><%= truncate(activity.title, length: 36) %></p>
-                <%= image_tag activity.member.get_profile_image, class: 'icon-img' %>
             <% end %>
-        <% end %>
+        </div>
     </div>
 </div>
-
 
 <style>
     .carousel-inner {

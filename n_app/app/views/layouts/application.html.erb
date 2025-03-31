@@ -10,50 +10,45 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="<%= root_path %>">
-                <img src="<%= asset_path('logo.png') %>" width="50" height="50" class="d-inline-block align-text-top">
-                Nect Life
-            </a>
-            
-            <!-- ハンバーガーボタン -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <!-- ナビゲーションメニュー -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <%= link_to 'About', about_path, class: 'nav-link text-light' %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to 'Members', members_path, class: 'nav-link text-light' %>
-                    </li>
-                    <li class="nav-item">
-                        <%= link_to 'Activities', activities_path, class: 'nav-link text-light' %>
-                    </li>
-                    <!--                    <li class="nav-item">-->
-                    <%#= link_to 'Teams', teams_path, class: 'nav-link text-light' %>
-                    <!--                    </li>-->
-                    <% if member_signed_in? %>
-                        <li class="nav-item">
-                            <%= link_to 'YourPage', member_path(current_member.id), class: 'nav-link text-light' %>
-                        </li>
-                    <% else %>
-                        <li class="nav-item">
-                            <%= link_to 'Login', new_member_session_path, class: 'nav-link text-light' %>
-                        </li>
-                    <% end %>
-                </ul>
+    <nav class="header-nav">
+        <div class="nav-top">
+            <div class="root">
+                <%= link_to root_path do %>
+                    <img src="<%= asset_path('nect-life-log.png') %>" class="nectlife-log">
+                <% end %>
             </div>
+            <div class="login-profile">
+                <% if member_signed_in? %>
+                    <%= link_to member_path(current_member.id) do %>
+                        <%= image_tag current_member.get_profile_image, class: 'profile-icon-img' %>
+                    <% end %>
+                    <div class="new-activity">
+                        <%= link_to '投稿する', new_activity_path, class: "new-activity-bottom" %>
+                    </div>
+                <% else %>
+                    <%= link_to 'Log in', new_member_session_path, class: "log-in" %>
+                <% end %>
+            </div>
+        
+        </div>
+        <div class="nav-bottom">
+            <ul class="nav-links">
+                <li class="nav-link">
+                    <%= link_to 'About', about_path, class: "nav-link-a" %>
+                </li>
+                <li class="nav-link">
+                    <%= link_to 'Activities', activities_path, class: "nav-link-a" %>
+                </li>
+                <li class="nav-link">
+                    <%= link_to 'Members', members_path, class: "nav-link-a" %>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>
-<body style="min-height: 100svh; display: flex; flex-direction: column;">
-<br/><br/>
-<div class="container" style="flex-grow: 1">
+
+<body>
+<div class="container-main">
     <% flash.each do |type, msg| %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <%= msg %>
@@ -64,8 +59,8 @@
     
     <%= yield %>
 </div>
-<br/><br/>
 </body>
+
 <footer class="footer mt-auto py-3 bg-body-tertiary" style="flex-shrink: 0;" data-bs-theme="dark">
     <div class="container">
         <div class="col-md-4 d-flex align-items-center">

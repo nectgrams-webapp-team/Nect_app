@@ -1,36 +1,66 @@
 <%= title "About" %>
 
-<header id="about-header">
-    <h1 class="title"><strong>Nect Life</strong> について</h1>
-</header>
-
-<div id="about-body">
-    <div class="container">
-        <p class="text-1"><strong>Nect Life</strong>
-            は、ある大学の「<strong>プログラミングサークル</strong>」が運営するオリジナルブログです！
+<div class="about-container">
+    <section class="anime-object about-nect-life-card">
+        <p class="mini-label">About</p>
+        <p class="title-1">
+            ある大学の
+            <span class="highlight">「プログラミングサークル」</span>
+            が
+            <br>
+            運営する<span class="highlight">オリジナルブログ</span>
         </p>
-        <p class="text-2">私たちは別名『<strong>Nectgrams</strong>』として活動しており、サークル名の由来は</p>
-        <p class="text-3"><strong>Nect</strong> (nectere:つなぐ、結ぶ) + <strong>gram</strong> (プログラムの gram) +
-            <strong>s</strong>
-            (複数形)です。</p>
-        <p class="text-4">私たちのモットーは「<strong>作りたいものを作る！</strong>」です。</p>
-        <p class="text-5">プログラミングを中心に、ものづくりを行なっていますが、メンバーにはCG制作をしている人もいるので、プログラミング以外でも大歓迎です！</p>
-        <p class="text-6">私たちは、学生がつながり合えるサークルを目指し、作品の展示や発信も積極的に行っています。</p>
-        <p class="text-7">『<strong>Nect Life</strong>』は、そんな日々の活動を記録し、より多くの人に届けるために開発したブログです。
+        <section class="about-nect-life-detail">
+            <p class="text-content-1">
+                Nect Life は、ある大学の「プログラミングサークル」が運営するオリジナルブログです！
+                私たちのモットーは「作りたいものを作る！」です。
+                プログラミングを中心に、ものづくりを行なっていますが、メンバーにはCG制作をしている人もいるので、プログラミング以外でも大歓迎です！
+            </p>
+            <p class="text-content-2">
+                「ものづくり」を通して学生がつながり合えるサークルを目指し、作品の展示や発信も積極的に行っています。
+                そんな日々の活動を記録し、より多くの人に届けるために開発したブログが「<strong>Nect Life</strong>」です！
+            </p>
+        </section>
+    </section>
+    <section class="anime-object about-nect-life-card">
+        <p class="mini-label">Origin</p>
+        <img src="<%= asset_path('no_image.png') %>" class="logo-img">
+        <p class="title-1">
+            <span class="highlight"><strong>Nect</strong> (nectere:つなぐ、結ぶ)</span>
+            <br>
+            +
+            <br>
+            <span class="highlight"><strong>gram</strong> (プログラムの gram) + <strong>s</strong></span>
+        
         </p>
-        <p class="text-8">今後もサークルメンバーの日々の活動を投稿し、Nectgramsをさらに盛り上げていきます！</p>
-    </div>
+        <section class="about-nect-life-detail">
+            <p class="text-content-1">
+                私たちは別名『<strong>Nectgrams</strong>』として活動しています。
+                最初は、大学入学前からプログラミングに触れていた学生が、大学からプログラミングを始める学生をキャッチアップする活動から始まりました。
+            </p>
+            <p class="text-content-1">
+                当時はサークルという文化はありませんでした。
+            </p>
+            <p class="text-content-1">
+                しかし、その活動で繋がったこときっかけにサークルとして活動するようになりました。
+                そこから、ただプログラミングを教え合うだけではなく、作ったものをオープンキャンパスに展示するなどして活動の幅を広げてきました！
+            </p>
+            <p class="text-content-2">
+                小さなきっかけから始まった活動は、今では大きな広がりを見せつつあり、今後もさらなる進化を目指していきます！
+            </p>
+        </section>
+    </section>
 </div>
 
-<h1 class="d-flex justify-content-center pb-5">Timeline of Nectgrams</h1>
-<div class="timeline">
-    <% @event_history.reverse_each do |event_history| %>
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <h2><%= event_history.event_title %></h2>
-                <p><%= event_history.event_text %></p>
-                <span class="date"><%= event_history.date_of_event.strftime("%B %Y") %></span>
-            </div>
-        </div>
-    <% end %>
-</div>
+<!--<h1 class="d-flex justify-content-center pb-5">Timeline of Nectgrams</h1>-->
+<!--<div class="timeline">-->
+<%# @event_history.reverse_each do |event_history| %>
+<!--        <div class="timeline-item">-->
+<!--            <div class="timeline-content">-->
+<!--                <h2><%#= event_history.event_title %></h2>-->
+<!--                <p><%#= event_history.event_text %></p>-->
+<!--                <span class="date"><%#= event_history.date_of_event.strftime("%B %Y") %></span>-->
+<!--            </div>-->
+<!--        </div>-->
+<%# end %>
+<!--</div>-->
