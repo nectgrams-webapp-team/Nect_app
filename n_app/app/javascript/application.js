@@ -4,7 +4,7 @@ import "./controllers"
 import "./packs/markdown"
 
 document.addEventListener('turbo:load', () => {
-    const file_input = document.getElementById('top_image');
+    const file_input = document.getElementById("image-file_field");
     if (!file_input) return;
 
     file_input.addEventListener('change', async (event) => {
@@ -26,5 +26,11 @@ document.addEventListener('turbo:load', () => {
 });
 
 window.addEventListener('beforeunload', (event) => {
-    event.preventDefault();
+    const currentUrl = window.location.pathname;
+
+    if (currentUrl === "/activities/new" || currentUrl.match(/^\/activities\/\d+\/edit$/) || currentUrl.match(/^\/members\/\d+\/edit$/)) {
+
+        event.preventDefault();
+    }
+
 });

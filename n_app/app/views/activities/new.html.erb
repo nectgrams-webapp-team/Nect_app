@@ -11,7 +11,6 @@
     </div>
 <% end %>
 
-<div id="error-message" style="color: red; display: none; font-weight: bold;"></div>
 
 <div class="markdown-container">
     <%= form_with model: @activity, url: activities_path, method: :post do |activity| %>
@@ -26,7 +25,8 @@
         
         <section class="activity-top-image-section">
             <%= activity.label :activity_image, 'トップ画像を選択する', class: "file_label" %>
-            <%= activity.file_field :activity_image, accept: "image/*", type: 'file', class: "file_field" %>
+            <div id="error-message" style="color: red; display: none; font-weight: bold;"></div>
+            <%= activity.file_field :activity_image, accept: "image/*", type: 'file', id: "image-file_field" %>
         </section>
         
         <section class="markdown-area">
