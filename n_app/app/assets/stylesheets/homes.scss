@@ -1,219 +1,349 @@
-.recent-activities-area {
-  //background-color: rgba(255, 168, 168, 0.2);
-  margin-top: 40px;
-  width: 100%;
-  display: inline-block;
-  padding: 10px;
-
-  .title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 35px;
-  }
-
-  .recent-activity-lists {
-    width: 100%;
-    height: 100%;
-    margin: 5px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    .recent-activity-card {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      width: 250px;
-      height: 360px;
-      border: 1px solid #000000;
-      text-decoration: none;
-      padding-top: 10px;
-      color: black;
-      transition: transform 0.3s;
-      border-radius: 10px;
-      margin: 20px 2.5% 40px 2.5%;
-      position: relative;
-
-      &:hover {
-        transform: scale(1.05, 1.05);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
-
-      .activity-image {
-        width: auto;
-        height: 140px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
-
-      p {
-        margin-top: 5px;
-        width: 220px;
-        text-align: right;
-      }
-
-      .activity-title {
-        margin-top: 10px;
-        width: 220px;
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .icon-img {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 50px;
-        height: 50px;
-        margin-bottom: 5px;
-        margin-right: 5px;
-        border-radius: 50px;
-        object-fit: cover;
-      }
-    }
-  }
-}
-
-//Aboutページ
-
-#about-header {
-  text-align: center;
-  padding: 20px 0;
-
-  .title {
-    margin: 0;
-    font-size: 3.5rem;
-  }
-}
-
-#about-body {
-  margin-bottom: 200px;
-  margin-top: 60px;
-
-  .container {
-    margin: auto;
-
-    p {
-      text-align: center;
-      font-size: 1.2rem;
-      margin: 30px 0;
-    }
-
-    strong {
-      font-size: 1.5rem;
-    }
-  }
-}
-
-
-/* Timeline container */
-.timeline {
-  position: relative;
-  max-width: 600px;
+//top.html.erb
+.top-container {
+  width: 80%;
   margin: 0 auto;
-  padding: 20px 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
 
-/* Vertical line in the middle */
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 4px;
-  background-color: #333;
-  transform: translateX(-50%);
-}
+  .recent-activities-area {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: inline-block;
+    padding: 10px;
 
-/* Timeline item */
-.timeline-item {
-  position: relative;
-  width: 100%;
-  padding: 20px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-}
+    .title {
+      text-align: center;
+      font-size: 30px;
+      margin: 45px 0;
+      font-family: "Fira Sans", serif;
+      font-weight: bold;
+    }
 
-/* Connector circle */
-.timeline-item::before {
-  content: '';
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border: 4px solid #333;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
+    .recent-activity-lists {
+      width: 100%;
+      height: 100%;
+      margin: 5px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
 
-/* Timeline content box */
-.timeline-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  width: 45%;
-  text-align: center;
-  z-index: 2;
-  word-wrap: break-word; /* Break long words */
-  overflow-wrap: break-word; /* Break long words (alternate property) */
-  word-break: break-word; /* Break long words forcibly */
-  box-sizing: border-box; /* Include padding and border in width calculations */
-}
+      .recent-activity-card {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 250px;
+        height: 360px;
+        border: 1px solid #000000;
+        text-decoration: none;
+        padding-top: 10px;
+        color: black;
+        transition: transform 0.3s;
+        border-radius: 10px;
+        margin: 20px 2.5% 40px 2.5%;
+        position: relative;
+        background-color: white;
 
-/* Ensures text does not overflow from timeline content */
-.timeline-content h2, .timeline-content p {
-  margin: 0;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
+        &:hover {
+          transform: scale(1.05, 1.05);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-/* Alternating content alignment */
-.timeline-item:nth-child(odd) .timeline-content {
-  margin-right: auto;
-  text-align: right;
-  padding-right: 15px; /* Adjust padding for better alignment */
-}
+        .activity-image {
+          width: auto;
+          height: 140px;
+          object-fit: cover;
+          border-radius: 10px;
+        }
 
-.timeline-item:nth-child(even) .timeline-content {
-  margin-left: auto;
-  text-align: left;
-  padding-left: 15px; /* Adjust padding for better alignment */
-}
+        p {
+          margin-top: 5px;
+          width: 220px;
+          text-align: right;
+        }
 
-/* Date styling */
-.date {
-  display: block;
-  margin-top: 10px;
-  font-size: 0.85em;
-  color: #666;
-}
+        .activity-title {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-top: 10px;
+          width: 220px;
+          text-align: center;
+          font-size: 20px;
+          font-weight: bold;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .timeline::before {
-    left: 50%; /* Keep the line centered on small screens */
-  }
-
-  .timeline-content {
-    width: 80%; /* Expand content width for small screens */
-    text-align: center;
-    padding: 10px; /* Reduce padding for better fit */
-  }
-
-  .timeline-item:nth-child(odd) .timeline-content,
-  .timeline-item:nth-child(even) .timeline-content {
-    margin: auto;
-    text-align: center;
+        .icon-img {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 50px;
+          height: 50px;
+          margin-bottom: 5px;
+          margin-right: 5px;
+          border-radius: 50px;
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
+
+//アニメーション
+.anime-object {
+  animation: fade-in 1.5s ease-in-out 0.5s forwards;
+}
+
+//about,html.erb
+.about-container {
+  max-width: 72.5em;
+  margin: 100px auto;
+
+  .about-nect-life-card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 70px 130px 50px;
+    border-radius: 20px;
+    position: relative;
+    opacity: 0;
+
+    &:first-child {
+      margin-bottom: 300px;
+    }
+
+    .mini-label {
+      position: absolute;
+      margin: 0;
+      top: -45px;
+      font: italic 3.2rem "Fira Sans", serif;
+    }
+
+    .logo-img {
+      height: 230px;
+    }
+
+    .title-1 {
+      text-align: center;
+      margin: 50px 0;
+      font-size: 40px;
+      font-weight: bold;
+      width: 100%;
+      line-height: 1.7;
+
+      .highlight {
+        background: linear-gradient(transparent 70%, rgba(249, 40, 6, 0.49) 0);
+        color: black;
+      }
+    }
+
+    .about-nect-life-detail {
+      width: 100%;
+      background-color: #f0f1fa;
+      padding: 10px 20px 10px;
+      border-radius: 20px;
+      line-height: 2;
+      font-size: 19px;
+      margin-top: 50px;
+
+      .text-content-1 {
+        margin-bottom: 20px;
+      }
+
+      .text-content-2 {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  //about,html.erb
+  .about-container {
+    width: 95%;
+    margin: 50px auto;
+
+    .about-nect-life-card {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 16px 20px;
+      border-radius: 4px;
+      position: relative;
+      opacity: 0;
+
+      &:first-child {
+        margin-bottom: 100px;
+      }
+
+      .mini-label {
+        position: absolute;
+        margin: 0;
+        top: -15px;
+        font: italic 1.2rem "Fira Sans", serif;
+      }
+
+      .logo-img {
+        height: 35vw;
+      }
+
+      .title-1 {
+        text-align: center;
+        margin: 0;
+        font-size: 4.4vw;
+        font-weight: bold;
+        width: 100%;
+        line-height: 1.7;
+
+        .highlight {
+          background: linear-gradient(transparent 70%, rgba(249, 40, 6, 0.49) 0);
+          color: black;
+        }
+      }
+
+      .about-nect-life-detail {
+        width: 100%;
+        background-color: #f0f1fa;
+        padding: 10px;
+        border-radius: 4px;
+        line-height: 2;
+        font-size: 3vw;
+        margin-top: 50px;
+
+        .text-content-1 {
+          margin-bottom: 10px;
+        }
+
+        .text-content-2 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+//アニメーション定義
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+///* Timeline container */
+//.timeline {
+//  position: relative;
+//  max-width: 600px;
+//  margin: 0 auto;
+//  padding: 20px 0;
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//}
+//
+///* Vertical line in the middle */
+//.timeline::before {
+//  content: '';
+//  position: absolute;
+//  top: 0;
+//  bottom: 0;
+//  left: 50%;
+//  width: 4px;
+//  background-color: #333;
+//  transform: translateX(-50%);
+//}
+//
+///* Timeline item */
+//.timeline-item {
+//  position: relative;
+//  width: 100%;
+//  padding: 20px 0;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  box-sizing: border-box;
+//}
+//
+///* Connector circle */
+//.timeline-item::before {
+//  content: '';
+//  width: 20px;
+//  height: 20px;
+//  background: #fff;
+//  border: 4px solid #333;
+//  border-radius: 50%;
+//  position: absolute;
+//  left: 50%;
+//  transform: translate(-50%, -50%);
+//  z-index: 1;
+//}
+//
+///* Timeline content box */
+//.timeline-content {
+//  background: #fff;
+//  padding: 20px;
+//  border-radius: 6px;
+//  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//  position: relative;
+//  width: 45%;
+//  text-align: center;
+//  z-index: 2;
+//  word-wrap: break-word; /* Break long words */
+//  overflow-wrap: break-word; /* Break long words (alternate property) */
+//  word-break: break-word; /* Break long words forcibly */
+//  box-sizing: border-box; /* Include padding and border in width calculations */
+//}
+//
+///* Ensures text does not overflow from timeline content */
+//.timeline-content h2, .timeline-content p {
+//  margin: 0;
+//  word-wrap: break-word;
+//  overflow-wrap: break-word;
+//}
+//
+///* Alternating content alignment */
+//.timeline-item:nth-child(odd) .timeline-content {
+//  margin-right: auto;
+//  text-align: right;
+//  padding-right: 15px; /* Adjust padding for better alignment */
+//}
+//
+//.timeline-item:nth-child(even) .timeline-content {
+//  margin-left: auto;
+//  text-align: left;
+//  padding-left: 15px; /* Adjust padding for better alignment */
+//}
+//
+///* Date styling */
+//.date {
+//  display: block;
+//  margin-top: 10px;
+//  font-size: 0.85em;
+//  color: #666;
+//}
+//
+///* Responsive adjustments */
+//@media (max-width: 600px) {
+//  .timeline::before {
+//    left: 50%; /* Keep the line centered on small screens */
+//  }
+//
+//  .timeline-content {
+//    width: 80%; /* Expand content width for small screens */
+//    text-align: center;
+//    padding: 10px; /* Reduce padding for better fit */
+//  }
+//
+//  .timeline-item:nth-child(odd) .timeline-content,
+//  .timeline-item:nth-child(even) .timeline-content {
+//    margin: auto;
+//    text-align: center;
+//  }
+//}
