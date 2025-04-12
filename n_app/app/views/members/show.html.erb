@@ -1,169 +1,216 @@
 <%= title @member.name %>
 
-<div class="card">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item me-2">
-        <%= link_to 'プロファイル', member_path(@member), class: 'btn btn-outline-dark profile-button-dark' %>
-      </li>
-      <div class="d-flex">
-        <% if member_signed_in? && current_member.id == @member.id %>
-          <li class="nav-item me-2">
-            <%= link_to '編集', edit_member_path, class: 'btn btn-outline-info' %>
-          </li>
-          <% unless current_member.user? %>
-            <li class="nav-item me-2">
-                <%= link_to 'Admin', site_admins_index_path, class: 'btn btn-outline-warning' %>
-            </li>
-          <% end %>
-          <li class="nav-item me-2">
-            <%= button_to 'ログアウト', destroy_member_session_path, method: :delete, class: 'btn btn-outline-danger' %>
-          </li>
-        <% end %>
-      </div>
-    </ul>
-  </div>
-  <div class="text-center" style="width: 100%;">
-    <%= image_tag @member.get_profile_image, class: "profile-image", style: 'max-width: 200px; max-height: 150px;' %>
-  </div>
-  <div class="card-body">
-    <div class="text-center mb-4">
-      <h1 class="card-title"><%= @member.name %></h1>
-      <p class="card-text"><%= @member.intro %></p>
-    </div>
-    <div class="flex-container">
-      <div class="flex-column">
-        <div class="content">
-          <b><h2>ユーザー詳細</h2></b>
-        </div>
-        <div class="content">
-          <h5>学年：<%= grade_translation(@member.grade) %></h5>
-        </div>
-        <div class="content">
-          <h5>卒年：<%= @member.graduation_year %>卒</h5>
-        </div>
-        <div class="content">
-          <% if member_signed_in? %>
-            <h5>メール：<%= @member.email %></h5>
-          <% end %>
-        </div>
-      </div>
-      <div class="flex-column">
-        <div class="content">
-          <b><h2>学科・コース</h2></b>
-        </div>
-        <div class="content">
-          <h5>学科： <%= department_translation(@member.department) %></h5>
-        </div>
-        <div class="content">
-          <h5>コース： <%= course_translation(@member.course) %></h5>
-        </div>
-      </div>
-      <div class="skills-field">
-        <div class="content">
-          <b><h2>学習中スキル</h2></b>
-        </div>
-        <div class="content">
-          <% languageList = @member.calculate_selected_attr(@member.learning_programming_languages, "PROGRAMMING_LANGUAGES") %>
-          <% frameworkList = @member.calculate_selected_attr(@member.learning_frameworks, "FRAMEWORKS") %>
-          <% libraryList = @member.calculate_selected_attr(@member.learning_libraries, "LIBRARIES") %>
-          <% game_engineList = @member.calculate_selected_attr(@member.learning_game_engines, "GAME_ENGINES") %>
-          <% graphics_3dList = @member.calculate_selected_attr(@member.learning_graphics_3D, "GRAPHICS_3D") %>
-          <% skill2dList = Array[languageList, frameworkList, libraryList, game_engineList, graphics_3dList] %>
-
-          <% if skill2dList.all?(&:empty?) %>
-            <h5>学んでるスキルなし</h5>
-          <% else %>
-            <% skill2dList.each do |attrList| %>
-              <div class="bordered-div">
-                <div class="flex-column learning-field">
-                  <% index = skill2dList.find_index(attrList) %>
-                  <% if attrList.empty? == false %>
-                    <h4><%= Member::ATTR_DICT[index] %></h4>
-                    <% attrList.each do |skill| %>
-                      <h5><%= skill %></h5>
+<div class="member-show-container">
+    <div class="profile-area">
+        <section class="member-info">
+            <%= image_tag @member.get_profile_image %>
+            <p class="name"><%= @member.name %></p>
+            <p class="introduction"><%= @member.intro %></p>
+        </section>
+        
+        <section class="learning-skills">
+            <p class="title">Learning Skills</p>
+            <% languageList = @member.calculate_selected_attr(@member.learning_programming_languages, "PROGRAMMING_LANGUAGES") %>
+            <% frameworkList = @member.calculate_selected_attr(@member.learning_frameworks, "FRAMEWORKS") %>
+            <% libraryList = @member.calculate_selected_attr(@member.learning_libraries, "LIBRARIES") %>
+            <% game_engineList = @member.calculate_selected_attr(@member.learning_game_engines, "GAME_ENGINES") %>
+            <% graphics_3dList = @member.calculate_selected_attr(@member.learning_graphics_3D, "GRAPHICS_3D") %>
+            <% skill2dList = Array[languageList, frameworkList, libraryList, game_engineList, graphics_3dList] %>
+            
+            <% if skill2dList.all?(&:empty?) %>
+                <h5>To be Decided…🤔</h5>
+            <% else %>
+                <% skill2dList.each_with_index do |attrList, index| %>
+                    <% if attrList.empty? == false %>
+                        <h4><%= Member::ATTR_DICT[index] %></h4>
+                        <section class="skills">
+                            <% attrList.each do |skill| %>
+                                <%= skills_logo_select(skill) %>
+                            <% end %>
+                        </section>
                     <% end %>
-                  <% end %>
-                </div>
-              </div>
+                <% end %>
             <% end %>
-          <% end %>
+        </section>
+    
+    </div>
+    
+    <div class="my-article-admin-area">
+    
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item me-2">
+                <%= link_to 'プロファイル', member_path(@member), class: 'btn btn-outline-dark profile-button-dark' %>
+            </li>
+            <div class="d-flex">
+                <% if member_signed_in? && current_member.id == @member.id %>
+                    <li class="nav-item me-2">
+                        <%= link_to '編集', edit_member_path, class: 'btn btn-outline-info' %>
+                    </li>
+                    <% unless current_member.user? %>
+                        <li class="nav-item me-2">
+                            <%= link_to 'Admin', site_admins_index_path, class: 'btn btn-outline-warning' %>
+                        </li>
+                    <% end %>
+                    <li class="nav-item me-2">
+                        <%= button_to 'ログアウト', destroy_member_session_path, method: :delete, class: 'btn btn-outline-danger' %>
+                    </li>
+                <% end %>
+            </div>
+        </ul>
+    </div>
+    <div class="text-center" style="width: 100%;">
+        <%= image_tag @member.get_profile_image, class: "profile-image", style: 'max-width: 200px; max-height: 150px;' %>
+    </div>
+    <div class="card-body">
+        <div class="text-center mb-4">
+            <h1 class="card-title"><%= @member.name %></h1>
+            <p class="card-text"><%= @member.intro %></p>
         </div>
-      </div>
+        <div class="flex-container">
+            <div class="flex-column">
+                <div class="content">
+                    <b><h2>ユーザー詳細</h2></b>
+                </div>
+                <div class="content">
+                    <h5>学年：<%= grade_translation(@member.grade) %></h5>
+                </div>
+                <div class="content">
+                    <h5>卒年：<%= @member.graduation_year %>卒</h5>
+                </div>
+                <div class="content">
+                    <% if member_signed_in? %>
+                        <h5>メール：<%= @member.email %></h5>
+                    <% end %>
+                </div>
+            </div>
+            <div class="flex-column">
+                <div class="content">
+                    <b><h2>学科・コース</h2></b>
+                </div>
+                <div class="content">
+                    <h5>学科： <%= department_translation(@member.department) %></h5>
+                </div>
+                <div class="content">
+                    <h5>コース： <%= course_translation(@member.course) %></h5>
+                </div>
+            </div>
+            <div class="skills-field">
+                <div class="content">
+                    <b><h2>学習中スキル</h2></b>
+                </div>
+                <div class="content">
+                    <% languageList = @member.calculate_selected_attr(@member.learning_programming_languages, "PROGRAMMING_LANGUAGES") %>
+                    <% frameworkList = @member.calculate_selected_attr(@member.learning_frameworks, "FRAMEWORKS") %>
+                    <% libraryList = @member.calculate_selected_attr(@member.learning_libraries, "LIBRARIES") %>
+                    <% game_engineList = @member.calculate_selected_attr(@member.learning_game_engines, "GAME_ENGINES") %>
+                    <% graphics_3dList = @member.calculate_selected_attr(@member.learning_graphics_3D, "GRAPHICS_3D") %>
+                    <% skill2dList = Array[languageList, frameworkList, libraryList, game_engineList, graphics_3dList] %>
+                    
+                    <% if skill2dList.all?(&:empty?) %>
+                        <h5>学んでるスキルなし</h5>
+                    <% else %>
+                        <% skill2dList.each do |attrList| %>
+                            <div class="bordered-div">
+                                <div class="flex-column learning-field">
+                                    <% index = skill2dList.find_index(attrList) %>
+                                    <% if attrList.empty? == false %>
+                                        <h4><%= Member::ATTR_DICT[index] %></h4>
+                                        <% attrList.each do |skill| %>
+                                            <h5><%= skill %></h5>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        
+        
+        <% if member_signed_in? && current_member.id == @member.id %>
+            
+            <div class="d-flex flex-column mb-2">
+                <b><h2 class="text-center m-4">公開記事一覧</h2></b>
+                <% if @activities_published.any? %>
+                    <div class="horizontal-scroll-container">
+                        <% @activities_published.reverse_each do |activity| %>
+                            <div class="card mb-2" style="width: 18rem;">
+                                <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+                                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
+                                    <%= link_to '編集', edit_activity_path(activity.id), class: 'btn btn-primary' %>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <h5>ー　公開記事なし</h5>
+                <% end %>
+            </div>
+            
+            <div class="d-flex flex-column mb-2">
+                <b><h2 class="text-center m-4">下書き一覧</h2></b>
+                <% if @activities_draft.any? %>
+                    <div class="horizontal-scroll-container">
+                        <% @activities_draft.reverse_each do |activity| %>
+                            <div class="card mb-2" style="width: 18rem;">
+                                <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+                                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
+                                    <%= link_to '編集', edit_activity_path(activity.id), class: 'btn btn-primary' %>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <h5>ー　下書きなし</h5>
+                <% end %>
+            </div>
+        
+        <% else %>
+            
+            <div class="d-flex flex-column mb-2">
+                <b><h2 class="text-center m-4">記事一覧</h2></b>
+                <% if @activities_published.any? %>
+                    <div class="horizontal-scroll-container">
+                        <% @activities_published.reverse_each do |activity| %>
+                            <div class="card mb-2" style="width: 18rem;">
+                                <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
+                                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
+                                    <p class="card-text">
+                                        <small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small>
+                                    </p>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <h5>ー　記事なし</h5>
+                <% end %>
+            </div>
+        
+        <% end %>
+        
+        <div class="btn-group">
+            <%= link_to 'トップページ', root_path, class: "btn btn-success" %>
+            <%= link_to '戻る', :back, class: "btn btn-danger" %>
+        </div>
     </div>
-
-
-    <% if member_signed_in? && current_member.id == @member.id %>
-
-      <div class="d-flex flex-column mb-2">
-        <b><h2 class="text-center m-4">公開記事一覧</h2></b>
-        <% if @activities_published.any? %>
-          <div class="horizontal-scroll-container">
-              <% @activities_published.reverse_each do |activity| %>
-                <div class="card mb-2" style="width: 18rem;">
-                  <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
-                    <%= link_to '編集', edit_activity_path(activity.id), class: 'btn btn-primary' %>
-                    <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-                  </div>
-                </div>
-              <% end %>
-          </div>
-        <% else %>
-          <h5>ー　公開記事なし</h5>
-        <% end %>
-      </div>
-
-      <div class="d-flex flex-column mb-2">
-        <b><h2 class="text-center m-4">下書き一覧</h2></b>
-        <% if @activities_draft.any? %>
-          <div class="horizontal-scroll-container">
-              <% @activities_draft.reverse_each do |activity| %>
-                <div class="card mb-2" style="width: 18rem;">
-                  <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
-                    <%= link_to '編集', edit_activity_path(activity.id), class: 'btn btn-primary' %>
-                    <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-                  </div>
-                </div>
-              <% end %>
-          </div>
-        <% else %>
-          <h5>ー　下書きなし</h5>
-        <% end %>
-      </div>
-
-    <% else %>
-
-      <div class="d-flex flex-column mb-2">
-        <b><h2 class="text-center m-4">記事一覧</h2></b>
-        <% if @activities_published.any? %>
-          <div class="horizontal-scroll-container">
-              <% @activities_published.reverse_each do |activity| %>
-                <div class="card mb-2" style="width: 18rem;">
-                  <%= image_tag activity.get_activity_image, class: 'img-fluid card-img-top' %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= link_to activity.title, activity_path(activity.id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h5>
-                    <h6><%= link_to activity.member.name, member_path(activity.member_id), class: 'link-offset-2 link-underline link-underline-opacity-0' %></h6>
-                    <p class="card-text"><small class="text-body-secondary"><%= activity.created_at.strftime('%Y/%m/%d') %></small></p>
-                  </div>
-                </div>
-              <% end %>
-          </div>
-        <% else %>
-          <h5>ー　記事なし</h5>
-        <% end %>
-      </div>
-
-    <% end %>
-
-    <div class="btn-group">
-      <%= link_to 'トップページ', root_path, class:"btn btn-success" %>
-      <%= link_to '戻る', :back, class:"btn btn-danger" %>
-    </div>
-  </div>
 </div>
