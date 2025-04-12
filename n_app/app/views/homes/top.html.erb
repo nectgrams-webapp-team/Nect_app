@@ -44,7 +44,9 @@
         <div class="recent-activity-lists" data-controller="top">
             <% @activities.each do |activity| %>
                 <%= link_to activity_path(activity.id), class: 'recent-activity-card' do %>
-                    <%= responsive_activity_image_tag activity.get_activity_image, class: 'activity-image' %>
+                    <section>
+                        <%= responsive_activity_image_tag activity.get_activity_image, class: 'activity-image' %>
+                    </section>
                     <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
                     <p class="activity-title"><%= truncate(activity.title, length: 36) %></p>
                     <%= image_tag activity.member.get_profile_image, class: 'icon-img' %>
