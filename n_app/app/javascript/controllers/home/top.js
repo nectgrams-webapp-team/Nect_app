@@ -7,7 +7,7 @@ export default class extends Controller {
         const imgH = img.height;
         const n_imgW = img.naturalWidth;
         const n_imgH = img.naturalHeight;
-        
+
         if (Math.abs(n_imgW - n_imgH) > 90) {
             if (n_imgW > n_imgH) {
                 img.style.width = "100%";
@@ -17,6 +17,6 @@ export default class extends Controller {
                 img.style.height = "100%";
             }
         }
-        console.log(`横：${n_imgW}, 縦：${n_imgH}`)
+        // console.log(`横：${n_imgW}, 縦：${n_imgH}`)
     }
 }
