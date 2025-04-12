@@ -1,7 +1,7 @@
 class Member < ApplicationRecord
 
   devise :invitable, :database_authenticatable, :registerable,
-  :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable
 
   # バリテーションの設定
   validates :student_id, presence: true, format: { with: /\A[a-zA-Z]{2}\d{4,}\z/ }
@@ -16,8 +16,8 @@ class Member < ApplicationRecord
   enum grade: { freshman: 0, sophomore: 1, junior: 2, senior: 3, graduate: 4 }
 
   DEPARTMENT_COURSES = {
-      information_technology: [:ai_strategy, :iot_systems, :robotics_development],
-      digital_entertainment: [:game_production, :cg_animation]
+    information_technology: [:ai_strategy, :iot_systems, :robotics_development],
+    digital_entertainment: [:game_production, :cg_animation]
   }.freeze
 
   def calculate_graduation_year(student_id)
@@ -45,11 +45,12 @@ class Member < ApplicationRecord
     256 => "PHP",
     512 => "JavaScript",
     1024 => "TypeScript",
-    2048 => "HTML/CSS",
-    4096 => "Swift",
-    8192 => "Kotlin",
-    16384 => "R",
-    32768 => "SQL"
+    2048 => "HTML",
+    4096 => "CSS",
+    8192 => "Swift",
+    16384 => "Kotlin",
+    32768 => "R",
+    65536 => "SQL",
   }.freeze
 
   FRAMEWORKS = {
@@ -85,16 +86,16 @@ class Member < ApplicationRecord
   }.freeze
 
   ATTR_DICT = {
-    0 => "言語",
-    1 => "フレームワーク",
-    2 => "ライブラリ",
-    3 => "ゲームエンジン",
-    4 => "3Dグラフィックス"
+    0 => "Programming Languages",
+    1 => "Framework",
+    2 => "Library",
+    3 => "Game Engine",
+    4 => "3D Graphics"
   }.freeze
 
   def calculate_select_pl(select_pl)
     s_pl = []
-    PROGRAMMING_LANGUAGES.each do |key,val|
+    PROGRAMMING_LANGUAGES.each do |key, val|
       if (select_pl & key) != 0
         s_pl.push(val)
       end
@@ -117,7 +118,7 @@ class Member < ApplicationRecord
       hash = GRAPHICS_3D
     end
 
-    hash.each do |key,val|
+    hash.each do |key, val|
       if (selected_attr & key) != 0
         s_attr.push(val)
       end
