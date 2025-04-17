@@ -18,6 +18,10 @@ module MembersHelper
         "Cpp.png"
       when "Ruby on Rails"
         "Rails.png"
+      when "Unreal Engine"
+        "UnrealEngine.png"
+      when "Construct 3"
+        "Construct3.png"
       else
         "#{skill}.png"
       end

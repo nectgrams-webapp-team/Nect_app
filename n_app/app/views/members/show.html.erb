@@ -22,12 +22,14 @@
             <% else %>
                 <% skill2dList.each_with_index do |attrList, index| %>
                     <% if attrList.empty? == false %>
-                        <h4><%= Member::ATTR_DICT[index] %></h4>
-                        <section class="skills">
-                            <% attrList.each do |skill| %>
-                                <%= skills_logo_select(skill) %>
-                            <% end %>
-                        </section>
+                        <div class="skill-card">
+                            <h4><%= Member::ATTR_DICT[index] %></h4>
+                            <section class="skills">
+                                <% attrList.each do |skill| %>
+                                    <%= skills_logo_select(skill) %>
+                                <% end %>
+                            </section>
+                        </div>
                     <% end %>
                 <% end %>
             <% end %>

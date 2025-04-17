@@ -100,7 +100,7 @@ class Member < ApplicationRecord
         s_pl.push(val)
       end
     end
-    return s_pl
+    s_pl
   end
 
   def calculate_selected_attr(selected_attr, hash_str)
