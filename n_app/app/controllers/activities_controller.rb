@@ -77,8 +77,9 @@ class ActivitiesController < ApplicationController
 
   def destroy
     activity = Activity.find(params[:id])
+    member_id = activity.member.id
     activity.delete
-    redirect_to activities_path
+    redirect_to member_path(member_id)
   end
 
   def save_draft

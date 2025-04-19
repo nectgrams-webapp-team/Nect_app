@@ -3,6 +3,12 @@
 <div class="member-show-container">
     <div class="profile-area">
         <section class="member-info">
+            <% if member_signed_in? && current_member.id == @member.id %>
+                <%= link_to edit_member_path do %>
+                    <%= image_tag 'user_edit.png', id: 'user-edit' %>
+                <% end %>
+            
+            <% end %>
             <%= image_tag @member.get_profile_image %>
             <p class="name"><%= @member.name %></p>
             <p class="introduction"><%= @member.intro %></p>
@@ -34,11 +40,59 @@
                 <% end %>
             <% end %>
         </section>
-    
     </div>
     
     <div class="my-article-admin-area">
-    
+        <div class="published">
+            <h1>Activities</h1>
+            <section class="activities">
+                <% if @activities_published.any? %>
+                    <% @activities_published.reverse_each do |activity| %>
+                        <div class="activity-card" data-controller="top">
+                            <section class="img">
+                                <%= responsive_activity_image_tag activity.get_activity_image, class: 'activity-image' %>
+                            </section>
+                            <section class="article">
+                                <%= link_to activity.title, activity_path(activity.id), class: 'title' %>
+                                <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
+                                <% if member_signed_in? && current_member.id == @member.id %>
+                                    <%= link_to 'Edit', edit_activity_path(activity.id), class: "edit-activity-button" %>
+                                <% end %>
+                            </section>
+                        </div>
+                    <% end %>
+                <% else %>
+                    <p class="comment-1">Typing in Progress…</p>
+                    <p class="typing-icon">🧑🏻‍💻</p>
+                <% end %>
+            </section>
+        </div>
+        
+        <% if member_signed_in? && current_member.id == @member.id %>
+            <div class="private">
+                <h1>Drafts</h1>
+                <section class="drafts">
+                    <% if @activities_draft.any? %>
+                        <% @activities_draft.reverse_each do |activity| %>
+                            <div class="draft-card" data-controller="top">
+                                <section class="img">
+                                    <%= responsive_activity_image_tag activity.get_activity_image, class: 'draft-image' %>
+                                </section>
+                                <section class="article">
+                                    <%= link_to activity.title, activity_path(activity.id), class: 'title' %>
+                                    <p><%= activity.created_at.strftime('%Y/%m/%d') %></p>
+                                    <%= link_to 'Edit', edit_activity_path(activity.id), class: "edit-activity-button" %>
+                                    <%= button_to 'Delete', activity_path(activity.id), class: "delete-button", method: :delete, form: { data: { turbo_confirm: '本当に削除しますか？' } } %>
+                                </section>
+                            </div>
+                        <% end %>
+                    <% else %>
+                        <p class="comment-1">Let's Try to Write an Your Article✏️</p>
+                        <p class="typing-icon">🧑🏻‍💻</p>
+                    <% end %>
+                </section>
+            </div>
+        <% end %>
     </div>
 </div>
 
