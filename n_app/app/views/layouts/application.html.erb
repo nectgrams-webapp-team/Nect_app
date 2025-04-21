@@ -19,9 +19,14 @@
             </div>
             <div class="login-profile">
                 <% if member_signed_in? %>
-                    <%= link_to member_path(current_member.id) do %>
-                        <%= image_tag current_member.get_profile_image, class: 'profile-icon-img' %>
-                    <% end %>
+                    <%= image_tag current_member.get_profile_image, id: 'profile-icon-img' %>
+                    <div id="user-menu">
+                        <%= link_to 'Your Page', member_path(current_member.id) %>
+                        <% unless current_member.user? %>
+                            <%= link_to 'Admin', site_admins_index_path %>
+                        <% end %>
+                        <%= link_to 'Log out', destroy_member_session_path, data: { turbo_method: :delete } %>
+                    </div>
                     <div class="new-activity">
                         <%= link_to '投稿する', new_activity_path, class: "new-activity-bottom" %>
                     </div>
