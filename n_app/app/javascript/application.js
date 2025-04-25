@@ -34,3 +34,18 @@ window.addEventListener('beforeunload', (event) => {
     }
 
 });
+document.addEventListener('turbo:load', function () {
+    const profileIcon = document.getElementById('profile-icon-img');
+    const userMenu = document.getElementById('user-menu');
+
+    profileIcon.addEventListener('click', function (event) {
+        event.stopPropagation();
+        userMenu.style.display = 'flex';
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!userMenu.contains(event.target)) {
+            userMenu.style.display = 'none';
+        }
+    });
+});
